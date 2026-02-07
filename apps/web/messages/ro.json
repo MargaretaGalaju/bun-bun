@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "title": "Marketplace",
+    "description": "Marketplace MVP"
+  },
+  "nav": {
+    "brand": "Marketplace",
+    "products": "Produse",
+    "admin": "Admin",
+    "login": "Autentificare",
+    "register": "Înregistrare",
+    "logout": "Ieșire"
+  },
+  "home": {
+    "title": "Bine ați venit la Marketplace",
+    "subtitle": "Tot ce aveți nevoie — într-un singur loc.",
+    "browse": "Răsfoiți produsele"
+  },
+  "login": {
+    "title": "Autentificare",
+    "email": "Email",
+    "password": "Parolă",
+    "submit": "Autentificare",
+    "submitting": "Se autentifică...",
+    "noAccount": "Nu aveți cont?",
+    "registerLink": "Înregistrați-vă",
+    "validationError": "Eroare de validare",
+    "failed": "Autentificare eșuată"
+  },
+  "register": {
+    "title": "Înregistrare",
+    "name": "Nume",
+    "email": "Email",
+    "password": "Parolă",
+    "role": "Rol",
+    "buyer": "Cumpărător",
+    "seller": "Vânzător",
+    "submit": "Înregistrare",
+    "submitting": "Se înregistrează...",
+    "hasAccount": "Aveți deja cont?",
+    "loginLink": "Autentificați-vă",
+    "validationError": "Eroare de validare",
+    "failed": "Înregistrare eșuată"
+  },
+  "products": {
+    "title": "Produse",
+    "loadError": "Nu s-au putut încărca produsele. API-ul funcționează?",
+    "empty": "Nu sunt produse disponibile încă.",
+    "price": "{price} $"
+  },
+  "admin": {
+    "title": "Panou de administrare",
+    "description": "Aici va fi gestionarea utilizatorilor, moderarea produselor și urmărirea comenzilor.",
+    "comingSoon": "Conținutul panoului va apărea în curând"
+  },
+  "common": {
+    "loading": "..."
+  }
+}

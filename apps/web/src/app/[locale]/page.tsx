@@ -1,10 +1,17 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+
 export default function HomePage() {
+  const t = useTranslations('home');
+
   return (
     <div>
-      <h1>Welcome to Marketplace</h1>
-      <p>Your one-stop shop for everything.</p>
+      <h1>{t('title')}</h1>
+      <p>{t('subtitle')}</p>
       <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-        <a
+        <Link
           href="/products"
           style={{
             padding: '0.75rem 1.5rem',
@@ -14,8 +21,8 @@ export default function HomePage() {
             textDecoration: 'none',
           }}
         >
-          Browse Products
-        </a>
+          {t('browse')}
+        </Link>
       </div>
     </div>
   );

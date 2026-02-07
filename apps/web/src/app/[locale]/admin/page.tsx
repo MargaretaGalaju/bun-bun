@@ -1,9 +1,15 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 export default function AdminPage() {
+  const t = useTranslations('admin');
+
   return (
     <div>
-      <h1>Admin Dashboard</h1>
+      <h1>{t('title')}</h1>
       <p style={{ color: '#666', marginTop: '1rem' }}>
-        Admin panel placeholder. Implement user management, product moderation, and order tracking here.
+        {t('description')}
       </p>
       <div
         style={{
@@ -15,8 +21,7 @@ export default function AdminPage() {
           color: '#999',
         }}
       >
-        {/* TODO: Implement admin dashboard */}
-        <p>Dashboard content coming soon</p>
+        <p>{t('comingSoon')}</p>
       </div>
     </div>
   );

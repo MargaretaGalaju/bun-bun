@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation';
 import type { ProductDto } from '@bun-bun/shared';
@@ -12,13 +13,14 @@ export function ProductDetailsScreen({ route }: Props) {
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getProductById(productId)
       .then(setProduct)
-      .catch(() => setError('Failed to load product.'))
+      .catch(() => setError(t('productDetails.loadError')))
       .finally(() => setLoading(false));
-  }, [productId]);
+  }, [productId, t]);
 
   if (loading) {
     return (
@@ -31,7 +33,7 @@ export function ProductDetailsScreen({ route }: Props) {
   if (error || !product) {
     return (
       <View style={styles.center}>
-        <Text style={styles.error}>{error || 'Product not found.'}</Text>
+        <Text style={styles.error}>{error || t('productDetails.notFound')}</Text>
       </View>
     );
   }

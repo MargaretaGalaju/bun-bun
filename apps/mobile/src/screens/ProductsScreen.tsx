@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation';
 import type { ProductDto } from '@bun-bun/shared';
@@ -18,13 +19,14 @@ export function ProductsScreen({ navigation }: Props) {
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getProducts()
       .then(setProducts)
-      .catch(() => setError('Failed to load products. Is the API running?'))
+      .catch(() => setError(t('products.loadError')))
       .finally(() => setLoading(false));
-  }, []);
+  }, [t]);
 
   if (loading) {
     return (
@@ -49,7 +51,7 @@ export function ProductsScreen({ navigation }: Props) {
       contentContainerStyle={styles.list}
       ListEmptyComponent={
         <View style={styles.center}>
-          <Text style={styles.empty}>No products available yet.</Text>
+          <Text style={styles.empty}>{t('products.empty')}</Text>
         </View>
       }
       renderItem={({ item }) => (

@@ -1,25 +1,27 @@
+import { getTranslations } from 'next-intl/server';
 import { getProducts } from '@/lib/api/products';
 import type { ProductDto } from '@bun-bun/shared';
 
 export default async function ProductsPage() {
+  const t = await getTranslations('products');
   let products: ProductDto[] = [];
   let error: string | null = null;
 
   try {
     products = await getProducts();
   } catch {
-    error = 'Failed to load products. Is the API running?';
+    error = t('loadError');
   }
 
   return (
     <div>
-      <h1>Products</h1>
+      <h1>{t('title')}</h1>
       {error && (
         <p style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}>
           {error}
         </p>
       )}
-      {products.length === 0 && !error && <p>No products available yet.</p>}
+      {products.length === 0 && !error && <p>{t('empty')}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
         {products.map((product) => (
           <div
@@ -33,7 +35,7 @@ export default async function ProductsPage() {
             <h2 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{product.title}</h2>
             <p style={{ color: '#666', fontSize: '0.9rem' }}>{product.description}</p>
             <p style={{ fontWeight: 'bold', marginTop: '0.75rem' }}>
-              ${product.price.toFixed(2)}
+              {t('price', { price: product.price.toFixed(2) })}
             </p>
           </div>
         ))}

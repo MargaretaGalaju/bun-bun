@@ -1,0 +1,46 @@
+{
+  "home": {
+    "title": "Добро пожаловать в Маркетплейс",
+    "greeting": "Привет, {{name}}! ({{role}})",
+    "subtitle": "Всё, что нужно — в одном месте.",
+    "browse": "Смотреть товары",
+    "profile": "Мой профиль"
+  },
+  "login": {
+    "title": "Вход",
+    "registerTitle": "Регистрация",
+    "name": "Имя",
+    "email": "Email",
+    "password": "Пароль",
+    "buyer": "Покупатель",
+    "seller": "Продавец",
+    "submit": "Войти",
+    "registerSubmit": "Зарегистрироваться",
+    "switchToRegister": "Нет аккаунта? Зарегистрироваться",
+    "switchToLogin": "Уже есть аккаунт? Войти",
+    "validationError": "Ошибка валидации",
+    "invalidInput": "Некорректные данные",
+    "loginFailed": "Ошибка входа",
+    "registerFailed": "Ошибка регистрации",
+    "unknownError": "Неизвестная ошибка"
+  },
+  "profile": {
+    "logout": "Выйти",
+    "language": "Язык"
+  },
+  "products": {
+    "title": "Товары",
+    "loadError": "Не удалось загрузить товары. API запущен?",
+    "empty": "Товаров пока нет."
+  },
+  "productDetails": {
+    "loadError": "Не удалось загрузить товар.",
+    "notFound": "Товар не найден."
+  },
+  "nav": {
+    "marketplace": "Маркетплейс",
+    "products": "Товары",
+    "productDetails": "Детали товара",
+    "profile": "Профиль"
+  }
+}

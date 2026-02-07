@@ -1,0 +1,46 @@
+{
+  "home": {
+    "title": "Bine ați venit la Marketplace",
+    "greeting": "Salut, {{name}}! ({{role}})",
+    "subtitle": "Tot ce aveți nevoie — într-un singur loc.",
+    "browse": "Răsfoiți produsele",
+    "profile": "Profilul meu"
+  },
+  "login": {
+    "title": "Autentificare",
+    "registerTitle": "Înregistrare",
+    "name": "Nume",
+    "email": "Email",
+    "password": "Parolă",
+    "buyer": "Cumpărător",
+    "seller": "Vânzător",
+    "submit": "Autentificare",
+    "registerSubmit": "Înregistrare",
+    "switchToRegister": "Nu aveți cont? Înregistrați-vă",
+    "switchToLogin": "Aveți deja cont? Autentificați-vă",
+    "validationError": "Eroare de validare",
+    "invalidInput": "Date invalide",
+    "loginFailed": "Autentificare eșuată",
+    "registerFailed": "Înregistrare eșuată",
+    "unknownError": "Eroare necunoscută"
+  },
+  "profile": {
+    "logout": "Ieșire",
+    "language": "Limbă"
+  },
+  "products": {
+    "title": "Produse",
+    "loadError": "Nu s-au putut încărca produsele. API-ul funcționează?",
+    "empty": "Nu sunt produse disponibile încă."
+  },
+  "productDetails": {
+    "loadError": "Nu s-a putut încărca produsul.",
+    "notFound": "Produs negăsit."
+  },
+  "nav": {
+    "marketplace": "Marketplace",
+    "products": "Produse",
+    "productDetails": "Detalii produs",
+    "profile": "Profil"
+  }
+}

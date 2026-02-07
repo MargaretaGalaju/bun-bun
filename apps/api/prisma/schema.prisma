@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum OrderGroupStatus {
+  NEW
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(BUYER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products     Product[]
+  orderGroups  OrderGroup[]
+  sellerOrders Order[]
+
+  @@map("users")
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String @unique
+  slug String @unique
+
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  status      ProductStatus @default(DRAFT)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  seller     User     @relation(fields: [sellerId], references: [id])
+  sellerId   String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+model OrderGroup {
+  id        String           @id @default(uuid())
+  status    OrderGroupStatus @default(NEW)
+  createdAt DateTime         @default(now())
+
+  buyer   User   @relation(fields: [buyerId], references: [id])
+  buyerId String
+
+  orders Order[]
+
+  @@index([buyerId, createdAt])
+  @@map("order_groups")
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  orderGroup   OrderGroup @relation(fields: [orderGroupId], references: [id])
+  orderGroupId String
+
+  seller   User   @relation(fields: [sellerId], references: [id])
+  sellerId String
+
+  orderItems OrderItem[]
+
+  @@index([orderGroupId])
+  @@index([sellerId, createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id            String @id @default(uuid())
+  qty           Int
+  priceSnapshot Float
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@index([orderId])
+  @@map("order_items")
+}

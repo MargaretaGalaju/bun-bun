@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Role } from '@bun-bun/shared';
-import { StubAuthGuard } from '../common/guards/auth.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser, RequestUser } from '../common/decorators/current-user.decorator';
@@ -10,10 +10,8 @@ import { OrdersService } from './orders.service';
 
 @ApiTags('orders')
 @ApiBearerAuth()
-@ApiSecurity('x-user-id')
-@ApiSecurity('x-user-role')
 @Controller('orders')
-@UseGuards(StubAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 

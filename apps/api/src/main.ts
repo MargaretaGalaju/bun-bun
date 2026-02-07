@@ -1,22 +1,25 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('Marketplace API')
     .setDescription('Marketplace MVP API documentation')
-    .setVersion('0.1.0')
+    .setVersion('0.2.0')
     .addBearerAuth()
-    .addApiKey({ type: 'apiKey', name: 'x-user-id', in: 'header', description: 'Stub auth: user UUID' }, 'x-user-id')
-    .addApiKey({ type: 'apiKey', name: 'x-user-role', in: 'header', description: 'Stub auth: BUYER | SELLER | ADMIN' }, 'x-user-role')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

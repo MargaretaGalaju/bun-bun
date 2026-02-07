@@ -1,10 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 
 /**
- * Stub AuthGuard for development.
- * Reads user identity from x-user-id and x-user-role headers.
+ * **For local testing only.** Use JwtAuthGuard in production.
  *
- * TODO: Replace with real JWT AuthGuard (@nestjs/passport + passport-jwt)
+ * Reads user identity from x-user-id and x-user-role headers.
+ * Useful for manual testing without going through the JWT flow.
+ *
+ * Usage: replace JwtAuthGuard with StubAuthGuard in controller @UseGuards()
+ * and pass headers: x-user-id: <uuid>, x-user-role: BUYER|SELLER|ADMIN
  */
 @Injectable()
 export class StubAuthGuard implements CanActivate {
@@ -16,8 +19,7 @@ export class StubAuthGuard implements CanActivate {
 
     if (!userId || !userRole) {
       throw new UnauthorizedException(
-        'Missing x-user-id or x-user-role headers. ' +
-          'TODO: Replace StubAuthGuard with real JWT authentication.',
+        'Missing x-user-id or x-user-role headers (StubAuthGuard).',
       );
     }
 

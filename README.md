@@ -36,7 +36,6 @@ docker compose up -d
 ```
 
 This starts Postgres on host port **5433** (to avoid conflicts with a local Postgres on 5432) with:
-
 - User: `marketplace`
 - Password: `marketplace`
 - Database: `marketplace_dev`
@@ -64,7 +63,6 @@ pnpm dev
 ```
 
 This starts:
-
 - **API** at [http://localhost:3000](http://localhost:3000)
 - **Web** at [http://localhost:3001](http://localhost:3001)
 - **Mobile** via Expo DevTools
@@ -83,28 +81,28 @@ Swagger UI is available at: [http://localhost:3000/docs](http://localhost:3000/d
 
 ### API Endpoints
 
-| Method | Path           | Description              |
-| ------ | -------------- | ------------------------ |
-| GET    | /health        | Health check             |
-| POST   | /auth/register | Register a new user      |
-| POST   | /auth/login    | Login                    |
-| GET    | /me            | Get current user profile |
-| GET    | /products      | List active products     |
-| GET    | /products/:id  | Get product by ID        |
-| GET    | /categories    | List categories          |
+| Method | Path             | Description              |
+|--------|------------------|--------------------------|
+| GET    | /health          | Health check             |
+| POST   | /auth/register   | Register a new user      |
+| POST   | /auth/login      | Login                    |
+| GET    | /me              | Get current user profile |
+| GET    | /products        | List active products     |
+| GET    | /products/:id    | Get product by ID        |
+| GET    | /categories      | List categories          |
 
 ## Scripts
 
-| Command            | Description                        |
-| ------------------ | ---------------------------------- |
-| `pnpm dev`         | Start all apps in development mode |
-| `pnpm build`       | Build all packages and apps        |
-| `pnpm lint`        | Lint all packages                  |
-| `pnpm test`        | Run tests (placeholder)            |
-| `pnpm format`      | Format code with Prettier          |
-| `pnpm db:generate` | Generate Prisma client             |
-| `pnpm db:migrate`  | Run Prisma migrations              |
-| `pnpm db:push`     | Push Prisma schema to DB           |
+| Command          | Description                        |
+|------------------|------------------------------------|
+| `pnpm dev`       | Start all apps in development mode |
+| `pnpm build`     | Build all packages and apps        |
+| `pnpm lint`      | Lint all packages                  |
+| `pnpm test`      | Run tests (placeholder)            |
+| `pnpm format`    | Format code with Prettier          |
+| `pnpm db:generate` | Generate Prisma client           |
+| `pnpm db:migrate`  | Run Prisma migrations            |
+| `pnpm db:push`     | Push Prisma schema to DB         |
 
 ## Tech Stack
 

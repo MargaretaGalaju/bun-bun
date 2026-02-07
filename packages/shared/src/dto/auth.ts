@@ -12,12 +12,20 @@ export interface AuthLoginDto {
   password: string;
 }
 
+export interface AuthUserDto {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+}
+
 export interface AuthTokenResponse {
   accessToken: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    role: Role;
-  };
+  refreshToken: string;
+  user: AuthUserDto;
+}
+
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken: string;
 }

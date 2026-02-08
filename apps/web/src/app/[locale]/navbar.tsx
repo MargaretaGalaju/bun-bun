@@ -3,16 +3,15 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useCart } from '@/features/cart/CartContext';
-import { Link, usePathname, useRouter } from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 
 function LanguageSwitcher() {
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   function switchTo(newLocale: Locale) {
-    router.replace(pathname, { locale: newLocale });
+    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
+    window.location.reload();
   }
 
   return (

@@ -63,7 +63,10 @@ export function NavBar() {
       </Link>
       <Link href="/products">{t('products')}</Link>
       {user?.role === 'SELLER' && (
-        <Link href="/seller/products">{t('myProducts')}</Link>
+        <>
+          <Link href="/seller/products">{t('myProducts')}</Link>
+          <Link href="/seller/orders">{t('sellerOrders')}</Link>
+        </>
       )}
       {user?.role === 'BUYER' && (
         <Link href="/orders">{t('orders')}</Link>

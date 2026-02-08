@@ -12,6 +12,7 @@
     "admin": "Админ",
     "login": "Вход",
     "register": "Регистрация",
+    "sellerOrders": "Заказы",
     "logout": "Выйти"
   },
   "home": {
@@ -101,6 +102,32 @@
     "orderStatusShipped": "Отправлен",
     "orderStatusDelivered": "Доставлен",
     "orderStatusCancelled": "Отменён"
+  },
+  "sellerOrders": {
+    "title": "Заказы покупателей",
+    "empty": "У вас пока нет заказов.",
+    "buyer": "Покупатель",
+    "email": "Email",
+    "phone": "Телефон",
+    "createdAt": "Дата",
+    "status": "Статус",
+    "total": "Итого",
+    "itemsCount": "Товаров",
+    "open": "Открыть",
+    "accept": "Принять",
+    "reject": "Отклонить",
+    "done": "Завершить",
+    "backToList": "← Назад к заказам",
+    "accessRequired": "Доступ только для продавцов. Пожалуйста, войдите как продавец.",
+    "statusUpdated": "Статус обновлён!",
+    "updateFailed": "Не удалось обновить статус",
+    "product": "Товар",
+    "qty": "Кол-во",
+    "price": "Цена",
+    "statusPending": "Ожидает",
+    "statusConfirmed": "Подтверждён",
+    "statusCancelled": "Отменён",
+    "statusDelivered": "Доставлен"
   },
   "seller": {
     "products": {

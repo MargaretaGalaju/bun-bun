@@ -12,6 +12,7 @@
     "admin": "Admin",
     "login": "Autentificare",
     "register": "Înregistrare",
+    "sellerOrders": "Comenzi",
     "logout": "Ieșire"
   },
   "home": {
@@ -101,6 +102,32 @@
     "orderStatusShipped": "Expediat",
     "orderStatusDelivered": "Livrat",
     "orderStatusCancelled": "Anulat"
+  },
+  "sellerOrders": {
+    "title": "Comenzile cumpărătorilor",
+    "empty": "Nu aveți comenzi încă.",
+    "buyer": "Cumpărător",
+    "email": "Email",
+    "phone": "Telefon",
+    "createdAt": "Data",
+    "status": "Stare",
+    "total": "Total",
+    "itemsCount": "Produse",
+    "open": "Deschide",
+    "accept": "Acceptă",
+    "reject": "Respinge",
+    "done": "Finalizează",
+    "backToList": "← Înapoi la comenzi",
+    "accessRequired": "Acces doar pentru vânzători. Vă rugăm să vă autentificați ca vânzător.",
+    "statusUpdated": "Starea a fost actualizată!",
+    "updateFailed": "Nu s-a putut actualiza starea",
+    "product": "Produs",
+    "qty": "Cant.",
+    "price": "Preț",
+    "statusPending": "În așteptare",
+    "statusConfirmed": "Confirmat",
+    "statusCancelled": "Anulat",
+    "statusDelivered": "Livrat"
   },
   "seller": {
     "products": {

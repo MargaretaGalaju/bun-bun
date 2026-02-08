@@ -24,3 +24,11 @@ export const checkoutRequestSchema = z
   });
 
 export type CheckoutRequestInput = z.infer<typeof checkoutRequestSchema>;
+
+// ── Seller order status update ──────────────────────────────────
+
+export const updateSellerOrderStatusSchema = z.object({
+  status: z.enum(['CONFIRMED', 'CANCELLED', 'DELIVERED']),
+});
+
+export type UpdateSellerOrderStatusInput = z.infer<typeof updateSellerOrderStatusSchema>;

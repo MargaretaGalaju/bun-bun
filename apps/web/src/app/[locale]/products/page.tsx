@@ -5,12 +5,16 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProductDto } from '@bun-bun/shared';
 import { listPublicProducts, type PublicProductParams } from '@/lib/api/products';
+import { useCart } from '@/features/cart/CartContext';
 
 export default function ProductsPage() {
   const t = useTranslations('products');
+  const tc = useTranslations('common');
+  const { addItem } = useCart();
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [addedId, setAddedId] = useState<string | null>(null);
 
   // Filters
   const [q, setQ] = useState('');
@@ -40,6 +44,14 @@ export default function ProductsPage() {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  function handleAddToCart(e: React.MouseEvent, product: ProductDto) {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+    setAddedId(product.id);
+    setTimeout(() => setAddedId((prev) => (prev === product.id ? null : prev)), 2000);
+  }
 
   const inputStyle = {
     padding: '0.5rem',
@@ -166,9 +178,40 @@ export default function ProductsPage() {
                     {product.city}
                   </p>
                 )}
-                <p style={{ fontWeight: 'bold', color: '#2d6a4f' }}>
+                <p style={{ fontWeight: 'bold', color: '#2d6a4f', marginBottom: '0.5rem' }}>
                   {t('price', { price: product.price.toFixed(2) })}
                 </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {addedId === product.id ? (
+                    <>
+                      <span style={{ color: '#2d6a4f', fontWeight: 600, fontSize: '0.85rem' }}>
+                        {tc('added')}
+                      </span>
+                      <Link
+                        href="/cart"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ fontSize: '0.85rem', color: '#2d6a4f' }}
+                      >
+                        {tc('goToCart')}
+                      </Link>
+                    </>
+                  ) : (
+                    <button
+                      onClick={(e) => handleAddToCart(e, product)}
+                      style={{
+                        padding: '0.35rem 0.8rem',
+                        background: '#2d6a4f',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '0.85rem',
+                      }}
+                    >
+                      {tc('addToCart')}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </Link>

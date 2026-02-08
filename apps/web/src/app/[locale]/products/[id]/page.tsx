@@ -6,15 +6,19 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProductDto } from '@bun-bun/shared';
 import { getPublicProduct } from '@/lib/api/products';
+import { useCart } from '@/features/cart/CartContext';
 
 export default function ProductDetailPage() {
   const t = useTranslations('products');
+  const tc = useTranslations('common');
   const params = useParams();
   const id = params.id as string;
+  const { addItem } = useCart();
 
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,6 +35,13 @@ export default function ProductDetailPage() {
     load();
     return () => { cancelled = true; };
   }, [id, t]);
+
+  function handleAddToCart() {
+    if (!product) return;
+    addItem(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  }
 
   if (loading) return <p>{t('empty')}</p>;
   if (error || !product) {
@@ -64,6 +75,32 @@ export default function ProductDetailPage() {
       >
         {t('price', { price: product.price.toFixed(2) })}
       </p>
+
+      {/* Add to cart */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+        {added ? (
+          <>
+            <span style={{ color: '#2d6a4f', fontWeight: 600 }}>{tc('added')}</span>
+            <Link href="/cart" style={{ color: '#2d6a4f' }}>{tc('goToCart')}</Link>
+          </>
+        ) : (
+          <button
+            onClick={handleAddToCart}
+            style={{
+              padding: '0.6rem 1.5rem',
+              background: '#2d6a4f',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: '1rem',
+            }}
+          >
+            {tc('addToCart')}
+          </button>
+        )}
+      </div>
 
       {/* Images */}
       {product.images && product.images.length > 0 && (

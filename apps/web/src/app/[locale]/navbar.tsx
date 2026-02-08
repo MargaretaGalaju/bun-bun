@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth/AuthContext';
+import { useCart } from '@/features/cart/CartContext';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/routing';
 
@@ -52,6 +53,7 @@ function LanguageSwitcher() {
 
 export function NavBar() {
   const { user, isLoading, logout } = useAuth();
+  const { itemCount } = useCart();
   const t = useTranslations('nav');
 
   return (
@@ -63,6 +65,12 @@ export function NavBar() {
       {user?.role === 'SELLER' && (
         <Link href="/seller/products">{t('myProducts')}</Link>
       )}
+      {user?.role === 'BUYER' && (
+        <Link href="/orders">{t('orders')}</Link>
+      )}
+      <Link href="/cart">
+        {t('cart')}{itemCount > 0 && ` (${itemCount})`}
+      </Link>
       <Link href="/admin">{t('admin')}</Link>
 
       <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>

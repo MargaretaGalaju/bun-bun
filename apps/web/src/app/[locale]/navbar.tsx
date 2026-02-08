@@ -60,6 +60,9 @@ export function NavBar() {
         {t('brand')}
       </Link>
       <Link href="/products">{t('products')}</Link>
+      {user?.role === 'SELLER' && (
+        <Link href="/seller/products">{t('myProducts')}</Link>
+      )}
       <Link href="/admin">{t('admin')}</Link>
 
       <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>

@@ -6,6 +6,7 @@
   "nav": {
     "brand": "Marketplace",
     "products": "Produse",
+    "myProducts": "Produsele mele",
     "admin": "Admin",
     "login": "Autentificare",
     "register": "Înregistrare",
@@ -46,7 +47,52 @@
     "title": "Produse",
     "loadError": "Nu s-au putut încărca produsele. API-ul funcționează?",
     "empty": "Nu sunt produse disponibile încă.",
-    "price": "{price} $"
+    "price": "{price} $",
+    "search": "Căutare...",
+    "city": "Oraș",
+    "minPrice": "Preț min.",
+    "maxPrice": "Preț max.",
+    "sort": "Sortare",
+    "sortNewest": "Noi",
+    "sortPriceAsc": "Preț ↑",
+    "sortPriceDesc": "Preț ↓",
+    "noImage": "Fără foto",
+    "details": "Detalii",
+    "backToCatalog": "← Înapoi la produse",
+    "description": "Descriere",
+    "notFound": "Produsul nu a fost găsit"
+  },
+  "seller": {
+    "products": {
+      "title": "Produsele mele",
+      "create": "Creează produs",
+      "edit": "Editare",
+      "editTitle": "Editarea produsului",
+      "statusDraft": "Ciornă",
+      "statusActive": "Activ",
+      "statusHidden": "Ascuns",
+      "publish": "Publică",
+      "hide": "Ascunde",
+      "toDraft": "La ciornă",
+      "save": "Salvează",
+      "saving": "Se salvează...",
+      "creating": "Se creează...",
+      "titleField": "Titlu",
+      "descriptionField": "Descriere",
+      "priceField": "Preț",
+      "cityField": "Oraș",
+      "categoryField": "Categorie",
+      "selectCategory": "Selectați categoria",
+      "images": "Imagini",
+      "addImage": "Adaugă",
+      "imageUrl": "URL imagine",
+      "noProducts": "Nu aveți produse încă.",
+      "accessRequired": "Acces doar pentru vânzători. Vă rugăm să vă autentificați ca vânzător.",
+      "created": "Produsul a fost creat!",
+      "saved": "Modificările au fost salvate!",
+      "validationError": "Eroare de validare",
+      "saveFailed": "Nu s-a putut salva"
+    }
   },
   "admin": {
     "title": "Panou de administrare",
@@ -54,6 +100,10 @@
     "comingSoon": "Conținutul panoului va apărea în curând"
   },
   "common": {
-    "loading": "..."
+    "loading": "...",
+    "error401": "Autentificare necesară",
+    "error403": "Permisiuni insuficiente",
+    "error400": "Cerere incorectă",
+    "errorGeneric": "A apărut o eroare"
   }
 }

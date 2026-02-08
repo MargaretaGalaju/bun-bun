@@ -6,6 +6,7 @@
   "nav": {
     "brand": "Маркетплейс",
     "products": "Товары",
+    "myProducts": "Мои товары",
     "admin": "Админ",
     "login": "Вход",
     "register": "Регистрация",
@@ -46,7 +47,52 @@
     "title": "Товары",
     "loadError": "Не удалось загрузить товары. API запущен?",
     "empty": "Товаров пока нет.",
-    "price": "{price} $"
+    "price": "{price} $",
+    "search": "Поиск...",
+    "city": "Город",
+    "minPrice": "Мин. цена",
+    "maxPrice": "Макс. цена",
+    "sort": "Сортировка",
+    "sortNewest": "Новые",
+    "sortPriceAsc": "Цена ↑",
+    "sortPriceDesc": "Цена ↓",
+    "noImage": "Нет фото",
+    "details": "Подробнее",
+    "backToCatalog": "← Назад к товарам",
+    "description": "Описание",
+    "notFound": "Товар не найден"
+  },
+  "seller": {
+    "products": {
+      "title": "Мои товары",
+      "create": "Создать товар",
+      "edit": "Редактировать",
+      "editTitle": "Редактирование товара",
+      "statusDraft": "Черновик",
+      "statusActive": "Активен",
+      "statusHidden": "Скрыт",
+      "publish": "Опубликовать",
+      "hide": "Скрыть",
+      "toDraft": "В черновик",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "creating": "Создание...",
+      "titleField": "Название",
+      "descriptionField": "Описание",
+      "priceField": "Цена",
+      "cityField": "Город",
+      "categoryField": "Категория",
+      "selectCategory": "Выберите категорию",
+      "images": "Изображения",
+      "addImage": "Добавить",
+      "imageUrl": "URL изображения",
+      "noProducts": "У вас пока нет товаров.",
+      "accessRequired": "Доступ только для продавцов. Пожалуйста, войдите как продавец.",
+      "created": "Товар создан!",
+      "saved": "Изменения сохранены!",
+      "validationError": "Ошибка валидации",
+      "saveFailed": "Не удалось сохранить"
+    }
   },
   "admin": {
     "title": "Панель администратора",
@@ -54,6 +100,10 @@
     "comingSoon": "Содержимое панели скоро появится"
   },
   "common": {
-    "loading": "..."
+    "loading": "...",
+    "error401": "Необходима авторизация",
+    "error403": "Недостаточно прав",
+    "error400": "Некорректный запрос",
+    "errorGeneric": "Произошла ошибка"
   }
 }

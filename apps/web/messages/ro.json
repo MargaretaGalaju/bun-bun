@@ -163,8 +163,59 @@
   },
   "admin": {
     "title": "Panou de administrare",
-    "description": "Aici va fi gestionarea utilizatorilor, moderarea produselor și urmărirea comenzilor.",
-    "comingSoon": "Conținutul panoului va apărea în curând"
+    "accessDenied": "Acces doar pentru administratori",
+    "nav": {
+      "dashboard": "Acasă",
+      "categories": "Categorii",
+      "categoriesDesc": "Gestionarea categoriilor de produse",
+      "users": "Utilizatori",
+      "usersDesc": "Gestionarea utilizatorilor, blocare, roluri",
+      "products": "Produse",
+      "productsDesc": "Moderarea produselor, schimbarea stării"
+    },
+    "categories": {
+      "title": "Categorii",
+      "name": "Denumire",
+      "nameRu": "Denumire (RU)",
+      "nameRo": "Denumire (RO)",
+      "imageUrl": "URL imagine",
+      "image": "Foto",
+      "slug": "Slug",
+      "parent": "Părinte",
+      "add": "Adaugă categorie",
+      "edit": "Editare",
+      "delete": "Șterge",
+      "confirmDelete": "Ștergeți această categorie?",
+      "noCategories": "Nu sunt categorii încă."
+    },
+    "users": {
+      "title": "Utilizatori",
+      "name": "Nume",
+      "email": "Email",
+      "phone": "Telefon",
+      "role": "Rol",
+      "blocked": "Stare",
+      "blockedYes": "Blocat",
+      "blockedNo": "Activ",
+      "search": "Căutare după nume, email, telefon...",
+      "allRoles": "Toate rolurile",
+      "block": "Blochează",
+      "unblock": "Deblochează",
+      "changeRole": "Schimbă rolul",
+      "noUsers": "Nu au fost găsiți utilizatori.",
+      "selfProtection": "Acesta ești tu"
+    },
+    "products": {
+      "title": "Produse",
+      "productTitle": "Titlu",
+      "seller": "Vânzător",
+      "price": "Preț",
+      "city": "Oraș",
+      "search": "Căutare după titlu...",
+      "allStatuses": "Toate stările",
+      "setStatus": "Stare",
+      "noProducts": "Nu au fost găsite produse."
+    }
   },
   "common": {
     "loading": "...",
@@ -174,6 +225,13 @@
     "error401": "Autentificare necesară",
     "error403": "Permisiuni insuficiente",
     "error400": "Cerere incorectă",
-    "errorGeneric": "A apărut o eroare"
+    "errorGeneric": "A apărut o eroare",
+    "save": "Salvează",
+    "cancel": "Anulare",
+    "delete": "Șterge",
+    "edit": "Editare",
+    "search": "Căutare",
+    "status": "Stare",
+    "actions": "Acțiuni"
   }
 }

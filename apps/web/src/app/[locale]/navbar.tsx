@@ -74,7 +74,9 @@ export function NavBar() {
       <Link href="/cart">
         {t('cart')}{itemCount > 0 && ` (${itemCount})`}
       </Link>
-      <Link href="/admin">{t('admin')}</Link>
+      {user?.role === 'ADMIN' && (
+        <Link href="/admin">{t('admin')}</Link>
+      )}
 
       <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>
         <LanguageSwitcher />

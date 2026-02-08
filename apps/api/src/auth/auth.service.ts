@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -69,6 +70,10 @@ export class AuthService {
     const valid = await argon2.verify(user.password, dto.password);
     if (!valid) {
       throw new UnauthorizedException('Invalid email or password');
+    }
+
+    if (user.isBlocked) {
+      throw new ForbiddenException('Account is blocked');
     }
 
     const tokens = await this.generateTokens(user.id, user.role);

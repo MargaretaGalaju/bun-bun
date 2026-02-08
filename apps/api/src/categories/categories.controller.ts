@@ -18,7 +18,11 @@ export class CategoriesController {
     return categories.map((c) => ({
       id: c.id,
       name: c.name,
+      nameRu: c.nameRu,
+      nameRo: c.nameRo,
       slug: c.slug,
+      imageUrl: c.imageUrl,
+      parentId: c.parentId,
     }));
   }
 }

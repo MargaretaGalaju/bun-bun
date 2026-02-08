@@ -11,7 +11,8 @@ import {
   addSellerProductImage,
   listMySellerProducts,
 } from '@/lib/api/products';
-import { getCategories, type CategoryDto } from '@/lib/api/categories';
+import { getCategories } from '@/lib/api/categories';
+import type { CategoryDto } from '@bun-bun/shared';
 import { updateProductSchema } from '@bun-bun/shared';
 
 export default function SellerEditProductPage() {

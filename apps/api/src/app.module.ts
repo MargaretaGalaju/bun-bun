@@ -8,6 +8,7 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import { SellerModule } from './seller/seller.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SellerModule } from './seller/seller.module';
     CategoriesModule,
     OrdersModule,
     SellerModule,
+    AdminModule,
   ],
   controllers: [HealthController],
 })

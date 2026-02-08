@@ -6,7 +6,8 @@ import { useRouter } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { createSellerProduct } from '@/lib/api/products';
-import { getCategories, type CategoryDto } from '@/lib/api/categories';
+import { getCategories } from '@/lib/api/categories';
+import type { CategoryDto } from '@bun-bun/shared';
 import { createProductSchema } from '@bun-bun/shared';
 
 export default function SellerCreateProductPage() {

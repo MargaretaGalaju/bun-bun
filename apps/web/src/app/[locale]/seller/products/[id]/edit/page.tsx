@@ -9,6 +9,8 @@ import type { ProductDto, ProductImageDto } from '@bun-bun/shared';
 import {
   updateSellerProduct,
   addSellerProductImage,
+  presignUpload,
+  uploadFileToR2,
   listMySellerProducts,
 } from '@/lib/api/products';
 import { getCategories } from '@/lib/api/categories';
@@ -31,10 +33,9 @@ export default function SellerEditProductPage() {
   const [city, setCity] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [images, setImages] = useState<ProductImageDto[]>([]);
-  const [imageUrl, setImageUrl] = useState('');
   const [loadingProduct, setLoadingProduct] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [addingImage, setAddingImage] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const isSeller = user?.role === 'SELLER';
@@ -128,17 +129,38 @@ export default function SellerEditProductPage() {
     }
   }
 
-  async function handleAddImage() {
-    if (!imageUrl.trim()) return;
-    setAddingImage(true);
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Derive extension from mime type
+    const extMap: Record<string, string> = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/webp': 'webp',
+    };
+    const fileExt = extMap[file.type];
+    if (!fileExt) {
+      setError(t('uploadFailed'));
+      return;
+    }
+
+    setUploading(true);
+    setError(null);
     try {
-      const img = await addSellerProductImage(id, imageUrl.trim());
+      // Step 1: Get presigned URL
+      const { uploadUrl, key } = await presignUpload(id, file.type, fileExt);
+      // Step 2: Upload file directly to R2
+      await uploadFileToR2(uploadUrl, file);
+      // Step 3: Save image record in DB
+      const img = await addSellerProductImage(id, key);
       setImages((prev) => [...prev, img]);
-      setImageUrl('');
     } catch {
-      alert(tc('errorGeneric'));
+      setError(t('uploadFailed'));
     } finally {
-      setAddingImage(false);
+      setUploading(false);
+      // Reset file input
+      e.target.value = '';
     }
   }
 
@@ -233,30 +255,32 @@ export default function SellerEditProductPage() {
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <input
-            type="url"
-            placeholder={t('imageUrl')}
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            style={{ ...inputStyle, flex: 1 }}
-          />
-          <button
-            type="button"
-            onClick={handleAddImage}
-            disabled={addingImage || !imageUrl.trim()}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <label
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
               padding: '0.6rem 1rem',
-              background: addingImage ? '#999' : '#333',
+              background: uploading ? '#999' : '#333',
               color: '#fff',
               border: 'none',
               borderRadius: '6px',
-              cursor: addingImage ? 'default' : 'pointer',
+              cursor: uploading ? 'default' : 'pointer',
               whiteSpace: 'nowrap',
+              fontSize: '0.95rem',
             }}
           >
-            {t('addImage')}
-          </button>
+            {uploading ? t('uploading') : t('uploadImage')}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={handleFileUpload}
+              disabled={uploading}
+              style={{ display: 'none' }}
+            />
+          </label>
+          {uploading && <span style={{ color: '#999', fontSize: '0.85rem' }}>{t('uploading')}</span>}
         </div>
       </div>
     </div>

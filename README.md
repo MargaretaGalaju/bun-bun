@@ -104,6 +104,34 @@ Swagger UI is available at: [http://localhost:3000/docs](http://localhost:3000/d
 | `pnpm db:migrate`  | Run Prisma migrations            |
 | `pnpm db:push`     | Push Prisma schema to DB         |
 
+## Cloudflare R2 (Image Uploads)
+
+Product images are uploaded directly to Cloudflare R2 via presigned PUT URLs. The API never touches the file bytes — the browser uploads directly to R2.
+
+### Setup
+
+1. Create an R2 bucket named `bunbun-images` in Cloudflare dashboard
+2. Enable **Public Development URL** for the bucket
+3. Create an API token with R2 read/write permissions
+4. Fill in the R2 env vars in `apps/api/.env` (see `.env.example`)
+
+### R2 CORS Configuration
+
+In the Cloudflare R2 dashboard, go to your bucket **Settings > CORS policy** and add:
+
+```json
+[
+  {
+    "AllowedOrigins": ["http://localhost:3001"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type"],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
+
+For production, replace `http://localhost:3001` with your actual web domain.
+
 ## Tech Stack
 
 - **Monorepo:** pnpm workspaces + Turborepo

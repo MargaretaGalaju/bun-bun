@@ -1,4 +1,5 @@
-import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import type { ProductDto, ProductImageDto } from '@bun-bun/shared';
 import { ProductStatus } from '@bun-bun/shared';
@@ -10,7 +11,14 @@ const IMAGES_INCLUDE = {
 
 @Injectable()
 export class SellerProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly r2PublicBaseUrl: string;
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly config: ConfigService,
+  ) {
+    this.r2PublicBaseUrl = this.config.get<string>('R2_PUBLIC_BASE_URL') || '';
+  }
 
   async create(
     sellerId: string,
@@ -77,12 +85,22 @@ export class SellerProductsService {
   async addImage(
     productId: string,
     sellerId: string,
-    data: { url: string; position?: number },
+    data: { key: string; position?: number },
   ): Promise<ProductImageDto> {
     await this.assertOwnership(productId, sellerId);
+
+    // Validate key belongs to this product
+    const expectedPrefix = `products/${productId}/`;
+    if (!data.key.startsWith(expectedPrefix)) {
+      throw new BadRequestException(`Image key must start with "${expectedPrefix}"`);
+    }
+
+    const url = `${this.r2PublicBaseUrl}/${data.key}`;
+
     const image = await this.prisma.productImage.create({
       data: {
-        url: data.url,
+        url,
+        key: data.key,
         position: data.position ?? 0,
         productId,
       },

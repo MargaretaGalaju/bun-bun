@@ -41,6 +41,12 @@ export interface UpdateProductStatusDto {
 }
 
 export interface AddProductImageDto {
-  url: string;
+  key: string;
   position?: number;
+}
+
+export interface PresignResponse {
+  uploadUrl: string;
+  key: string;
+  publicUrl: string;
 }

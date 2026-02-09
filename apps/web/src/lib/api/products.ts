@@ -70,10 +70,39 @@ export function setSellerProductStatus(
 
 export function addSellerProductImage(
   id: string,
-  url: string,
+  key: string,
 ): Promise<ProductImageDto> {
   return apiFetch<ProductImageDto>(`/seller/products/${id}/images`, {
     method: 'POST',
-    body: JSON.stringify({ url }),
+    body: JSON.stringify({ key }),
   });
+}
+
+// ── Upload helpers ──────────────────────────────────────────
+
+export function presignUpload(
+  productId: string,
+  contentType: string,
+  fileExt: string,
+): Promise<{ uploadUrl: string; key: string; publicUrl: string }> {
+  return apiFetch<{ uploadUrl: string; key: string; publicUrl: string }>(
+    '/uploads/presign',
+    {
+      method: 'POST',
+      body: JSON.stringify({ productId, contentType, fileExt }),
+    },
+  );
+}
+
+export async function uploadFileToR2(uploadUrl: string, file: File): Promise<void> {
+  const res = await fetch(uploadUrl, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type,
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Upload failed: ${res.status}`);
+  }
 }

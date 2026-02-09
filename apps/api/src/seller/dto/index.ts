@@ -50,9 +50,10 @@ export class UpdateProductStatusDto {
 }
 
 export class AddProductImageDto {
-  @ApiProperty({ example: 'https://example.com/image.jpg' })
-  @IsUrl()
-  url!: string;
+  @ApiProperty({ example: 'products/uuid/image.jpg' })
+  @IsString()
+  @IsNotEmpty()
+  key!: string;
 
   @ApiPropertyOptional({ example: 0 })
   @IsOptional()

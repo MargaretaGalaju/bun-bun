@@ -1,0 +1,17 @@
+node_modules
+dist
+.next
+.turbo
+.expo
+.pnpm-store
+.git
+.github
+.vscode
+.idea
+.env
+.env.*
+!.npmrc
+*.md
+coverage
+apps/web
+apps/mobile

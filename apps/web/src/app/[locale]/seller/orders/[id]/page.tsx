@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
@@ -25,6 +25,7 @@ function StatusBadge({ status, t }: { status: string; t: (key: string) => string
 export default function SellerOrderDetailPage() {
   const t = useTranslations('sellerOrders');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const params = useParams();
   const orderId = params?.id as string;
@@ -150,7 +151,7 @@ export default function SellerOrderDetailPage() {
         <tbody>
           {order.items.map((item) => (
             <tr key={item.id} className="border-b border-gray-200">
-              <td className="p-3">{item.productTitle}</td>
+              <td className="p-3">{locale === 'ro' ? item.productTitleRo : item.productTitleRu}</td>
               <td className="p-3">{item.qty}</td>
               <td className="p-3">{item.priceSnapshot.toFixed(2)} $</td>
               <td className="p-3 font-semibold">{(item.qty * item.priceSnapshot).toFixed(2)} $</td>

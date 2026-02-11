@@ -11,6 +11,7 @@
     "db:generate": "pnpm --filter @bun-bun/api exec prisma generate",
     "db:migrate": "pnpm --filter @bun-bun/api exec prisma migrate dev",
     "db:push": "pnpm --filter @bun-bun/api exec prisma db push",
+    "db:deploy": "pnpm --filter @bun-bun/api exec prisma migrate deploy",
     "prepare": "husky"
   },
   "devDependencies": {

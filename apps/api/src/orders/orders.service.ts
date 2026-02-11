@@ -33,7 +33,7 @@ export class OrdersService {
     // 2. Load all products in one query
     const products = await this.prisma.product.findMany({
       where: { id: { in: productIds } },
-      select: { id: true, title: true, price: true, status: true, sellerId: true },
+      select: { id: true, titleRo: true, titleRu: true, price: true, status: true, sellerId: true },
     });
 
     // 3. Validate: all products exist
@@ -112,7 +112,7 @@ export class OrdersService {
           include: {
             orderItems: {
               include: {
-                product: { select: { title: true } },
+                product: { select: { titleRo: true, titleRu: true } },
               },
             },
           },
@@ -126,7 +126,8 @@ export class OrdersService {
         const items: OrderItemDto[] = order.orderItems.map((oi) => ({
           id: oi.id,
           productId: oi.productId,
-          productTitle: oi.product.title,
+          productTitleRo: oi.product.titleRo,
+          productTitleRu: oi.product.titleRu,
           qty: oi.qty,
           priceSnapshot: oi.priceSnapshot,
         }));

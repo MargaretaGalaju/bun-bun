@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import type { ProductDto } from '@bun-bun/shared';
@@ -26,6 +26,7 @@ function StatusBadge({ status, t }: { status: string; t: (key: string) => string
 export default function SellerProductsPage() {
   const t = useTranslations('seller.products');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -115,7 +116,7 @@ export default function SellerProductsPage() {
           <tbody>
             {products.map((p) => (
               <tr key={p.id} className="border-b border-gray-100">
-                <td className="p-3">{p.title}</td>
+                <td className="p-3">{locale === 'ro' ? p.titleRo : p.titleRu}</td>
                 <td className="p-3">{p.price.toFixed(2)} $</td>
                 <td className="p-3">
                   <StatusBadge status={p.status} t={t} />

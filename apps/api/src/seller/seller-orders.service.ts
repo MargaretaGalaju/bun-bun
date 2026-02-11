@@ -11,7 +11,7 @@ import { OrderStatus } from '@bun-bun/shared';
 const ORDER_INCLUDE = {
   orderItems: {
     include: {
-      product: { select: { title: true } },
+      product: { select: { titleRo: true, titleRu: true } },
     },
   },
   orderGroup: {
@@ -81,7 +81,8 @@ export class SellerOrdersService {
     const items: SellerOrderItemDto[] = order.orderItems.map((oi) => ({
       id: oi.id,
       productId: oi.productId,
-      productTitle: oi.product.title,
+      productTitleRo: oi.product.titleRo,
+      productTitleRu: oi.product.titleRu,
       qty: oi.qty,
       priceSnapshot: oi.priceSnapshot,
     }));

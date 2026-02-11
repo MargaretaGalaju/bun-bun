@@ -1,10 +1,11 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProductDto } from '@bun-bun/shared';
 import { useCart } from '@/features/cart/CartContext';
 import { useState } from 'react';
+import { getProductTitle } from '@/lib/localizedProduct';
 
 interface ProductCardProps {
   product: ProductDto;
@@ -20,8 +21,10 @@ function isNew(createdAt: string): boolean {
 export function ProductCard({ product }: ProductCardProps) {
   const t = useTranslations('home');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const title = getProductTitle(product, locale);
 
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
@@ -43,7 +46,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {product.images && product.images.length > 0 ? (
           <img
             src={product.images[0].url}
-            alt={product.title}
+            alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
@@ -69,7 +72,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         {/* Title */}
         <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2 leading-tight">
-          {product.title}
+          {title}
         </h3>
 
         {/* Price */}

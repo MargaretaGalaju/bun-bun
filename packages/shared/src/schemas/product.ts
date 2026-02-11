@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
 export const createProductSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(200),
-  description: z.string().min(1, 'Description is required').max(5000),
+  titleRo: z.string().min(1, 'Title (RO) is required').max(200),
+  titleRu: z.string().min(1, 'Title (RU) is required').max(200),
+  descriptionRo: z.string().min(1, 'Description (RO) is required').max(5000),
+  descriptionRu: z.string().min(1, 'Description (RU) is required').max(5000),
   price: z.number().positive('Price must be positive'),
   categoryId: z.string().uuid('Invalid category ID'),
   city: z.string().max(100).optional(),

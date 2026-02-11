@@ -46,7 +46,7 @@ export function NavBar() {
   const linkClass = 'text-white no-underline text-sm hover:text-gray-300 transition-colors';
 
   return (
-    <nav className="flex items-center gap-5 bg-[#1e1e1e] px-6 py-3">
+    <nav className="flex items-center gap-5 bg-[#1e1e1e] px-6 py-5">
       <Link href="/" className="flex items-center no-underline">
         <img
           src="https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/bunbun-logo-white.svg"

@@ -33,8 +33,10 @@ export class ProductsService {
 
     if (filters.q) {
       where.OR = [
-        { title: { contains: filters.q, mode: 'insensitive' } },
-        { description: { contains: filters.q, mode: 'insensitive' } },
+        { titleRo: { contains: filters.q, mode: 'insensitive' } },
+        { titleRu: { contains: filters.q, mode: 'insensitive' } },
+        { descriptionRo: { contains: filters.q, mode: 'insensitive' } },
+        { descriptionRu: { contains: filters.q, mode: 'insensitive' } },
       ];
     }
 
@@ -105,8 +107,10 @@ export class ProductsService {
   private toDto(p: any): ProductDto {
     return {
       id: p.id,
-      title: p.title,
-      description: p.description,
+      titleRo: p.titleRo,
+      titleRu: p.titleRu,
+      descriptionRo: p.descriptionRo,
+      descriptionRu: p.descriptionRu,
       price: p.price,
       status: p.status as ProductStatus,
       city: p.city || undefined,

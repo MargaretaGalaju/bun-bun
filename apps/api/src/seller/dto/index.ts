@@ -14,17 +14,29 @@ import {
 export { CreateProductDto } from './create-product.dto';
 
 export class UpdateProductDto {
-  @ApiPropertyOptional({ example: 'Organic Honey' })
+  @ApiPropertyOptional({ example: 'Miere ecologică' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  title?: string;
+  titleRo?: string;
 
-  @ApiPropertyOptional({ example: 'Pure organic honey from local bees' })
+  @ApiPropertyOptional({ example: 'Экологический мёд' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  description?: string;
+  titleRu?: string;
+
+  @ApiPropertyOptional({ example: 'Miere pură ecologică de la albine locale' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  descriptionRo?: string;
+
+  @ApiPropertyOptional({ example: 'Чистый экологический мёд от местных пчёл' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  descriptionRu?: string;
 
   @ApiPropertyOptional({ example: 19.99 })
   @IsOptional()
@@ -37,7 +49,7 @@ export class UpdateProductDto {
   @IsUUID()
   categoryId?: string;
 
-  @ApiPropertyOptional({ example: 'Chisinau' })
+  @ApiPropertyOptional({ example: 'chisinau' })
   @IsOptional()
   @IsString()
   city?: string;

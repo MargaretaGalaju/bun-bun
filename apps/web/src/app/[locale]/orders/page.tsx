@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import type { OrderGroupDto } from '@bun-bun/shared';
@@ -52,6 +52,7 @@ function OrderStatusBadge({ status, t }: { status: string; t: (key: string) => s
 export default function OrdersPage() {
   const t = useTranslations('orders');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const searchParams = useSearchParams();
   const isSuccess = searchParams.get('success') === '1';
@@ -223,7 +224,7 @@ export default function OrdersPage() {
                   <tbody>
                     {order.items.map((item) => (
                       <tr key={item.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{item.productTitle}</td>
+                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{locale === 'ro' ? item.productTitleRo : item.productTitleRu}</td>
                         <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{item.qty}</td>
                         <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{item.priceSnapshot.toFixed(2)} $</td>
                       </tr>

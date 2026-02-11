@@ -22,12 +22,22 @@ export class SellerProductsService {
 
   async create(
     sellerId: string,
-    data: { title: string; description: string; price: number; categoryId: string; city?: string },
+    data: {
+      titleRo: string;
+      titleRu: string;
+      descriptionRo: string;
+      descriptionRu: string;
+      price: number;
+      categoryId: string;
+      city?: string;
+    },
   ): Promise<ProductDto> {
     const product = await this.prisma.product.create({
       data: {
-        title: data.title,
-        description: data.description,
+        titleRo: data.titleRo,
+        titleRu: data.titleRu,
+        descriptionRo: data.descriptionRo,
+        descriptionRu: data.descriptionRu,
         price: data.price,
         city: data.city,
         status: 'DRAFT',
@@ -61,7 +71,15 @@ export class SellerProductsService {
   async update(
     id: string,
     sellerId: string,
-    data: { title?: string; description?: string; price?: number; categoryId?: string; city?: string },
+    data: {
+      titleRo?: string;
+      titleRu?: string;
+      descriptionRo?: string;
+      descriptionRu?: string;
+      price?: number;
+      categoryId?: string;
+      city?: string;
+    },
   ): Promise<ProductDto> {
     await this.assertOwnership(id, sellerId);
     const product = await this.prisma.product.update({
@@ -126,8 +144,10 @@ export class SellerProductsService {
   private toDto(p: any): ProductDto {
     return {
       id: p.id,
-      title: p.title,
-      description: p.description,
+      titleRo: p.titleRo,
+      titleRu: p.titleRu,
+      descriptionRo: p.descriptionRo,
+      descriptionRu: p.descriptionRu,
       price: p.price,
       status: p.status as ProductStatus,
       city: p.city || undefined,

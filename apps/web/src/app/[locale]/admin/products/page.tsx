@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState, useCallback } from 'react';
@@ -10,6 +10,7 @@ import { getAdminProducts, changeAdminProductStatus } from '@/lib/api/admin';
 export default function AdminProductsPage() {
   const t = useTranslations('admin.products');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -139,7 +140,7 @@ export default function AdminProductsPage() {
                           className="w-8 h-8 object-cover rounded"
                         />
                       )}
-                      <span>{p.title}</span>
+                      <span>{locale === 'ro' ? p.titleRo : p.titleRu}</span>
                     </div>
                   </td>
                   <td className="p-2 text-sm">

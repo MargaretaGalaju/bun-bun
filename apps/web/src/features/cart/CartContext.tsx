@@ -15,7 +15,8 @@ import type { ProductDto } from '@bun-bun/shared';
 export interface CartItem {
   productId: string;
   qty: number;
-  title: string;
+  titleRo: string;
+  titleRu: string;
   price: number;
   image?: string;
 }
@@ -55,7 +56,8 @@ function cartReducer(state: CartState, action: CartAction): CartState {
           [action.product.id]: {
             productId: action.product.id,
             qty: newQty,
-            title: action.product.title,
+            titleRo: action.product.titleRo,
+            titleRu: action.product.titleRu,
             price: action.product.price,
             image: action.product.images?.[0]?.url,
           },

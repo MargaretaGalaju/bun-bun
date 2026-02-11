@@ -2,20 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
-import type { ProductDto } from '@bun-bun/shared';
+import type { ProductDto, CityDto } from '@bun-bun/shared';
 import { getPublicProduct } from '@/lib/api/products';
+import { getCities } from '@/lib/api/cities';
 import { useCart } from '@/features/cart/CartContext';
+import { getProductTitle, getProductDescription, getCityName } from '@/lib/localizedProduct';
 
 export default function ProductDetailPage() {
   const t = useTranslations('products');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const params = useParams();
   const id = params.id as string;
   const { addItem } = useCart();
 
   const [product, setProduct] = useState<ProductDto | null>(null);
+  const [cities, setCities] = useState<CityDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [added, setAdded] = useState(false);
@@ -24,8 +28,11 @@ export default function ProductDetailPage() {
     let cancelled = false;
     async function load() {
       try {
-        const data = await getPublicProduct(id);
-        if (!cancelled) setProduct(data);
+        const [data, cityList] = await Promise.all([getPublicProduct(id), getCities()]);
+        if (!cancelled) {
+          setProduct(data);
+          setCities(cityList);
+        }
       } catch {
         if (!cancelled) setError(t('notFound'));
       } finally {
@@ -57,15 +64,19 @@ export default function ProductDetailPage() {
     );
   }
 
+  const title = getProductTitle(product, locale);
+  const description = getProductDescription(product, locale);
+  const cityDisplay = product.city ? getCityName(product.city, cities, locale) : null;
+
   return (
     <div>
       <Link href="/products" className="text-gray-600 no-underline">
         {t('backToCatalog')}
       </Link>
 
-      <h1 className="mt-4 mb-2">{product.title}</h1>
+      <h1 className="mt-4 mb-2">{title}</h1>
 
-      {product.city && <p className="text-gray-500 text-sm mb-2">{product.city}</p>}
+      {cityDisplay && <p className="text-gray-500 text-sm mb-2">{cityDisplay}</p>}
 
       <p className="text-2xl font-bold text-green-700 mb-4">
         {t('price', { price: product.price.toFixed(2) })}
@@ -97,7 +108,7 @@ export default function ProductDetailPage() {
             <img
               key={img.id}
               src={img.url}
-              alt={product.title}
+              alt={title}
               className="w-[280px] h-[200px] object-cover rounded-lg shrink-0"
             />
           ))}
@@ -105,7 +116,7 @@ export default function ProductDetailPage() {
       )}
 
       <h3>{t('description')}</h3>
-      <p className="leading-relaxed text-gray-700 whitespace-pre-wrap">{product.description}</p>
+      <p className="leading-relaxed text-gray-700 whitespace-pre-wrap">{description}</p>
     </div>
   );
 }

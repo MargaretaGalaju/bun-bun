@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useCart } from '@/features/cart/CartContext';
@@ -11,6 +11,7 @@ import { ApiError } from '@/lib/api/client';
 export default function CartPage() {
   const t = useTranslations('cart');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const { itemList, itemCount, total, removeItem, setQty, clearCart } = useCart();
   const router = useRouter();
@@ -89,14 +90,14 @@ export default function CartPage() {
                 {item.image ? (
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={locale === 'ro' ? item.titleRo : item.titleRu}
                     className="w-[50px] h-[50px] object-cover rounded"
                   />
                 ) : (
                   <div className="w-[50px] h-[50px] bg-gray-100 rounded" />
                 )}
               </td>
-              <td className="p-3 font-medium">{item.title}</td>
+              <td className="p-3 font-medium">{locale === 'ro' ? item.titleRo : item.titleRu}</td>
               <td className="p-3">{item.price.toFixed(2)} $</td>
               <td className="p-3">
                 <div className="flex items-center gap-1">

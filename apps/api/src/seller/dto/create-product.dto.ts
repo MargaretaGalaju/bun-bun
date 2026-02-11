@@ -2,15 +2,25 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber, Min, IsUUID, IsOptional } from 'class-validator';
 
 export class CreateProductDto {
-  @ApiProperty({ example: 'Organic Honey' })
+  @ApiProperty({ example: 'Miere ecologică' })
   @IsString()
   @IsNotEmpty()
-  title!: string;
+  titleRo!: string;
 
-  @ApiProperty({ example: 'Pure organic honey from local bees' })
+  @ApiProperty({ example: 'Экологический мёд' })
   @IsString()
   @IsNotEmpty()
-  description!: string;
+  titleRu!: string;
+
+  @ApiProperty({ example: 'Miere pură ecologică de la albine locale' })
+  @IsString()
+  @IsNotEmpty()
+  descriptionRo!: string;
+
+  @ApiProperty({ example: 'Чистый экологический мёд от местных пчёл' })
+  @IsString()
+  @IsNotEmpty()
+  descriptionRu!: string;
 
   @ApiProperty({ example: 19.99 })
   @IsNumber()
@@ -21,7 +31,7 @@ export class CreateProductDto {
   @IsUUID()
   categoryId!: string;
 
-  @ApiPropertyOptional({ example: 'Chisinau' })
+  @ApiPropertyOptional({ example: 'chisinau' })
   @IsOptional()
   @IsString()
   city?: string;

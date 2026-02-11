@@ -10,6 +10,7 @@ import { OrdersModule } from './orders/orders.module';
 import { SellerModule } from './seller/seller.module';
 import { AdminModule } from './admin/admin.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { CitiesModule } from './cities/cities.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UploadsModule } from './uploads/uploads.module';
     SellerModule,
     AdminModule,
     UploadsModule,
+    CitiesModule,
   ],
   controllers: [HealthController],
 })

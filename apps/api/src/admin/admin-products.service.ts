@@ -30,8 +30,10 @@ export class AdminProductsService {
 
     if (opts.q) {
       where.OR = [
-        { title: { contains: opts.q, mode: 'insensitive' } },
-        { description: { contains: opts.q, mode: 'insensitive' } },
+        { titleRo: { contains: opts.q, mode: 'insensitive' } },
+        { titleRu: { contains: opts.q, mode: 'insensitive' } },
+        { descriptionRo: { contains: opts.q, mode: 'insensitive' } },
+        { descriptionRu: { contains: opts.q, mode: 'insensitive' } },
       ];
     }
 
@@ -52,8 +54,10 @@ export class AdminProductsService {
     return {
       items: items.map((p) => ({
         id: p.id,
-        title: p.title,
-        description: p.description,
+        titleRo: p.titleRo,
+        titleRu: p.titleRu,
+        descriptionRo: p.descriptionRo,
+        descriptionRu: p.descriptionRu,
         price: p.price,
         city: p.city,
         status: p.status,
@@ -90,8 +94,10 @@ export class AdminProductsService {
 
     return {
       id: p.id,
-      title: p.title,
-      description: p.description,
+      titleRo: p.titleRo,
+      titleRu: p.titleRu,
+      descriptionRo: p.descriptionRo,
+      descriptionRu: p.descriptionRu,
       price: p.price,
       city: p.city,
       status: p.status,
@@ -126,8 +132,10 @@ export class AdminProductsService {
 
     return {
       id: updated.id,
-      title: updated.title,
-      description: updated.description,
+      titleRo: updated.titleRo,
+      titleRu: updated.titleRu,
+      descriptionRo: updated.descriptionRo,
+      descriptionRu: updated.descriptionRu,
       price: updated.price,
       city: updated.city,
       status: updated.status,

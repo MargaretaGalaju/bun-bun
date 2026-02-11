@@ -27,7 +27,8 @@ export interface CheckoutResponseDto {
 export interface OrderItemDto {
   id: string;
   productId: string;
-  productTitle: string;
+  productTitleRo: string;
+  productTitleRu: string;
   qty: number;
   priceSnapshot: number;
 }
@@ -70,7 +71,8 @@ export interface SellerOrderListItemDto {
 export interface SellerOrderItemDto {
   id: string;
   productId: string;
-  productTitle: string;
+  productTitleRo: string;
+  productTitleRu: string;
   qty: number;
   priceSnapshot: number;
 }

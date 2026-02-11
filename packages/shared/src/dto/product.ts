@@ -8,8 +8,10 @@ export interface ProductImageDto {
 
 export interface ProductDto {
   id: string;
-  title: string;
-  description: string;
+  titleRo: string;
+  titleRu: string;
+  descriptionRo: string;
+  descriptionRu: string;
   price: number;
   status: ProductStatus;
   city?: string;
@@ -29,19 +31,29 @@ export interface PaginatedProductsDto {
 }
 
 export interface CreateProductDto {
-  title: string;
-  description: string;
+  titleRo: string;
+  titleRu: string;
+  descriptionRo: string;
+  descriptionRu: string;
   price: number;
   categoryId: string;
   city?: string;
 }
 
 export interface UpdateProductDto {
-  title?: string;
-  description?: string;
+  titleRo?: string;
+  titleRu?: string;
+  descriptionRo?: string;
+  descriptionRu?: string;
   price?: number;
   categoryId?: string;
   city?: string;
+}
+
+export interface CityDto {
+  id: string;
+  nameRo: string;
+  nameRu: string;
 }
 
 export interface UpdateProductStatusDto {

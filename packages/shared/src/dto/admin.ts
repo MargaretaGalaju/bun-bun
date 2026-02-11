@@ -34,8 +34,10 @@ export interface AdminProductImageDto {
 
 export interface AdminProductDto {
   id: string;
-  title: string;
-  description: string;
+  titleRo: string;
+  titleRu: string;
+  descriptionRo: string;
+  descriptionRu: string;
   price: number;
   city: string | null;
   status: ProductStatus;

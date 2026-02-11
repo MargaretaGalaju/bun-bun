@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
@@ -10,14 +10,17 @@ import {
   setSellerProductStatus,
 } from '@/lib/api/products';
 import { getCategories } from '@/lib/api/categories';
-import type { CategoryDto, ProductDto, ProductImageDto } from '@bun-bun/shared';
+import { getCities } from '@/lib/api/cities';
+import type { CategoryDto, CityDto, ProductDto, ProductImageDto } from '@bun-bun/shared';
 import { createProductSchema } from '@bun-bun/shared';
 import Stepper from '@/components/Stepper';
 import ImageUploader from '@/components/ImageUploader';
+import CitySelect from '@/components/CitySelect';
 
 export default function SellerCreateProductPage() {
   const t = useTranslations('seller.products');
   const tc = useTranslations('common');
+  const locale = useLocale();
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -28,8 +31,11 @@ export default function SellerCreateProductPage() {
 
   // Step 1 form state
   const [categories, setCategories] = useState<CategoryDto[]>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [cities, setCities] = useState<CityDto[]>([]);
+  const [titleRo, setTitleRo] = useState('');
+  const [titleRu, setTitleRu] = useState('');
+  const [descriptionRo, setDescriptionRo] = useState('');
+  const [descriptionRu, setDescriptionRu] = useState('');
   const [price, setPrice] = useState('');
   const [city, setCity] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -43,6 +49,7 @@ export default function SellerCreateProductPage() {
 
   useEffect(() => {
     getCategories().then(setCategories).catch(() => {});
+    getCities().then(setCities).catch(() => {});
   }, []);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -68,11 +75,13 @@ export default function SellerCreateProductPage() {
     setError(null);
 
     const payload = {
-      title: title.trim(),
-      description: description.trim(),
+      titleRo: titleRo.trim(),
+      titleRu: titleRu.trim(),
+      descriptionRo: descriptionRo.trim(),
+      descriptionRu: descriptionRu.trim(),
       price: parseFloat(price),
       categoryId,
-      city: city.trim() || undefined,
+      city: city || undefined,
     };
 
     const validation = createProductSchema.safeParse(payload);
@@ -116,10 +125,22 @@ export default function SellerCreateProductPage() {
     router.push('/seller/products');
   }
 
-  // ── Category name lookup ────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────
 
   const categoryName =
     categories.find((c) => c.id === categoryId)?.name || categoryId;
+
+  const getCityName = (cityId: string) => {
+    const c = cities.find((ci) => ci.id === cityId);
+    if (!c) return cityId;
+    return locale === 'ro' ? c.nameRo : c.nameRu;
+  };
+
+  const getTitle = (p: ProductDto) =>
+    locale === 'ro' ? p.titleRo : p.titleRu;
+
+  const getDescription = (p: ProductDto) =>
+    locale === 'ro' ? p.descriptionRo : p.descriptionRu;
 
   return (
     <div className="max-w-[600px] mx-auto">
@@ -144,25 +165,49 @@ export default function SellerCreateProductPage() {
         <form onSubmit={handleCreateProduct} className="flex flex-col gap-4">
           <div>
             <label className="block mb-1 font-semibold text-sm">
-              {t('titleField')}
+              {t('titleFieldRo')}
             </label>
             <input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={titleRo}
+              onChange={(e) => setTitleRo(e.target.value)}
               required
               className="w-full"
             />
           </div>
           <div>
             <label className="block mb-1 font-semibold text-sm">
-              {t('descriptionField')}
+              {t('titleFieldRu')}
+            </label>
+            <input
+              type="text"
+              value={titleRu}
+              onChange={(e) => setTitleRu(e.target.value)}
+              required
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold text-sm">
+              {t('descriptionFieldRo')}
             </label>
             <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={descriptionRo}
+              onChange={(e) => setDescriptionRo(e.target.value)}
               required
-              rows={4}
+              rows={3}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold text-sm">
+              {t('descriptionFieldRu')}
+            </label>
+            <textarea
+              value={descriptionRu}
+              onChange={(e) => setDescriptionRu(e.target.value)}
+              required
+              rows={3}
               className="w-full"
             />
           </div>
@@ -184,11 +229,10 @@ export default function SellerCreateProductPage() {
             <label className="block mb-1 font-semibold text-sm">
               {t('cityField')}
             </label>
-            <input
-              type="text"
+            <CitySelect
               value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full"
+              onChange={setCity}
+              placeholder={t('selectCity')}
             />
           </div>
           <div>
@@ -257,7 +301,7 @@ export default function SellerCreateProductPage() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-500">{t('titleField')}</span>
-                <span className="font-medium">{product.title}</span>
+                <span className="font-medium">{getTitle(product)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">{t('priceField')}</span>
@@ -270,12 +314,12 @@ export default function SellerCreateProductPage() {
               {product.city && (
                 <div className="flex justify-between">
                   <span className="text-gray-500">{t('cityField')}</span>
-                  <span className="font-medium">{product.city}</span>
+                  <span className="font-medium">{getCityName(product.city)}</span>
                 </div>
               )}
               <div className="pt-1">
                 <span className="text-gray-500">{t('descriptionField')}</span>
-                <p className="mt-1 text-gray-700">{product.description}</p>
+                <p className="mt-1 text-gray-700">{getDescription(product)}</p>
               </div>
             </div>
 

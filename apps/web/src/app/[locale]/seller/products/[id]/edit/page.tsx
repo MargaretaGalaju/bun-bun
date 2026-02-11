@@ -16,6 +16,7 @@ import {
 import { getCategories } from '@/lib/api/categories';
 import type { CategoryDto } from '@bun-bun/shared';
 import { updateProductSchema } from '@bun-bun/shared';
+import CitySelect from '@/components/CitySelect';
 
 export default function SellerEditProductPage() {
   const t = useTranslations('seller.products');
@@ -27,8 +28,10 @@ export default function SellerEditProductPage() {
 
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [titleRo, setTitleRo] = useState('');
+  const [titleRu, setTitleRu] = useState('');
+  const [descriptionRo, setDescriptionRo] = useState('');
+  const [descriptionRu, setDescriptionRu] = useState('');
   const [price, setPrice] = useState('');
   const [city, setCity] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -51,8 +54,10 @@ export default function SellerEditProductPage() {
         const found = allProducts.find((p) => p.id === id);
         if (!cancelled && found) {
           setProduct(found);
-          setTitle(found.title);
-          setDescription(found.description);
+          setTitleRo(found.titleRo);
+          setTitleRu(found.titleRu);
+          setDescriptionRo(found.descriptionRo);
+          setDescriptionRu(found.descriptionRu);
           setPrice(String(found.price));
           setCity(found.city || '');
           setCategoryId(found.categoryId);
@@ -99,12 +104,14 @@ export default function SellerEditProductPage() {
     setError(null);
 
     const payload: Record<string, unknown> = {};
-    if (title.trim() !== product!.title) payload.title = title.trim();
-    if (description.trim() !== product!.description) payload.description = description.trim();
+    if (titleRo.trim() !== product!.titleRo) payload.titleRo = titleRo.trim();
+    if (titleRu.trim() !== product!.titleRu) payload.titleRu = titleRu.trim();
+    if (descriptionRo.trim() !== product!.descriptionRo) payload.descriptionRo = descriptionRo.trim();
+    if (descriptionRu.trim() !== product!.descriptionRu) payload.descriptionRu = descriptionRu.trim();
     if (parseFloat(price) !== product!.price) payload.price = parseFloat(price);
     if (categoryId !== product!.categoryId) payload.categoryId = categoryId;
-    const trimmedCity = city.trim() || undefined;
-    if (trimmedCity !== (product!.city || undefined)) payload.city = trimmedCity;
+    const newCity = city || undefined;
+    if (newCity !== (product!.city || undefined)) payload.city = newCity;
 
     if (Object.keys(payload).length === 0) {
       router.push('/seller/products');
@@ -176,22 +183,42 @@ export default function SellerEditProductPage() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block mb-1 font-semibold text-sm">{t('titleField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('titleFieldRo')}</label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={titleRo}
+            onChange={(e) => setTitleRo(e.target.value)}
             required
             className="w-full"
           />
         </div>
         <div>
-          <label className="block mb-1 font-semibold text-sm">{t('descriptionField')}</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+          <label className="block mb-1 font-semibold text-sm">{t('titleFieldRu')}</label>
+          <input
+            type="text"
+            value={titleRu}
+            onChange={(e) => setTitleRu(e.target.value)}
             required
-            rows={4}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-semibold text-sm">{t('descriptionFieldRo')}</label>
+          <textarea
+            value={descriptionRo}
+            onChange={(e) => setDescriptionRo(e.target.value)}
+            required
+            rows={3}
+            className="w-full"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-semibold text-sm">{t('descriptionFieldRu')}</label>
+          <textarea
+            value={descriptionRu}
+            onChange={(e) => setDescriptionRu(e.target.value)}
+            required
+            rows={3}
             className="w-full"
           />
         </div>
@@ -209,11 +236,10 @@ export default function SellerEditProductPage() {
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
-          <input
-            type="text"
+          <CitySelect
             value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="w-full"
+            onChange={setCity}
+            placeholder={t('selectCity')}
           />
         </div>
         <div>

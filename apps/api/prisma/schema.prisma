@@ -70,14 +70,16 @@ model Category {
 }
 
 model Product {
-  id          String        @id @default(uuid())
-  title       String
-  description String
-  price       Float
-  city        String?
-  status      ProductStatus @default(DRAFT)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            String        @id @default(uuid())
+  titleRo       String
+  titleRu       String
+  descriptionRo String
+  descriptionRu String
+  price         Float
+  city          String?
+  status        ProductStatus @default(DRAFT)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   seller     User     @relation(fields: [sellerId], references: [id])
   sellerId   String

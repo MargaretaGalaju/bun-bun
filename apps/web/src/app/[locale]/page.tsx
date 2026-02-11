@@ -79,24 +79,17 @@ export default function HomePage() {
 
   return (
     <div className="-m-8 min-h-screen flex flex-col">
-      {/* Category strip */}
-      <div className="border-b border-gray-100 bg-white">
-        <CategoryStrip
-          activeCategoryId={categoryId}
-          onSelect={handleCategoryChange}
-        />
+      {/* Collection header */}
+      <div className="bg-gradient-to-b from-green-50 border-b border-gray-100 to-white px-4 py-8 md:px-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{t('title')}</h1>
+          <p className="text-gray-600 text-sm md:text-base max-w-xl mx-auto">{t('subtitle')}</p>
+        </div>
       </div>
 
-      {/* Collection header */}
-      <div className="bg-gradient-to-b from-green-50 to-white px-4 py-8 md:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            {t('title')}
-          </h1>
-          <p className="text-gray-600 text-sm md:text-base max-w-xl mx-auto">
-            {t('subtitle')}
-          </p>
-        </div>
+      {/* Category strip */}
+      <div className="bg-white">
+        <CategoryStrip activeCategoryId={categoryId} onSelect={handleCategoryChange} />
       </div>
 
       {/* Main content */}
@@ -141,11 +134,7 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <Pagination
-                  currentPage={page}
-                  totalPages={totalPages}
-                  onPageChange={setPage}
-                />
+                <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
               </>
             )}
           </div>

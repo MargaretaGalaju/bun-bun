@@ -5,8 +5,10 @@ import { AdminUsersController } from './admin-users.controller';
 import { AdminUsersService } from './admin-users.service';
 import { AdminProductsController } from './admin-products.controller';
 import { AdminProductsService } from './admin-products.service';
+import { UploadsModule } from '../uploads/uploads.module';
 
 @Module({
+  imports: [UploadsModule],
   controllers: [
     AdminCategoriesController,
     AdminUsersController,

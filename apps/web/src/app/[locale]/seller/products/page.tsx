@@ -51,7 +51,9 @@ export default function SellerProductsPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [authLoading, isSeller, tc]);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -92,11 +94,7 @@ export default function SellerProductsPage() {
         </Link>
       </div>
 
-      {error && (
-        <p className="text-red-600 p-4 bg-red-50 rounded-lg">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 p-4 bg-red-50 rounded-lg">{error}</p>}
 
       {loading && <p>{tc('loading')}</p>}
 

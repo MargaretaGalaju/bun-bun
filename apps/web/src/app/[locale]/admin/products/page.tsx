@@ -70,7 +70,9 @@ export default function AdminProductsPage() {
   };
 
   const statusBadge = (status: string) => (
-    <span className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${statusBadgeClass[status] || 'bg-gray-500 text-white'}`}>
+    <span
+      className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${statusBadgeClass[status] || 'bg-gray-500 text-white'}`}
+    >
       {status}
     </span>
   );
@@ -87,12 +89,18 @@ export default function AdminProductsPage() {
           className="w-full min-w-[200px]"
           placeholder={t('search')}
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
         />
         <select
           className="w-full min-w-[120px]"
           value={statusFilter}
-          onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setStatusFilter(e.target.value);
+            setPage(1);
+          }}
         >
           <option value="">{t('allStatuses')}</option>
           <option value="ACTIVE">ACTIVE</option>

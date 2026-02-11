@@ -18,9 +18,7 @@ function StatusBadge({ status, t }: { status: string; t: (key: string) => string
   const cls = classMap[status] || classMap.PENDING;
   const labelKey = `status${status.charAt(0) + status.slice(1).toLowerCase()}`;
   return (
-    <span className={`py-0.5 px-2 rounded-xl text-sm font-semibold ${cls}`}>
-      {t(labelKey)}
-    </span>
+    <span className={`py-0.5 px-2 rounded-xl text-sm font-semibold ${cls}`}>{t(labelKey)}</span>
   );
 }
 
@@ -55,7 +53,9 @@ export default function SellerOrderDetailPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [authLoading, isSeller, orderId, tc]);
 
   async function handleStatusChange(newStatus: string) {
@@ -108,20 +108,16 @@ export default function SellerOrderDetailPage() {
       </Link>
 
       <div className="flex items-center gap-4 mb-6">
-        <h1 className="m-0">{t('title')} #{order.id.slice(0, 8)}</h1>
+        <h1 className="m-0">
+          {t('title')} #{order.id.slice(0, 8)}
+        </h1>
         <StatusBadge status={order.status} t={t} />
       </div>
 
       {successMsg && (
-        <p className="text-green-700 bg-green-100 p-4 rounded-lg mb-4">
-          {successMsg}
-        </p>
+        <p className="text-green-700 bg-green-100 p-4 rounded-lg mb-4">{successMsg}</p>
       )}
-      {error && order && (
-        <p className="text-red-600 bg-red-50 p-4 rounded-lg mb-4">
-          {error}
-        </p>
-      )}
+      {error && order && <p className="text-red-600 bg-red-50 p-4 rounded-lg mb-4">{error}</p>}
 
       {/* Buyer info */}
       <div className="bg-gray-100 p-4 rounded-lg mb-6">
@@ -157,9 +153,7 @@ export default function SellerOrderDetailPage() {
               <td className="p-3">{item.productTitle}</td>
               <td className="p-3">{item.qty}</td>
               <td className="p-3">{item.priceSnapshot.toFixed(2)} $</td>
-              <td className="p-3 font-semibold">
-                {(item.qty * item.priceSnapshot).toFixed(2)} $
-              </td>
+              <td className="p-3 font-semibold">{(item.qty * item.priceSnapshot).toFixed(2)} $</td>
             </tr>
           ))}
         </tbody>

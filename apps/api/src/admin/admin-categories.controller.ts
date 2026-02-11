@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -10,12 +11,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { randomUUID } from 'crypto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { AdminCategoriesService } from './admin-categories.service';
+import { UploadsService } from '../uploads/uploads.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryPresignDto } from './dto/category-presign.dto';
 
 @ApiTags('admin/categories')
 @ApiBearerAuth()
@@ -23,7 +28,11 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 @Roles('ADMIN')
 @Controller('admin/categories')
 export class AdminCategoriesController {
-  constructor(private readonly service: AdminCategoriesService) {}
+  constructor(
+    private readonly service: AdminCategoriesService,
+    private readonly uploadsService: UploadsService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List all categories (admin)' })
@@ -50,5 +59,23 @@ export class AdminCategoriesController {
   @ApiOperation({ summary: 'Delete a category (admin)' })
   delete(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.service.delete(id);
+  }
+
+  @Post(':id/presign')
+  @ApiOperation({ summary: 'Get a presigned PUT URL for uploading a category image to R2' })
+  async presign(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() dto: CategoryPresignDto,
+  ) {
+    const category = await this.prisma.category.findUnique({ where: { id } });
+    if (!category) {
+      throw new NotFoundException('Category not found');
+    }
+
+    const key = `categories/${id}/${randomUUID()}.${dto.fileExt}`;
+    const uploadUrl = await this.uploadsService.presignPut(key, dto.contentType);
+    const publicUrl = this.uploadsService.getPublicUrl(key);
+
+    return { uploadUrl, key, publicUrl };
   }
 }

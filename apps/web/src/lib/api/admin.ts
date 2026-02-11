@@ -47,6 +47,20 @@ export function deleteAdminCategory(id: string): Promise<{ deleted: boolean }> {
   });
 }
 
+export function presignCategoryUpload(
+  categoryId: string,
+  contentType: string,
+  fileExt: string,
+): Promise<{ uploadUrl: string; key: string; publicUrl: string }> {
+  return apiFetch<{ uploadUrl: string; key: string; publicUrl: string }>(
+    `/admin/categories/${categoryId}/presign`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ contentType, fileExt }),
+    },
+  );
+}
+
 // ── Users ───────────────────────────────────────────────────
 
 export function getAdminUsers(params?: {

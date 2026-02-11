@@ -16,8 +16,8 @@ async function bootstrap() {
 
   // Swagger setup
   const config = new DocumentBuilder()
-    .setTitle('Marketplace API')
-    .setDescription('Marketplace MVP API documentation')
+    .setTitle('BunBun API')
+    .setDescription('BunBun MVP API documentation')
     .setVersion('0.2.0')
     .addBearerAuth()
     .build();

@@ -1,6 +1,6 @@
 {
   "home": {
-    "title": "Bine ați venit la Marketplace",
+    "title": "Bine ați venit la BunBun",
     "greeting": "Salut, {{name}}! ({{role}})",
     "subtitle": "Tot ce aveți nevoie — într-un singur loc.",
     "browse": "Răsfoiți produsele",
@@ -38,7 +38,7 @@
     "notFound": "Produs negăsit."
   },
   "nav": {
-    "marketplace": "Marketplace",
+    "marketplace": "BunBun",
     "products": "Produse",
     "productDetails": "Detalii produs",
     "profile": "Profil"

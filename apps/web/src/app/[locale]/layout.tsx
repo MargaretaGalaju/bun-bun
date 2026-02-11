@@ -16,17 +16,23 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
+  const locale = rawLocale && routing.locales.includes(rawLocale as any)
+    ? rawLocale
+    : routing.defaultLocale;
   const messages = await getMessages({ locale });
   const metadata = messages.metadata as Record<string, string>;
   return {
-    title: metadata?.title || 'Marketplace',
-    description: metadata?.description || 'Marketplace MVP',
+    title: metadata?.title || 'BunBun',
+    description: metadata?.description || 'BunBun MVP',
   };
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
+  const locale = rawLocale && routing.locales.includes(rawLocale as any)
+    ? rawLocale
+    : routing.defaultLocale;
   const messages = await getMessages({ locale });
 
   return (

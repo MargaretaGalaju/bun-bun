@@ -78,7 +78,9 @@ export default function AdminUsersPage() {
   };
 
   const roleBadge = (role: string) => (
-    <span className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${roleBadgeClass[role] || 'bg-gray-500 text-white'}`}>
+    <span
+      className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${roleBadgeClass[role] || 'bg-gray-500 text-white'}`}
+    >
       {role}
     </span>
   );
@@ -95,12 +97,18 @@ export default function AdminUsersPage() {
           className="w-full min-w-[200px]"
           placeholder={t('search')}
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
         />
         <select
           className="w-full min-w-[120px]"
           value={roleFilter}
-          onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setRoleFilter(e.target.value);
+            setPage(1);
+          }}
         >
           <option value="">{t('allRoles')}</option>
           <option value="BUYER">BUYER</option>
@@ -130,14 +138,19 @@ export default function AdminUsersPage() {
               {data.items.map((u) => {
                 const isSelf = u.id === currentUser?.id;
                 return (
-                  <tr key={u.id} className={`border-b border-gray-200 ${isSelf ? 'opacity-60' : ''}`}>
+                  <tr
+                    key={u.id}
+                    className={`border-b border-gray-200 ${isSelf ? 'opacity-60' : ''}`}
+                  >
                     <td className="p-2">{u.name}</td>
                     <td className="p-2 text-sm">{u.email}</td>
                     <td className="p-2 text-sm">{u.phone || '—'}</td>
                     <td className="p-2">{roleBadge(u.role)}</td>
                     <td className="p-2">
                       {u.isBlocked ? (
-                        <span className="inline-block py-0.5 px-2 rounded-xl text-xs font-semibold bg-red-500 text-white">{t('blockedYes')}</span>
+                        <span className="inline-block py-0.5 px-2 rounded-xl text-xs font-semibold bg-red-500 text-white">
+                          {t('blockedYes')}
+                        </span>
                       ) : (
                         <span className="text-gray-500 text-sm">{t('blockedNo')}</span>
                       )}
@@ -150,7 +163,9 @@ export default function AdminUsersPage() {
                           <button
                             onClick={() => handleBlock(u.id, !u.isBlocked)}
                             className={`px-3 py-1.5 border rounded bg-white text-xs hover:bg-gray-50 disabled:opacity-50 ${
-                              u.isBlocked ? 'border-green-600 text-green-600 hover:bg-green-50' : 'border-red-600 text-red-600 hover:bg-red-50'
+                              u.isBlocked
+                                ? 'border-green-600 text-green-600 hover:bg-green-50'
+                                : 'border-red-600 text-red-600 hover:bg-red-50'
                             }`}
                           >
                             {u.isBlocked ? t('unblock') : t('block')}

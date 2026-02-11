@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "title": "Маркетплейс",
-    "description": "Маркетплейс MVP"
+    "title": "BunBun",
+    "description": "BunBun MVP"
   },
   "nav": {
-    "brand": "Маркетплейс",
+    "brand": "BunBun",
     "products": "Товары",
     "myProducts": "Мои товары",
     "cart": "Корзина",
@@ -16,7 +16,7 @@
     "logout": "Выйти"
   },
   "home": {
-    "title": "Добро пожаловать в Маркетплейс",
+    "title": "Добро пожаловать в BunBun",
     "subtitle": "Покупайте свежие продукты онлайн. Откройте для себя овощи, фрукты и многое другое — от местных фермеров с доставкой.",
     "browse": "Смотреть товары",
     "productCount": "{count} товаров",
@@ -215,7 +215,22 @@
       "edit": "Редактировать",
       "delete": "Удалить",
       "confirmDelete": "Удалить эту категорию?",
-      "noCategories": "Категорий пока нет."
+      "noCategories": "Категорий пока нет.",
+      "stepDetails": "Детали",
+      "stepImage": "Изображение",
+      "stepReview": "Проверка",
+      "nextStep": "Далее",
+      "skipImage": "Пропустить",
+      "categorySummary": "Обзор категории",
+      "dragDropHint": "Перетащите изображение сюда или нажмите для выбора",
+      "replaceImage": "Заменить",
+      "removeImage": "Удалить фото",
+      "done": "Готово",
+      "backToImage": "Назад к изображению",
+      "uploadFailed": "Не удалось загрузить фото",
+      "uploading": "Загрузка...",
+      "editTitle": "Редактирование категории",
+      "saveChanges": "Сохранить изменения"
     },
     "users": {
       "title": "Пользователи",

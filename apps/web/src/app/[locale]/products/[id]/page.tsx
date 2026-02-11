@@ -33,7 +33,9 @@ export default function ProductDetailPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [id, t]);
 
   function handleAddToCart() {
@@ -47,7 +49,9 @@ export default function ProductDetailPage() {
   if (error || !product) {
     return (
       <div>
-        <Link href="/products" className="text-gray-600">{t('backToCatalog')}</Link>
+        <Link href="/products" className="text-gray-600">
+          {t('backToCatalog')}
+        </Link>
         <p className="mt-4 text-red-600">{error || t('notFound')}</p>
       </div>
     );
@@ -61,9 +65,7 @@ export default function ProductDetailPage() {
 
       <h1 className="mt-4 mb-2">{product.title}</h1>
 
-      {product.city && (
-        <p className="text-gray-500 text-sm mb-2">{product.city}</p>
-      )}
+      {product.city && <p className="text-gray-500 text-sm mb-2">{product.city}</p>}
 
       <p className="text-2xl font-bold text-green-700 mb-4">
         {t('price', { price: product.price.toFixed(2) })}
@@ -74,7 +76,9 @@ export default function ProductDetailPage() {
         {added ? (
           <>
             <span className="text-green-700 font-semibold">{tc('added')}</span>
-            <Link href="/cart" className="text-green-700">{tc('goToCart')}</Link>
+            <Link href="/cart" className="text-green-700">
+              {tc('goToCart')}
+            </Link>
           </>
         ) : (
           <button
@@ -101,9 +105,7 @@ export default function ProductDetailPage() {
       )}
 
       <h3>{t('description')}</h3>
-      <p className="leading-relaxed text-gray-700 whitespace-pre-wrap">
-        {product.description}
-      </p>
+      <p className="leading-relaxed text-gray-700 whitespace-pre-wrap">{product.description}</p>
     </div>
   );
 }

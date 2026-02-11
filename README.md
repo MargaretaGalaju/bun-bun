@@ -1,4 +1,4 @@
-# Marketplace MVP
+# BunBun MVP
 
 Production-ready monorepo skeleton for a marketplace application.
 

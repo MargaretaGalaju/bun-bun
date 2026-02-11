@@ -47,10 +47,7 @@ export default function SellerEditProductPage() {
     let cancelled = false;
     async function load() {
       try {
-        const [allProducts, cats] = await Promise.all([
-          listMySellerProducts(),
-          getCategories(),
-        ]);
+        const [allProducts, cats] = await Promise.all([listMySellerProducts(), getCategories()]);
         const found = allProducts.find((p) => p.id === id);
         if (!cancelled && found) {
           setProduct(found);
@@ -69,7 +66,9 @@ export default function SellerEditProductPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [authLoading, isSeller, id, tc]);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -114,7 +113,9 @@ export default function SellerEditProductPage() {
 
     const validation = updateProductSchema.safeParse(payload);
     if (!validation.success) {
-      setError(t('validationError') + ': ' + validation.error.issues.map((i) => i.message).join(', '));
+      setError(
+        t('validationError') + ': ' + validation.error.issues.map((i) => i.message).join(', '),
+      );
       return;
     }
 
@@ -171,35 +172,63 @@ export default function SellerEditProductPage() {
       </Link>
       <h1 className="mt-2 mb-6">{t('editTitle')}</h1>
 
-      {error && (
-        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">{error}</p>}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('titleField')}</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="w-full" />
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            className="w-full"
+          />
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('descriptionField')}</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows={4} className="w-full" />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            rows={4}
+            className="w-full"
+          />
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('priceField')}</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required min={0.01} step={0.01} className="w-full" />
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+            min={0.01}
+            step={0.01}
+            className="w-full"
+          />
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
-          <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="w-full" />
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="w-full"
+          />
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('categoryField')}</label>
-          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required className="w-full">
+          <select
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+            required
+            className="w-full"
+          >
             <option value="">{t('selectCategory')}</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
             ))}
           </select>
         </div>

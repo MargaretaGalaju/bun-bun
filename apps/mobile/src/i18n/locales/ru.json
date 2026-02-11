@@ -1,6 +1,6 @@
 {
   "home": {
-    "title": "Добро пожаловать в Маркетплейс",
+    "title": "Добро пожаловать в BunBun",
     "greeting": "Привет, {{name}}! ({{role}})",
     "subtitle": "Всё, что нужно — в одном месте.",
     "browse": "Смотреть товары",
@@ -38,7 +38,7 @@
     "notFound": "Товар не найден."
   },
   "nav": {
-    "marketplace": "Маркетплейс",
+    "marketplace": "BunBun",
     "products": "Товары",
     "productDetails": "Детали товара",
     "profile": "Профиль"

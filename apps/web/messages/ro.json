@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "title": "Marketplace",
-    "description": "Marketplace MVP"
+    "title": "BunBun",
+    "description": "BunBun MVP"
   },
   "nav": {
-    "brand": "Marketplace",
+    "brand": "BunBun",
     "products": "Produse",
     "myProducts": "Produsele mele",
     "cart": "Coș",
@@ -16,7 +16,7 @@
     "logout": "Ieșire"
   },
   "home": {
-    "title": "Bine ați venit la Marketplace",
+    "title": "Bine ați venit la BunBun",
     "subtitle": "Cumpărați produse proaspete online. Descoperiți legume, fructe și multe altele — de la fermieri locali, cu livrare.",
     "browse": "Răsfoiți produsele",
     "productCount": "{count} produse",
@@ -215,7 +215,22 @@
       "edit": "Editare",
       "delete": "Șterge",
       "confirmDelete": "Ștergeți această categorie?",
-      "noCategories": "Nu sunt categorii încă."
+      "noCategories": "Nu sunt categorii încă.",
+      "stepDetails": "Detalii",
+      "stepImage": "Imagine",
+      "stepReview": "Verificare",
+      "nextStep": "Continuă",
+      "skipImage": "Omite",
+      "categorySummary": "Rezumatul categoriei",
+      "dragDropHint": "Trageți imaginea aici sau faceți clic pentru a selecta",
+      "replaceImage": "Înlocuiește",
+      "removeImage": "Șterge imaginea",
+      "done": "Finalizare",
+      "backToImage": "Înapoi la imagine",
+      "uploadFailed": "Nu s-a putut încărca imaginea",
+      "uploading": "Se încarcă...",
+      "editTitle": "Editare categorie",
+      "saveChanges": "Salvează modificările"
     },
     "users": {
       "title": "Utilizatori",

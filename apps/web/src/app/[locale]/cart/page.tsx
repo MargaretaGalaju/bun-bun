@@ -69,11 +69,7 @@ export default function CartPage() {
     <div>
       <h1 className="mb-6">{t('title')}</h1>
 
-      {error && (
-        <p className="text-red-600 p-3 bg-red-50 rounded-md mb-4">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 p-3 bg-red-50 rounded-md mb-4">{error}</p>}
 
       <table className="w-full border-collapse">
         <thead>
@@ -120,9 +116,7 @@ export default function CartPage() {
                   </button>
                 </div>
               </td>
-              <td className="p-3 font-semibold">
-                {(item.price * item.qty).toFixed(2)} $
-              </td>
+              <td className="p-3 font-semibold">{(item.price * item.qty).toFixed(2)} $</td>
               <td className="p-3">
                 <button
                   onClick={() => removeItem(item.productId)}

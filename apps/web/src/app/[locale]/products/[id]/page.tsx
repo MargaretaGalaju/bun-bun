@@ -47,55 +47,39 @@ export default function ProductDetailPage() {
   if (error || !product) {
     return (
       <div>
-        <Link href="/products" style={{ color: '#555' }}>{t('backToCatalog')}</Link>
-        <p style={{ marginTop: '1rem', color: '#e53e3e' }}>{error || t('notFound')}</p>
+        <Link href="/products" className="text-gray-600">{t('backToCatalog')}</Link>
+        <p className="mt-4 text-red-600">{error || t('notFound')}</p>
       </div>
     );
   }
 
   return (
     <div>
-      <Link href="/products" style={{ color: '#555', textDecoration: 'none' }}>
+      <Link href="/products" className="text-gray-600 no-underline">
         {t('backToCatalog')}
       </Link>
 
-      <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>{product.title}</h1>
+      <h1 className="mt-4 mb-2">{product.title}</h1>
 
       {product.city && (
-        <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{product.city}</p>
+        <p className="text-gray-500 text-sm mb-2">{product.city}</p>
       )}
 
-      <p
-        style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          color: '#2d6a4f',
-          marginBottom: '1rem',
-        }}
-      >
+      <p className="text-2xl font-bold text-green-700 mb-4">
         {t('price', { price: product.price.toFixed(2) })}
       </p>
 
       {/* Add to cart */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+      <div className="flex items-center gap-3 mb-6">
         {added ? (
           <>
-            <span style={{ color: '#2d6a4f', fontWeight: 600 }}>{tc('added')}</span>
-            <Link href="/cart" style={{ color: '#2d6a4f' }}>{tc('goToCart')}</Link>
+            <span className="text-green-700 font-semibold">{tc('added')}</span>
+            <Link href="/cart" className="text-green-700">{tc('goToCart')}</Link>
           </>
         ) : (
           <button
             onClick={handleAddToCart}
-            style={{
-              padding: '0.6rem 1.5rem',
-              background: '#2d6a4f',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '1rem',
-            }}
+            className="px-6 py-2.5 bg-green-700 text-white border-none rounded-md cursor-pointer font-semibold text-base"
           >
             {tc('addToCart')}
           </button>
@@ -104,34 +88,20 @@ export default function ProductDetailPage() {
 
       {/* Images */}
       {product.images && product.images.length > 0 && (
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.75rem',
-            overflowX: 'auto',
-            marginBottom: '1.5rem',
-            paddingBottom: '0.5rem',
-          }}
-        >
+        <div className="flex gap-3 overflow-x-auto mb-6 pb-2">
           {product.images.map((img) => (
             <img
               key={img.id}
               src={img.url}
               alt={product.title}
-              style={{
-                width: '280px',
-                height: '200px',
-                objectFit: 'cover',
-                borderRadius: '8px',
-                flexShrink: 0,
-              }}
+              className="w-[280px] h-[200px] object-cover rounded-lg shrink-0"
             />
           ))}
         </div>
       )}
 
       <h3>{t('description')}</h3>
-      <p style={{ lineHeight: 1.6, color: '#444', whiteSpace: 'pre-wrap' }}>
+      <p className="leading-relaxed text-gray-700 whitespace-pre-wrap">
         {product.description}
       </p>
     </div>

@@ -1,5 +1,6 @@
 import type {
   ProductDto,
+  PaginatedProductsDto,
   CreateProductDto,
   UpdateProductDto,
   ProductImageDto,
@@ -11,22 +12,28 @@ import { apiFetch } from './client';
 export interface PublicProductParams {
   q?: string;
   city?: string;
+  categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
   sort?: 'price_asc' | 'price_desc' | 'newest' | 'oldest';
+  page?: number;
+  limit?: number;
 }
 
 export function listPublicProducts(
   params: PublicProductParams = {},
-): Promise<ProductDto[]> {
+): Promise<PaginatedProductsDto> {
   const qs = new URLSearchParams();
   if (params.q) qs.set('q', params.q);
   if (params.city) qs.set('city', params.city);
+  if (params.categoryId) qs.set('categoryId', params.categoryId);
   if (params.minPrice !== undefined) qs.set('minPrice', String(params.minPrice));
   if (params.maxPrice !== undefined) qs.set('maxPrice', String(params.maxPrice));
   if (params.sort) qs.set('sort', params.sort);
+  if (params.page !== undefined) qs.set('page', String(params.page));
+  if (params.limit !== undefined) qs.set('limit', String(params.limit));
   const query = qs.toString();
-  return apiFetch<ProductDto[]>(`/products${query ? `?${query}` : ''}`);
+  return apiFetch<PaginatedProductsDto>(`/products${query ? `?${query}` : ''}`);
 }
 
 export function getPublicProduct(id: string): Promise<ProductDto> {

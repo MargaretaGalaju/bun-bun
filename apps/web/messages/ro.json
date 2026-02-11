@@ -17,8 +17,23 @@
   },
   "home": {
     "title": "Bine ați venit la Marketplace",
-    "subtitle": "Tot ce aveți nevoie — într-un singur loc.",
-    "browse": "Răsfoiți produsele"
+    "subtitle": "Cumpărați produse proaspete online. Descoperiți legume, fructe și multe altele — de la fermieri locali, cu livrare.",
+    "browse": "Răsfoiți produsele",
+    "productCount": "{count} produse",
+    "filter": "Filtru",
+    "sortBy": "Sortare",
+    "sortNewest": "Noi",
+    "sortOldest": "Vechi",
+    "sortPriceAsc": "Preț: crescător",
+    "sortPriceDesc": "Preț: descrescător",
+    "priceRange": "Preț",
+    "priceFrom": "De la",
+    "priceTo": "Până la",
+    "newBadge": "NOU",
+    "noImage": "Fără foto",
+    "price": "{price} $",
+    "noProducts": "Nu au fost găsite produse.",
+    "loading": "Se încarcă..."
   },
   "login": {
     "title": "Autentificare",
@@ -236,5 +251,18 @@
     "search": "Căutare",
     "status": "Stare",
     "actions": "Acțiuni"
+  },
+  "footer": {
+    "newsletter": "Abonați-vă la newsletter",
+    "newsletterDesc": "Abonați-vă la newsletter-ul nostru și primiți livrare gratuită la prima comandă.",
+    "subscribe": "Abonare",
+    "subscribed": "V-ați abonat!",
+    "contact": "Aveți întrebări?",
+    "hours": "Lun-Sâm, 8:00 - 20:00",
+    "phone": "+373 69 123 456",
+    "email": "support@bunbun.md",
+    "tagline": "De la fermă — direct la tine",
+    "payment": "Plată",
+    "rights": "Toate drepturile rezervate."
   }
 }

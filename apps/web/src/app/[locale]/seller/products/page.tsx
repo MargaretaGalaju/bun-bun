@@ -7,25 +7,17 @@ import { useAuth } from '@/lib/auth/AuthContext';
 import type { ProductDto } from '@bun-bun/shared';
 import { listMySellerProducts, setSellerProductStatus } from '@/lib/api/products';
 
+const statusClasses: Record<string, string> = {
+  ACTIVE: 'bg-green-100 text-green-800',
+  DRAFT: 'bg-yellow-100 text-yellow-800',
+  HIDDEN: 'bg-gray-200 text-gray-700',
+};
+
 function StatusBadge({ status, t }: { status: string; t: (key: string) => string }) {
-  const colors: Record<string, { bg: string; fg: string }> = {
-    ACTIVE: { bg: '#d4edda', fg: '#155724' },
-    DRAFT: { bg: '#fff3cd', fg: '#856404' },
-    HIDDEN: { bg: '#e2e3e5', fg: '#383d41' },
-  };
-  const c = colors[status] || colors.DRAFT;
+  const classes = statusClasses[status] || statusClasses.DRAFT;
   const labelKey = `status${status.charAt(0) + status.slice(1).toLowerCase()}`;
   return (
-    <span
-      style={{
-        padding: '0.2rem 0.6rem',
-        borderRadius: '12px',
-        fontSize: '0.8rem',
-        fontWeight: 600,
-        background: c.bg,
-        color: c.fg,
-      }}
-    >
+    <span className={`inline-block py-1 px-2.5 rounded-xl text-xs font-semibold ${classes}`}>
       {t(labelKey)}
     </span>
   );
@@ -66,19 +58,11 @@ export default function SellerProductsPage() {
 
   if (!isSeller) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-        <p style={{ fontSize: '1.1rem', color: '#666' }}>{t('accessRequired')}</p>
+      <div className="text-center mt-12">
+        <p className="text-lg text-gray-500">{t('accessRequired')}</p>
         <Link
           href="/login"
-          style={{
-            display: 'inline-block',
-            marginTop: '1rem',
-            padding: '0.5rem 1.5rem',
-            background: '#333',
-            color: '#fff',
-            borderRadius: '6px',
-            textDecoration: 'none',
-          }}
+          className="inline-block mt-4 py-2 px-6 bg-gray-800 text-white rounded-md no-underline hover:bg-gray-700 transition-colors"
         >
           {tc('error401')}
         </Link>
@@ -98,25 +82,18 @@ export default function SellerProductsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+      <div className="flex justify-between items-center mb-6">
         <h1>{t('title')}</h1>
         <Link
           href="/seller/products/new"
-          style={{
-            padding: '0.5rem 1.2rem',
-            background: '#2d6a4f',
-            color: '#fff',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            fontWeight: 600,
-          }}
+          className="py-2 px-5 bg-green-700 text-white rounded-md no-underline font-semibold hover:bg-green-800 transition-colors"
         >
           + {t('create')}
         </Link>
       </div>
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}>
+        <p className="text-red-600 p-4 bg-red-50 rounded-lg">
           {error}
         </p>
       )}
@@ -124,51 +101,37 @@ export default function SellerProductsPage() {
       {loading && <p>{tc('loading')}</p>}
 
       {!loading && products.length === 0 && !error && (
-        <p style={{ color: '#888' }}>{t('noProducts')}</p>
+        <p className="text-gray-500">{t('noProducts')}</p>
       )}
 
       {products.length > 0 && (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table className="w-full border-collapse">
           <thead>
-            <tr style={{ borderBottom: '2px solid #eee', textAlign: 'left' }}>
-              <th style={{ padding: '0.75rem' }}>{t('titleField')}</th>
-              <th style={{ padding: '0.75rem' }}>{t('priceField')}</th>
-              <th style={{ padding: '0.75rem' }}>Status</th>
-              <th style={{ padding: '0.75rem' }}></th>
+            <tr className="border-b-2 border-gray-200 text-left">
+              <th className="p-3">{t('titleField')}</th>
+              <th className="p-3">{t('priceField')}</th>
+              <th className="p-3">Status</th>
+              <th className="p-3"></th>
             </tr>
           </thead>
           <tbody>
             {products.map((p) => (
-              <tr key={p.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                <td style={{ padding: '0.75rem' }}>{p.title}</td>
-                <td style={{ padding: '0.75rem' }}>{p.price.toFixed(2)} $</td>
-                <td style={{ padding: '0.75rem' }}>
+              <tr key={p.id} className="border-b border-gray-100">
+                <td className="p-3">{p.title}</td>
+                <td className="p-3">{p.price.toFixed(2)} $</td>
+                <td className="p-3">
                   <StatusBadge status={p.status} t={t} />
                 </td>
-                <td style={{ padding: '0.75rem', display: 'flex', gap: '0.5rem' }}>
+                <td className="p-3 flex gap-2">
                   <Link
                     href={`/seller/products/${p.id}/edit`}
-                    style={{
-                      padding: '0.3rem 0.8rem',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      color: '#333',
-                    }}
+                    className="py-1.5 px-3 border border-gray-300 rounded no-underline text-sm text-gray-800 hover:bg-gray-50 transition-colors"
                   >
                     {t('edit')}
                   </Link>
                   <button
                     onClick={() => toggleStatus(p)}
-                    style={{
-                      padding: '0.3rem 0.8rem',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontSize: '0.85rem',
-                      background: p.status === 'ACTIVE' ? '#fff3cd' : '#d4edda',
-                    }}
+                    className={`py-1.5 px-3 border border-gray-300 rounded cursor-pointer text-sm ${p.status === 'ACTIVE' ? 'bg-yellow-100 hover:bg-yellow-200' : 'bg-green-100 hover:bg-green-200'}`}
                   >
                     {p.status === 'ACTIVE' ? t('hide') : t('publish')}
                   </button>

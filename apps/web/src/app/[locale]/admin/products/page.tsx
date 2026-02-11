@@ -62,61 +62,35 @@ export default function AdminProductsPage() {
 
   const totalPages = data ? Math.ceil(data.total / pageSize) : 0;
 
-  const inputStyle = {
-    padding: '0.4rem 0.6rem',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-  } as const;
-
-  const btnStyle = {
-    padding: '0.4rem 0.8rem',
-    cursor: 'pointer',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    background: 'white',
-    fontSize: '0.85rem',
-  } as const;
-
-  const statusColors: Record<string, string> = {
-    ACTIVE: '#4CAF50',
-    DRAFT: '#FF9800',
-    HIDDEN: '#f44336',
-    ARCHIVED: '#9E9E9E',
+  const statusBadgeClass: Record<string, string> = {
+    ACTIVE: 'bg-green-500 text-white',
+    DRAFT: 'bg-yellow-500 text-white',
+    HIDDEN: 'bg-red-500 text-white',
+    ARCHIVED: 'bg-gray-500 text-white',
   };
 
   const statusBadge = (status: string) => (
-    <span
-      style={{
-        display: 'inline-block',
-        padding: '0.15rem 0.5rem',
-        borderRadius: '12px',
-        fontSize: '0.75rem',
-        fontWeight: 600,
-        background: statusColors[status] || '#999',
-        color: 'white',
-      }}
-    >
+    <span className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${statusBadgeClass[status] || 'bg-gray-500 text-white'}`}>
       {status}
     </span>
   );
 
   return (
     <div>
-      <h1 style={{ marginBottom: '1rem' }}>{t('title')}</h1>
+      <h1 className="mb-4">{t('title')}</h1>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="text-red-600 mb-4">{error}</p>}
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+      <div className="flex gap-3 mb-4 flex-wrap">
         <input
-          style={{ ...inputStyle, minWidth: '200px' }}
+          className="w-full min-w-[200px]"
           placeholder={t('search')}
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
         />
         <select
-          style={inputStyle}
+          className="w-full min-w-[120px]"
           value={statusFilter}
           onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
         >
@@ -131,47 +105,47 @@ export default function AdminProductsPage() {
       {loading ? (
         <p>{tc('loading')}</p>
       ) : !data || data.items.length === 0 ? (
-        <p style={{ color: '#999' }}>{t('noProducts')}</p>
+        <p className="text-gray-500">{t('noProducts')}</p>
       ) : (
         <>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="w-full border-collapse">
             <thead>
-              <tr style={{ borderBottom: '2px solid #ddd', textAlign: 'left' }}>
-                <th style={{ padding: '0.5rem' }}>{t('productTitle')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('seller')}</th>
-                <th style={{ padding: '0.5rem' }}>{tc('status')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('price')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('city')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('setStatus')}</th>
+              <tr className="border-b-2 border-gray-200 text-left">
+                <th className="p-2">{t('productTitle')}</th>
+                <th className="p-2">{t('seller')}</th>
+                <th className="p-2">{tc('status')}</th>
+                <th className="p-2">{t('price')}</th>
+                <th className="p-2">{t('city')}</th>
+                <th className="p-2">{t('setStatus')}</th>
               </tr>
             </thead>
             <tbody>
               {data.items.map((p) => (
-                <tr key={p.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '0.5rem' }}>
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <tr key={p.id} className="border-b border-gray-200">
+                  <td className="p-2">
+                    <div className="flex gap-2 items-center">
                       {p.images.length > 0 && (
                         <img
                           src={p.images[0].url}
                           alt=""
-                          style={{ width: 32, height: 32, objectFit: 'cover', borderRadius: 4 }}
+                          className="w-8 h-8 object-cover rounded"
                         />
                       )}
                       <span>{p.title}</span>
                     </div>
                   </td>
-                  <td style={{ padding: '0.5rem', fontSize: '0.9rem' }}>
+                  <td className="p-2 text-sm">
                     <div>{p.sellerName}</div>
-                    <div style={{ color: '#999', fontSize: '0.8rem' }}>{p.sellerEmail}</div>
+                    <div className="text-gray-500 text-xs">{p.sellerEmail}</div>
                   </td>
-                  <td style={{ padding: '0.5rem' }}>{statusBadge(p.status)}</td>
-                  <td style={{ padding: '0.5rem' }}>${p.price.toFixed(2)}</td>
-                  <td style={{ padding: '0.5rem', color: '#666' }}>{p.city || '—'}</td>
-                  <td style={{ padding: '0.5rem' }}>
+                  <td className="p-2">{statusBadge(p.status)}</td>
+                  <td className="p-2">${p.price.toFixed(2)}</td>
+                  <td className="p-2 text-gray-500">{p.city || '—'}</td>
+                  <td className="p-2">
                     <select
                       value={p.status}
                       onChange={(e) => handleStatusChange(p.id, e.target.value)}
-                      style={{ ...inputStyle, fontSize: '0.8rem', padding: '0.3rem' }}
+                      className="w-full text-sm py-1"
                     >
                       <option value="ACTIVE">ACTIVE</option>
                       <option value="DRAFT">DRAFT</option>
@@ -185,21 +159,21 @@ export default function AdminProductsPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', justifyContent: 'center' }}>
+            <div className="flex gap-2 mt-4 justify-center items-center">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                style={btnStyle}
+                className="px-3 py-1.5 border border-gray-300 rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50"
               >
                 &laquo;
               </button>
-              <span style={{ padding: '0.4rem 0.6rem', fontSize: '0.9rem' }}>
+              <span className="px-3 py-1.5 text-sm">
                 {page} / {totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                style={btnStyle}
+                className="px-3 py-1.5 border border-gray-300 rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50"
               >
                 &raquo;
               </button>

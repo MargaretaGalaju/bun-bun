@@ -9,25 +9,16 @@ import type { SellerOrderDetailsDto } from '@bun-bun/shared';
 import { getSellerOrder, updateSellerOrderStatus } from '@/lib/api/sellerOrders';
 
 function StatusBadge({ status, t }: { status: string; t: (key: string) => string }) {
-  const colors: Record<string, { bg: string; fg: string }> = {
-    PENDING: { bg: '#fff3cd', fg: '#856404' },
-    CONFIRMED: { bg: '#d4edda', fg: '#155724' },
-    DELIVERED: { bg: '#cce5ff', fg: '#004085' },
-    CANCELLED: { bg: '#f8d7da', fg: '#721c24' },
+  const classMap: Record<string, string> = {
+    PENDING: 'bg-yellow-500 text-white',
+    CONFIRMED: 'bg-green-500 text-white',
+    DELIVERED: 'bg-blue-500 text-white',
+    CANCELLED: 'bg-red-500 text-white',
   };
-  const c = colors[status] || colors.PENDING;
+  const cls = classMap[status] || classMap.PENDING;
   const labelKey = `status${status.charAt(0) + status.slice(1).toLowerCase()}`;
   return (
-    <span
-      style={{
-        padding: '0.2rem 0.6rem',
-        borderRadius: '12px',
-        fontSize: '0.85rem',
-        fontWeight: 600,
-        background: c.bg,
-        color: c.fg,
-      }}
-    >
+    <span className={`py-0.5 px-2 rounded-xl text-sm font-semibold ${cls}`}>
       {t(labelKey)}
     </span>
   );
@@ -87,19 +78,11 @@ export default function SellerOrderDetailPage() {
 
   if (!isSeller) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-        <p style={{ fontSize: '1.1rem', color: '#666' }}>{t('accessRequired')}</p>
+      <div className="text-center mt-12">
+        <p className="text-lg text-gray-500">{t('accessRequired')}</p>
         <Link
           href="/login"
-          style={{
-            display: 'inline-block',
-            marginTop: '1rem',
-            padding: '0.5rem 1.5rem',
-            background: '#333',
-            color: '#fff',
-            borderRadius: '6px',
-            textDecoration: 'none',
-          }}
+          className="inline-block mt-4 px-6 py-2 bg-gray-800 text-white rounded-md no-underline hover:bg-gray-700"
         >
           {tc('error401')}
         </Link>
@@ -110,7 +93,7 @@ export default function SellerOrderDetailPage() {
   if (loading) return <p>{tc('loading')}</p>;
 
   if (error && !order) {
-    return <p style={{ color: '#e53e3e' }}>{error}</p>;
+    return <p className="text-red-600">{error}</p>;
   }
 
   if (!order) return <p>{tc('errorGeneric')}</p>;
@@ -119,62 +102,62 @@ export default function SellerOrderDetailPage() {
     <div>
       <Link
         href="/seller/orders"
-        style={{ display: 'inline-block', marginBottom: '1rem', color: '#555', textDecoration: 'none' }}
+        className="inline-block mb-4 text-gray-500 no-underline hover:text-gray-700"
       >
         {t('backToList')}
       </Link>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-        <h1 style={{ margin: 0 }}>{t('title')} #{order.id.slice(0, 8)}</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <h1 className="m-0">{t('title')} #{order.id.slice(0, 8)}</h1>
         <StatusBadge status={order.status} t={t} />
       </div>
 
       {successMsg && (
-        <p style={{ color: '#155724', background: '#d4edda', padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+        <p className="text-green-700 bg-green-100 p-4 rounded-lg mb-4">
           {successMsg}
         </p>
       )}
       {error && order && (
-        <p style={{ color: '#e53e3e', background: '#fff5f5', padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+        <p className="text-red-600 bg-red-50 p-4 rounded-lg mb-4">
           {error}
         </p>
       )}
 
       {/* Buyer info */}
-      <div style={{ background: '#f8f9fa', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
-        <p style={{ margin: '0.25rem 0' }}>
+      <div className="bg-gray-100 p-4 rounded-lg mb-6">
+        <p className="my-1">
           <strong>{t('buyer')}:</strong> {order.buyer.name}
         </p>
-        <p style={{ margin: '0.25rem 0' }}>
+        <p className="my-1">
           <strong>{t('email')}:</strong> {order.buyer.email}
         </p>
         {order.buyer.phone && (
-          <p style={{ margin: '0.25rem 0' }}>
+          <p className="my-1">
             <strong>{t('phone')}:</strong> {order.buyer.phone}
           </p>
         )}
-        <p style={{ margin: '0.25rem 0' }}>
+        <p className="my-1">
           <strong>{t('createdAt')}:</strong> {new Date(order.createdAt).toLocaleString()}
         </p>
       </div>
 
       {/* Items table */}
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1.5rem' }}>
+      <table className="w-full border-collapse mb-6">
         <thead>
-          <tr style={{ borderBottom: '2px solid #eee', textAlign: 'left' }}>
-            <th style={{ padding: '0.75rem' }}>{t('product')}</th>
-            <th style={{ padding: '0.75rem' }}>{t('qty')}</th>
-            <th style={{ padding: '0.75rem' }}>{t('price')}</th>
-            <th style={{ padding: '0.75rem' }}>Subtotal</th>
+          <tr className="border-b-2 border-gray-200 text-left">
+            <th className="p-3">{t('product')}</th>
+            <th className="p-3">{t('qty')}</th>
+            <th className="p-3">{t('price')}</th>
+            <th className="p-3">Subtotal</th>
           </tr>
         </thead>
         <tbody>
           {order.items.map((item) => (
-            <tr key={item.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-              <td style={{ padding: '0.75rem' }}>{item.productTitle}</td>
-              <td style={{ padding: '0.75rem' }}>{item.qty}</td>
-              <td style={{ padding: '0.75rem' }}>{item.priceSnapshot.toFixed(2)} $</td>
-              <td style={{ padding: '0.75rem', fontWeight: 600 }}>
+            <tr key={item.id} className="border-b border-gray-200">
+              <td className="p-3">{item.productTitle}</td>
+              <td className="p-3">{item.qty}</td>
+              <td className="p-3">{item.priceSnapshot.toFixed(2)} $</td>
+              <td className="p-3 font-semibold">
                 {(item.qty * item.priceSnapshot).toFixed(2)} $
               </td>
             </tr>
@@ -182,43 +165,25 @@ export default function SellerOrderDetailPage() {
         </tbody>
       </table>
 
-      <p style={{ fontSize: '1.2rem', fontWeight: 700 }}>
+      <p className="text-xl font-bold">
         {t('total')}: {order.total.toFixed(2)} $
       </p>
 
       {/* Action buttons */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+      <div className="flex gap-3 mt-6">
         {order.status === 'PENDING' && (
           <>
             <button
               disabled={updating}
               onClick={() => handleStatusChange('CONFIRMED')}
-              style={{
-                padding: '0.5rem 1.5rem',
-                background: '#2d6a4f',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: updating ? 'not-allowed' : 'pointer',
-                fontWeight: 600,
-                opacity: updating ? 0.6 : 1,
-              }}
+              className="px-6 py-2 bg-green-700 text-white border-none rounded-md font-semibold cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:bg-green-800"
             >
               {t('accept')}
             </button>
             <button
               disabled={updating}
               onClick={() => handleStatusChange('CANCELLED')}
-              style={{
-                padding: '0.5rem 1.5rem',
-                background: '#dc3545',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: updating ? 'not-allowed' : 'pointer',
-                fontWeight: 600,
-                opacity: updating ? 0.6 : 1,
-              }}
+              className="px-6 py-2 bg-red-600 text-white border-none rounded-md font-semibold cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:bg-red-700"
             >
               {t('reject')}
             </button>
@@ -228,16 +193,7 @@ export default function SellerOrderDetailPage() {
           <button
             disabled={updating}
             onClick={() => handleStatusChange('DELIVERED')}
-            style={{
-              padding: '0.5rem 1.5rem',
-              background: '#0069d9',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: updating ? 'not-allowed' : 'pointer',
-              fontWeight: 600,
-              opacity: updating ? 0.6 : 1,
-            }}
+            className="px-6 py-2 bg-blue-600 text-white border-none rounded-md font-semibold cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:bg-blue-700"
           >
             {t('done')}
           </button>

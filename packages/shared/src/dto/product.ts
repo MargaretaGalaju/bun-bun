@@ -14,10 +14,18 @@ export interface ProductDto {
   status: ProductStatus;
   city?: string;
   sellerId: string;
+  sellerName?: string;
   categoryId: string;
   images: ProductImageDto[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface PaginatedProductsDto {
+  items: ProductDto[];
+  total: number;
+  page: number;
+  limit: number;
 }
 
 export interface CreateProductDto {

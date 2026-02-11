@@ -71,57 +71,34 @@ export default function AdminUsersPage() {
 
   const totalPages = data ? Math.ceil(data.total / pageSize) : 0;
 
-  const inputStyle = {
-    padding: '0.4rem 0.6rem',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-  } as const;
-
-  const btnStyle = {
-    padding: '0.4rem 0.8rem',
-    cursor: 'pointer',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    background: 'white',
-    fontSize: '0.85rem',
-  } as const;
-
-  const badgeStyle = (color: string) => ({
-    display: 'inline-block',
-    padding: '0.15rem 0.5rem',
-    borderRadius: '12px',
-    fontSize: '0.75rem',
-    fontWeight: 600 as const,
-    background: color,
-    color: 'white',
-  });
-
-  const roleBadge = (role: string) => {
-    const colors: Record<string, string> = {
-      ADMIN: '#9c27b0',
-      SELLER: '#2196F3',
-      BUYER: '#4CAF50',
-    };
-    return <span style={badgeStyle(colors[role] || '#999')}>{role}</span>;
+  const roleBadgeClass: Record<string, string> = {
+    ADMIN: 'bg-purple-500 text-white',
+    SELLER: 'bg-blue-500 text-white',
+    BUYER: 'bg-green-500 text-white',
   };
+
+  const roleBadge = (role: string) => (
+    <span className={`inline-block py-0.5 px-2 rounded-xl text-xs font-semibold ${roleBadgeClass[role] || 'bg-gray-500 text-white'}`}>
+      {role}
+    </span>
+  );
 
   return (
     <div>
-      <h1 style={{ marginBottom: '1rem' }}>{t('title')}</h1>
+      <h1 className="mb-4">{t('title')}</h1>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="text-red-600 mb-4">{error}</p>}
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+      <div className="flex gap-3 mb-4 flex-wrap">
         <input
-          style={{ ...inputStyle, minWidth: '200px' }}
+          className="w-full min-w-[200px]"
           placeholder={t('search')}
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
         />
         <select
-          style={inputStyle}
+          className="w-full min-w-[120px]"
           value={roleFilter}
           onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
         >
@@ -135,56 +112,53 @@ export default function AdminUsersPage() {
       {loading ? (
         <p>{tc('loading')}</p>
       ) : !data || data.items.length === 0 ? (
-        <p style={{ color: '#999' }}>{t('noUsers')}</p>
+        <p className="text-gray-500">{t('noUsers')}</p>
       ) : (
         <>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="w-full border-collapse">
             <thead>
-              <tr style={{ borderBottom: '2px solid #ddd', textAlign: 'left' }}>
-                <th style={{ padding: '0.5rem' }}>{t('name')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('email')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('phone')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('role')}</th>
-                <th style={{ padding: '0.5rem' }}>{t('blocked')}</th>
-                <th style={{ padding: '0.5rem' }}>{tc('actions')}</th>
+              <tr className="border-b-2 border-gray-200 text-left">
+                <th className="p-2">{t('name')}</th>
+                <th className="p-2">{t('email')}</th>
+                <th className="p-2">{t('phone')}</th>
+                <th className="p-2">{t('role')}</th>
+                <th className="p-2">{t('blocked')}</th>
+                <th className="p-2">{tc('actions')}</th>
               </tr>
             </thead>
             <tbody>
               {data.items.map((u) => {
                 const isSelf = u.id === currentUser?.id;
                 return (
-                  <tr key={u.id} style={{ borderBottom: '1px solid #eee', opacity: isSelf ? 0.6 : 1 }}>
-                    <td style={{ padding: '0.5rem' }}>{u.name}</td>
-                    <td style={{ padding: '0.5rem', fontSize: '0.9rem' }}>{u.email}</td>
-                    <td style={{ padding: '0.5rem', fontSize: '0.9rem' }}>{u.phone || '—'}</td>
-                    <td style={{ padding: '0.5rem' }}>{roleBadge(u.role)}</td>
-                    <td style={{ padding: '0.5rem' }}>
+                  <tr key={u.id} className={`border-b border-gray-200 ${isSelf ? 'opacity-60' : ''}`}>
+                    <td className="p-2">{u.name}</td>
+                    <td className="p-2 text-sm">{u.email}</td>
+                    <td className="p-2 text-sm">{u.phone || '—'}</td>
+                    <td className="p-2">{roleBadge(u.role)}</td>
+                    <td className="p-2">
                       {u.isBlocked ? (
-                        <span style={badgeStyle('#f44336')}>{t('blockedYes')}</span>
+                        <span className="inline-block py-0.5 px-2 rounded-xl text-xs font-semibold bg-red-500 text-white">{t('blockedYes')}</span>
                       ) : (
-                        <span style={{ color: '#999', fontSize: '0.85rem' }}>{t('blockedNo')}</span>
+                        <span className="text-gray-500 text-sm">{t('blockedNo')}</span>
                       )}
                     </td>
-                    <td style={{ padding: '0.5rem' }}>
+                    <td className="p-2">
                       {isSelf ? (
-                        <span style={{ color: '#999', fontSize: '0.8rem' }}>{t('selfProtection')}</span>
+                        <span className="text-gray-500 text-xs">{t('selfProtection')}</span>
                       ) : (
-                        <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
+                        <div className="flex gap-1 items-center">
                           <button
                             onClick={() => handleBlock(u.id, !u.isBlocked)}
-                            style={{
-                              ...btnStyle,
-                              fontSize: '0.8rem',
-                              color: u.isBlocked ? '#4CAF50' : '#f44336',
-                              borderColor: u.isBlocked ? '#4CAF50' : '#f44336',
-                            }}
+                            className={`px-3 py-1.5 border rounded bg-white text-xs hover:bg-gray-50 disabled:opacity-50 ${
+                              u.isBlocked ? 'border-green-600 text-green-600 hover:bg-green-50' : 'border-red-600 text-red-600 hover:bg-red-50'
+                            }`}
                           >
                             {u.isBlocked ? t('unblock') : t('block')}
                           </button>
                           <select
                             value={u.role}
                             onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                            style={{ ...inputStyle, fontSize: '0.8rem', padding: '0.3rem' }}
+                            className="w-full text-sm py-1"
                           >
                             <option value="BUYER">BUYER</option>
                             <option value="SELLER">SELLER</option>
@@ -201,21 +175,21 @@ export default function AdminUsersPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', justifyContent: 'center' }}>
+            <div className="flex gap-2 mt-4 justify-center items-center">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                style={btnStyle}
+                className="px-3 py-1.5 border border-gray-300 rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50"
               >
                 &laquo;
               </button>
-              <span style={{ padding: '0.4rem 0.6rem', fontSize: '0.9rem' }}>
+              <span className="px-3 py-1.5 text-sm">
                 {page} / {totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                style={btnStyle}
+                className="px-3 py-1.5 border border-gray-300 rounded bg-white text-sm hover:bg-gray-50 disabled:opacity-50"
               >
                 &raquo;
               </button>

@@ -76,8 +76,8 @@ export default function SellerEditProductPage() {
 
   if (!isSeller) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-        <p style={{ fontSize: '1.1rem', color: '#666' }}>{t('accessRequired')}</p>
+      <div className="text-center mt-12">
+        <p className="text-lg text-gray-500">{t('accessRequired')}</p>
       </div>
     );
   }
@@ -87,10 +87,10 @@ export default function SellerEditProductPage() {
   if (!product) {
     return (
       <div>
-        <Link href="/seller/products" style={{ color: '#555', textDecoration: 'none' }}>
+        <Link href="/seller/products" className="text-gray-600 no-underline hover:text-gray-800">
           ← {t('title')}
         </Link>
-        <p style={{ marginTop: '1rem', color: '#e53e3e' }}>{tc('errorGeneric')}</p>
+        <p className="mt-4 text-red-600">{tc('errorGeneric')}</p>
       </div>
     );
   }
@@ -164,55 +164,39 @@ export default function SellerEditProductPage() {
     }
   }
 
-  const inputStyle = {
-    width: '100%',
-    padding: '0.6rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '0.95rem',
-    boxSizing: 'border-box' as const,
-  };
-
-  const labelStyle = {
-    display: 'block',
-    marginBottom: '0.3rem',
-    fontWeight: 600 as const,
-    fontSize: '0.9rem',
-  };
-
   return (
-    <div style={{ maxWidth: '600px' }}>
-      <Link href="/seller/products" style={{ color: '#555', textDecoration: 'none' }}>
+    <div className="max-w-[600px]">
+      <Link href="/seller/products" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
-      <h1 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}>{t('editTitle')}</h1>
+      <h1 className="mt-2 mb-6">{t('editTitle')}</h1>
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '0.75rem', background: '#fff5f5', borderRadius: '6px', marginBottom: '1rem' }}>
+        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
           {error}
         </p>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label style={labelStyle}>{t('titleField')}</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required style={inputStyle} />
+          <label className="block mb-1 font-semibold text-sm">{t('titleField')}</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="w-full" />
         </div>
         <div>
-          <label style={labelStyle}>{t('descriptionField')}</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows={4} style={inputStyle} />
+          <label className="block mb-1 font-semibold text-sm">{t('descriptionField')}</label>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows={4} className="w-full" />
         </div>
         <div>
-          <label style={labelStyle}>{t('priceField')}</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required min={0.01} step={0.01} style={inputStyle} />
+          <label className="block mb-1 font-semibold text-sm">{t('priceField')}</label>
+          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required min={0.01} step={0.01} className="w-full" />
         </div>
         <div>
-          <label style={labelStyle}>{t('cityField')}</label>
-          <input type="text" value={city} onChange={(e) => setCity(e.target.value)} style={inputStyle} />
+          <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
+          <input type="text" value={city} onChange={(e) => setCity(e.target.value)} className="w-full" />
         </div>
         <div>
-          <label style={labelStyle}>{t('categoryField')}</label>
-          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required style={inputStyle}>
+          <label className="block mb-1 font-semibold text-sm">{t('categoryField')}</label>
+          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required className="w-full">
             <option value="">{t('selectCategory')}</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -223,53 +207,36 @@ export default function SellerEditProductPage() {
         <button
           type="submit"
           disabled={submitting}
-          style={{
-            padding: '0.7rem',
-            background: submitting ? '#999' : '#2d6a4f',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 600,
-            cursor: submitting ? 'default' : 'pointer',
-            fontSize: '1rem',
-          }}
+          className="w-full py-2.5 bg-green-700 text-white font-semibold rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? t('saving') : t('save')}
         </button>
       </form>
 
       {/* Images section */}
-      <div style={{ marginTop: '2rem', borderTop: '1px solid #eee', paddingTop: '1.5rem' }}>
-        <h3 style={{ marginBottom: '1rem' }}>{t('images')}</h3>
+      <div className="mt-8 border-t border-gray-200 pt-6">
+        <h3 className="mb-4">{t('images')}</h3>
 
         {images.length > 0 && (
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+          <div className="flex gap-3 flex-wrap mb-4">
             {images.map((img) => (
               <img
                 key={img.id}
                 src={img.url}
                 alt=""
-                style={{ width: '120px', height: '90px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #eee' }}
+                className="w-[120px] h-[90px] object-cover rounded-md border border-gray-200"
               />
             ))}
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <div className="flex gap-2 items-center">
           <label
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.6rem 1rem',
-              background: uploading ? '#999' : '#333',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: uploading ? 'default' : 'pointer',
-              whiteSpace: 'nowrap',
-              fontSize: '0.95rem',
-            }}
+            className={`inline-flex items-center gap-2 py-2.5 px-4 rounded-md cursor-pointer whitespace-nowrap text-sm font-medium transition-colors ${
+              uploading
+                ? 'bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-gray-800 text-white hover:bg-gray-700'
+            }`}
           >
             {uploading ? t('uploading') : t('uploadImage')}
             <input
@@ -277,10 +244,10 @@ export default function SellerEditProductPage() {
               accept="image/jpeg,image/png,image/webp"
               onChange={handleFileUpload}
               disabled={uploading}
-              style={{ display: 'none' }}
+              className="hidden"
             />
           </label>
-          {uploading && <span style={{ color: '#999', fontSize: '0.85rem' }}>{t('uploading')}</span>}
+          {uploading && <span className="text-gray-400 text-sm">{t('uploading')}</span>}
         </div>
       </div>
     </div>

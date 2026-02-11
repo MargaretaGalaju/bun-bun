@@ -13,6 +13,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - internal
 
   api:
     build:
@@ -23,6 +25,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - internal
+      - edge
 
   caddy:
     image: caddy:2-alpine
@@ -35,10 +40,31 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
+    networks:
+      - edge
     depends_on:
       - api
+      - web
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    restart: unless-stopped
+    env_file:
+      - .env.web.prod
+    networks:
+      - edge
 
 volumes:
   pgdata:
   caddy_data:
   caddy_config:
+
+networks:
+  edge:
+    driver: bridge
+  internal:
+    driver: bridge

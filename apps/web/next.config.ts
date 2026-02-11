@@ -3,6 +3,8 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   transpilePackages: ['@bun-bun/shared'],
+  output: "standalone",
+  experimental: { externalDir: true },
 };
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');

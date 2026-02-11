@@ -13,5 +13,15 @@ dist
 !.npmrc
 *.md
 coverage
-apps/web
-apps/mobile
+# ignore everything in apps by default
+# apps
+
+# but allow the web app (needed for Docker build)
+!apps/web/**
+!apps/web/package.json
+!apps/web/next.config.ts
+!apps/web/next.config.js
+!apps/web/next.config.mjs
+
+# allow mobile manifest if Dockerfile copies it (otherwise remove COPY from Dockerfile)
+!apps/mobile/package.json

@@ -7,7 +7,7 @@ enum ProductStatusEnum {
   DRAFT = 'DRAFT',
 }
 
-export class UpdateProductStatusDto {
+export class AdminUpdateProductStatusDto {
   @ApiProperty({ enum: ProductStatusEnum, example: 'HIDDEN' })
   @IsEnum(ProductStatusEnum)
   status!: 'ACTIVE' | 'HIDDEN' | 'DRAFT';

@@ -23,6 +23,7 @@ out/
 .env.*.local
 .env.prod
 .env.prod.*
+.env.web.prod
 
 # IDE
 .vscode/

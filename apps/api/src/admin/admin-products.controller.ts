@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { AdminProductsService } from './admin-products.service';
-import { UpdateProductStatusDto } from './dto/update-product-status.dto';
+import { AdminUpdateProductStatusDto } from './dto/update-product-status.dto';
 
 @ApiTags('admin/products')
 @ApiBearerAuth()
@@ -56,7 +56,7 @@ export class AdminProductsController {
   @ApiOperation({ summary: 'Change product status (admin)' })
   updateStatus(
     @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() dto: UpdateProductStatusDto,
+    @Body() dto: AdminUpdateProductStatusDto,
   ) {
     return this.service.updateStatus(id, dto.status);
   }

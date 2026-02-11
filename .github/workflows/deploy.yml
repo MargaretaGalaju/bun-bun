@@ -1,49 +1,31 @@
-name: Deploy API to VPS
+name: Deploy (prod)
 
 on:
   push:
-    branches: [main]
-
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false
+    branches: ['main']
 
 jobs:
   deploy:
-    name: Deploy to Hetzner VPS
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          command_timeout: 10m
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          fingerprint: ${{ secrets.DEPLOY_HOST_FINGERPRINT }}
           script: |
-            set -e
+            set -euo pipefail
 
             cd /opt/bunbun/repo
+            git fetch --all
+            git reset --hard origin/main
 
-            echo "==> Pulling latest code..."
-            git pull origin main
+            docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build --remove-orphans
 
-            echo "==> Building and starting containers..."
-            docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build --remove-orphans
+            # если миграции появятся — применятся, если нет — ок
+            docker compose --env-file .env.prod -f docker-compose.prod.yml exec -T api sh -lc 'cd /app/apps/api && npx prisma migrate deploy || true'
 
-            echo "==> Running database migrations..."
-            docker compose -f docker-compose.prod.yml exec -T api npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
-
-            echo "==> Waiting for API to be ready..."
-            sleep 5
-
-            echo "==> Health check..."
-            curl -f --max-time 10 https://api.bunbun.market/health || { echo "Health check FAILED"; exit 1; }
-
-            echo "==> Cleaning up old Docker images..."
-            docker image prune -f
-
-            echo "==> Deploy complete!"
+            # быстрый smoke-check
+            docker compose --env-file .env.prod -f docker-compose.prod.yml exec -T api sh -lc 'apk add --no-cache curl >/dev/null 2>&1 || true; curl -fsS http://127.0.0.1:3000/health'

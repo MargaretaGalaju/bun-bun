@@ -1,7 +1,8 @@
-api.bunbun.market {
-	encode gzip
-	reverse_proxy api:3000
+{
+	email admin@bunbun.market
+}
 
+(common_headers) {
 	header {
 		X-Content-Type-Options nosniff
 		X-Frame-Options DENY
@@ -9,4 +10,20 @@ api.bunbun.market {
 		Permissions-Policy "camera=(), microphone=(), geolocation=()"
 		-Server
 	}
+}
+
+www.bunbun.market {
+	redir https://bunbun.market{uri} permanent
+}
+
+bunbun.market {
+	encode zstd gzip
+	import common_headers
+	reverse_proxy web:3000
+}
+
+api.bunbun.market {
+	encode zstd gzip
+	import common_headers
+	reverse_proxy api:3000
 }

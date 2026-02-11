@@ -29,11 +29,11 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} style={{ margin: 0, padding: 0 }}>
+      <body style={{ margin: 0, padding: 0 }}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
-            <header style={{ padding: '1rem 2rem', borderBottom: '1px solid #eee' }}>
+            <header>
               <NavBar />
             </header>
             <main style={{ padding: '2rem' }}>{children}</main>

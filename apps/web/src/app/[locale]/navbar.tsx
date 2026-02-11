@@ -23,8 +23,9 @@ function LanguageSwitcher() {
           padding: '0.2rem 0.5rem',
           cursor: locale === 'ru' ? 'default' : 'pointer',
           fontWeight: locale === 'ru' ? 'bold' : 'normal',
-          background: locale === 'ru' ? '#e8f0fe' : 'transparent',
-          border: '1px solid #ccc',
+          background: locale === 'ru' ? '#444' : 'transparent',
+          color: '#fff',
+          border: '1px solid #555',
           borderRadius: '4px 0 0 4px',
           opacity: locale === 'ru' ? 1 : 0.7,
         }}
@@ -38,8 +39,9 @@ function LanguageSwitcher() {
           padding: '0.2rem 0.5rem',
           cursor: locale === 'ro' ? 'default' : 'pointer',
           fontWeight: locale === 'ro' ? 'bold' : 'normal',
-          background: locale === 'ro' ? '#e8f0fe' : 'transparent',
-          border: '1px solid #ccc',
+          background: locale === 'ro' ? '#444' : 'transparent',
+          color: '#fff',
+          border: '1px solid #555',
           borderRadius: '0 4px 4px 0',
           opacity: locale === 'ro' ? 1 : 0.7,
         }}
@@ -56,25 +58,48 @@ export function NavBar() {
   const t = useTranslations('nav');
 
   return (
-    <nav style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-      <Link href="/" style={{ fontWeight: 'bold', fontSize: '1.2rem', textDecoration: 'none' }}>
-        {t('brand')}
+    <nav
+      style={{
+        display: 'flex',
+        gap: '1.5rem',
+        alignItems: 'center',
+        background: '#1e1e1e',
+        padding: '1rem 2rem',
+      }}
+    >
+      <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <img
+          src="https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/bunbun-logo-white.svg"
+          alt="BunBun"
+          style={{ height: '28px', width: 'auto' }}
+        />
       </Link>
-      <Link href="/products">{t('products')}</Link>
+      <Link href="/products" style={{ color: '#fff', textDecoration: 'none' }}>
+        {t('products')}
+      </Link>
       {user?.role === 'SELLER' && (
         <>
-          <Link href="/seller/products">{t('myProducts')}</Link>
-          <Link href="/seller/orders">{t('sellerOrders')}</Link>
+          <Link href="/seller/products" style={{ color: '#fff', textDecoration: 'none' }}>
+            {t('myProducts')}
+          </Link>
+          <Link href="/seller/orders" style={{ color: '#fff', textDecoration: 'none' }}>
+            {t('sellerOrders')}
+          </Link>
         </>
       )}
       {user?.role === 'BUYER' && (
-        <Link href="/orders">{t('orders')}</Link>
+        <Link href="/orders" style={{ color: '#fff', textDecoration: 'none' }}>
+          {t('orders')}
+        </Link>
       )}
-      <Link href="/cart">
-        {t('cart')}{itemCount > 0 && ` (${itemCount})`}
+      <Link href="/cart" style={{ color: '#fff', textDecoration: 'none' }}>
+        {t('cart')}
+        {itemCount > 0 && ` (${itemCount})`}
       </Link>
       {user?.role === 'ADMIN' && (
-        <Link href="/admin">{t('admin')}</Link>
+        <Link href="/admin" style={{ color: '#fff', textDecoration: 'none' }}>
+          {t('admin')}
+        </Link>
       )}
 
       <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -84,7 +109,7 @@ export function NavBar() {
           <span style={{ color: '#999', fontSize: '0.9rem' }}>...</span>
         ) : user ? (
           <>
-            <span style={{ fontSize: '0.9rem' }}>
+            <span style={{ fontSize: '0.9rem', color: '#ccc' }}>
               {user.name} ({user.role})
             </span>
             <button
@@ -93,7 +118,8 @@ export function NavBar() {
                 padding: '0.3rem 0.8rem',
                 cursor: 'pointer',
                 background: 'none',
-                border: '1px solid #ccc',
+                color: '#fff',
+                border: '1px solid #555',
                 borderRadius: 4,
               }}
             >
@@ -102,8 +128,12 @@ export function NavBar() {
           </>
         ) : (
           <>
-            <Link href="/login">{t('login')}</Link>
-            <Link href="/register">{t('register')}</Link>
+            <Link href="/login" style={{ color: '#fff', textDecoration: 'none' }}>
+              {t('login')}
+            </Link>
+            <Link href="/register" style={{ color: '#fff', textDecoration: 'none' }}>
+              {t('register')}
+            </Link>
           </>
         )}
       </div>

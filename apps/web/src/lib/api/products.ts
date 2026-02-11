@@ -85,6 +85,15 @@ export function addSellerProductImage(
   });
 }
 
+export function removeSellerProductImage(
+  productId: string,
+  imageId: string,
+): Promise<{ deleted: boolean }> {
+  return apiFetch<{ deleted: boolean }>(`/seller/products/${productId}/images/${imageId}`, {
+    method: 'DELETE',
+  });
+}
+
 // ── Upload helpers ──────────────────────────────────────────
 
 export function presignUpload(

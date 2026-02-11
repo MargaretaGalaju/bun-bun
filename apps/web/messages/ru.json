@@ -176,7 +176,18 @@
       "created": "Товар создан!",
       "saved": "Изменения сохранены!",
       "validationError": "Ошибка валидации",
-      "saveFailed": "Не удалось сохранить"
+      "saveFailed": "Не удалось сохранить",
+      "stepDetails": "Детали товара",
+      "stepPhotos": "Фотографии",
+      "stepPublish": "Публикация",
+      "nextStep": "Далее",
+      "skipPhotos": "Пропустить",
+      "publishProduct": "Опубликовать товар",
+      "keepDraft": "Оставить как черновик",
+      "backToPhotos": "Назад к фотографиям",
+      "productSummary": "Обзор товара",
+      "dragDropHint": "Перетащите фото сюда или нажмите для выбора",
+      "removeImage": "Удалить фото"
     }
   },
   "admin": {

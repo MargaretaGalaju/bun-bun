@@ -176,7 +176,18 @@
       "created": "Produsul a fost creat!",
       "saved": "Modificările au fost salvate!",
       "validationError": "Eroare de validare",
-      "saveFailed": "Nu s-a putut salva"
+      "saveFailed": "Nu s-a putut salva",
+      "stepDetails": "Detalii produs",
+      "stepPhotos": "Fotografii",
+      "stepPublish": "Publicare",
+      "nextStep": "Continuă",
+      "skipPhotos": "Omite",
+      "publishProduct": "Publică produsul",
+      "keepDraft": "Păstrează ca ciornă",
+      "backToPhotos": "Înapoi la fotografii",
+      "productSummary": "Rezumatul produsului",
+      "dragDropHint": "Trageți fotografii aici sau faceți clic pentru a selecta",
+      "removeImage": "Șterge imaginea"
     }
   },
   "admin": {

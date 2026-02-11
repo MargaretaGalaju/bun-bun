@@ -52,20 +52,12 @@ export default function CartPage() {
 
   if (itemList.length === 0) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+      <div className="text-center mt-12">
         <h1>{t('title')}</h1>
-        <p style={{ color: '#888', marginTop: '1rem' }}>{t('empty')}</p>
+        <p className="text-gray-500 mt-4">{t('empty')}</p>
         <Link
           href="/products"
-          style={{
-            display: 'inline-block',
-            marginTop: '1rem',
-            padding: '0.5rem 1.5rem',
-            background: '#2d6a4f',
-            color: '#fff',
-            borderRadius: '6px',
-            textDecoration: 'none',
-          }}
+          className="inline-block mt-4 px-6 py-2 bg-green-700 text-white rounded-md no-underline"
         >
           {t('continueShopping')}
         </Link>
@@ -75,90 +67,66 @@ export default function CartPage() {
 
   return (
     <div>
-      <h1 style={{ marginBottom: '1.5rem' }}>{t('title')}</h1>
+      <h1 className="mb-6">{t('title')}</h1>
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '0.75rem', background: '#fff5f5', borderRadius: '6px', marginBottom: '1rem' }}>
+        <p className="text-red-600 p-3 bg-red-50 rounded-md mb-4">
           {error}
         </p>
       )}
 
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table className="w-full border-collapse">
         <thead>
-          <tr style={{ borderBottom: '2px solid #eee', textAlign: 'left' }}>
-            <th style={{ padding: '0.75rem' }}></th>
-            <th style={{ padding: '0.75rem' }}>{t('product')}</th>
-            <th style={{ padding: '0.75rem' }}>{t('price')}</th>
-            <th style={{ padding: '0.75rem' }}>{t('qty')}</th>
-            <th style={{ padding: '0.75rem' }}>{t('subtotal')}</th>
-            <th style={{ padding: '0.75rem' }}></th>
+          <tr className="border-b-2 border-gray-200 text-left">
+            <th className="p-3"></th>
+            <th className="p-3">{t('product')}</th>
+            <th className="p-3">{t('price')}</th>
+            <th className="p-3">{t('qty')}</th>
+            <th className="p-3">{t('subtotal')}</th>
+            <th className="p-3"></th>
           </tr>
         </thead>
         <tbody>
           {itemList.map((item) => (
-            <tr key={item.productId} style={{ borderBottom: '1px solid #f0f0f0' }}>
-              <td style={{ padding: '0.75rem', width: '60px' }}>
+            <tr key={item.productId} className="border-b border-gray-100">
+              <td className="p-3 w-[60px]">
                 {item.image ? (
                   <img
                     src={item.image}
                     alt={item.title}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
+                    className="w-[50px] h-[50px] object-cover rounded"
                   />
                 ) : (
-                  <div style={{ width: '50px', height: '50px', background: '#f0f0f0', borderRadius: '4px' }} />
+                  <div className="w-[50px] h-[50px] bg-gray-100 rounded" />
                 )}
               </td>
-              <td style={{ padding: '0.75rem', fontWeight: 500 }}>{item.title}</td>
-              <td style={{ padding: '0.75rem' }}>{item.price.toFixed(2)} $</td>
-              <td style={{ padding: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <td className="p-3 font-medium">{item.title}</td>
+              <td className="p-3">{item.price.toFixed(2)} $</td>
+              <td className="p-3">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => setQty(item.productId, item.qty - 1)}
                     disabled={item.qty <= 1}
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      cursor: item.qty <= 1 ? 'default' : 'pointer',
-                      background: '#fff',
-                      fontSize: '1rem',
-                    }}
+                    className="w-7 h-7 border border-gray-300 rounded cursor-pointer bg-white text-base disabled:cursor-default disabled:opacity-60"
                   >
                     -
                   </button>
-                  <span style={{ minWidth: '24px', textAlign: 'center' }}>{item.qty}</span>
+                  <span className="min-w-6 text-center">{item.qty}</span>
                   <button
                     onClick={() => setQty(item.productId, item.qty + 1)}
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      background: '#fff',
-                      fontSize: '1rem',
-                    }}
+                    className="w-7 h-7 border border-gray-300 rounded cursor-pointer bg-white text-base"
                   >
                     +
                   </button>
                 </div>
               </td>
-              <td style={{ padding: '0.75rem', fontWeight: 600 }}>
+              <td className="p-3 font-semibold">
                 {(item.price * item.qty).toFixed(2)} $
               </td>
-              <td style={{ padding: '0.75rem' }}>
+              <td className="p-3">
                 <button
                   onClick={() => removeItem(item.productId)}
-                  style={{
-                    padding: '0.25rem 0.6rem',
-                    border: '1px solid #e53e3e',
-                    borderRadius: '4px',
-                    color: '#e53e3e',
-                    background: '#fff',
-                    cursor: 'pointer',
-                    fontSize: '0.8rem',
-                  }}
+                  className="py-1 px-2.5 border border-red-600 rounded text-red-600 bg-white cursor-pointer text-sm"
                 >
                   {t('remove')}
                 </button>
@@ -169,20 +137,8 @@ export default function CartPage() {
       </table>
 
       {/* Total + checkout */}
-      <div
-        style={{
-          marginTop: '1.5rem',
-          padding: '1.5rem',
-          background: '#f9f9f9',
-          borderRadius: '8px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-        }}
-      >
-        <p style={{ fontSize: '1.3rem', fontWeight: 700 }}>
+      <div className="mt-6 p-6 bg-gray-50 rounded-lg flex justify-between items-center flex-wrap gap-4">
+        <p className="text-xl font-bold">
           {t('total')}: {total.toFixed(2)} $
         </p>
 
@@ -191,14 +147,7 @@ export default function CartPage() {
         ) : !user ? (
           <Link
             href="/login"
-            style={{
-              padding: '0.7rem 1.5rem',
-              background: '#333',
-              color: '#fff',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              fontWeight: 600,
-            }}
+            className="py-2.5 px-6 bg-gray-800 text-white rounded-md no-underline font-semibold"
           >
             {t('loginToCheckout')}
           </Link>
@@ -206,21 +155,12 @@ export default function CartPage() {
           <button
             onClick={handleCheckout}
             disabled={checkingOut}
-            style={{
-              padding: '0.7rem 2rem',
-              background: checkingOut ? '#999' : '#2d6a4f',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              fontWeight: 600,
-              cursor: checkingOut ? 'default' : 'pointer',
-              fontSize: '1rem',
-            }}
+            className="py-2.5 px-8 bg-green-700 text-white border-none rounded-md font-semibold text-base disabled:bg-gray-500 disabled:cursor-default cursor-pointer"
           >
             {checkingOut ? t('checkoutLoading') : t('checkout')}
           </button>
         ) : (
-          <p style={{ color: '#888' }}>{t('buyerOnly')}</p>
+          <p className="text-gray-500">{t('buyerOnly')}</p>
         )}
       </div>
     </div>

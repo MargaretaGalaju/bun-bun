@@ -144,58 +144,44 @@ export default function AdminCategoriesPage() {
   if (authLoading || loading) return <p>{tc('loading')}</p>;
   if (user?.role !== 'ADMIN') return null;
 
-  const inputStyle = {
-    padding: '0.4rem 0.6rem',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    fontSize: '0.9rem',
-    width: '100%',
-  } as const;
-
-  const btnStyle = {
-    padding: '0.4rem 0.8rem',
-    cursor: 'pointer',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    background: 'white',
-    fontSize: '0.85rem',
-  } as const;
-
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+      <div className="flex justify-between items-center mb-4">
         <h1>{t('title')}</h1>
-        <button onClick={startCreate} style={{ ...btnStyle, background: '#4CAF50', color: 'white', border: 'none' }}>
+        <button
+          onClick={startCreate}
+          className="px-3 py-1.5 border-0 rounded bg-green-700 text-white text-sm hover:bg-green-800"
+        >
           {t('add')}
         </button>
       </div>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="text-red-600 mb-4">{error}</p>}
 
       {/* Create form */}
       {showCreate && (
-        <div style={{ marginBottom: '1.5rem', padding: '1rem', border: '1px solid #ddd', borderRadius: '8px', background: '#f9f9f9' }}>
-          <h3 style={{ marginTop: 0 }}>{t('add')}</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+        <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+          <h3 className="mt-0">{t('add')}</h3>
+          <div className="grid grid-cols-2 gap-3">
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>{t('name')}</label>
-              <input style={inputStyle} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+              <label className="text-sm block mb-1">{t('name')}</label>
+              <input className="w-full" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>{t('nameRu')}</label>
-              <input style={inputStyle} value={form.nameRu} onChange={(e) => setForm({ ...form, nameRu: e.target.value })} />
+              <label className="text-sm block mb-1">{t('nameRu')}</label>
+              <input className="w-full" value={form.nameRu} onChange={(e) => setForm({ ...form, nameRu: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>{t('nameRo')}</label>
-              <input style={inputStyle} value={form.nameRo} onChange={(e) => setForm({ ...form, nameRo: e.target.value })} />
+              <label className="text-sm block mb-1">{t('nameRo')}</label>
+              <input className="w-full" value={form.nameRo} onChange={(e) => setForm({ ...form, nameRo: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>{t('imageUrl')}</label>
-              <input style={inputStyle} value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
+              <label className="text-sm block mb-1">{t('imageUrl')}</label>
+              <input className="w-full" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: '0.85rem', display: 'block', marginBottom: '0.25rem' }}>{t('parent')}</label>
-              <select style={inputStyle} value={form.parentId} onChange={(e) => setForm({ ...form, parentId: e.target.value })}>
+              <label className="text-sm block mb-1">{t('parent')}</label>
+              <select className="w-full" value={form.parentId} onChange={(e) => setForm({ ...form, parentId: e.target.value })}>
                 <option value="">—</option>
                 {categories.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
@@ -203,81 +189,97 @@ export default function AdminCategoriesPage() {
               </select>
             </div>
           </div>
-          <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
-            <button onClick={handleSave} disabled={saving || !form.name} style={{ ...btnStyle, background: '#4CAF50', color: 'white', border: 'none' }}>
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={handleSave}
+              disabled={saving || !form.name}
+              className="px-3 py-1.5 border-0 rounded bg-green-700 text-white text-sm hover:bg-green-800 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               {saving ? tc('loading') : tc('save')}
             </button>
-            <button onClick={cancelForm} style={btnStyle}>{tc('cancel')}</button>
+            <button onClick={cancelForm} className="px-3 py-1.5 border border-gray-300 rounded bg-white text-sm hover:bg-gray-50">
+              {tc('cancel')}
+            </button>
           </div>
         </div>
       )}
 
       {categories.length === 0 ? (
-        <p style={{ color: '#999' }}>{t('noCategories')}</p>
+        <p className="text-gray-500">{t('noCategories')}</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table className="w-full border-collapse">
           <thead>
-            <tr style={{ borderBottom: '2px solid #ddd', textAlign: 'left' }}>
-              <th style={{ padding: '0.5rem' }}>{t('name')}</th>
-              <th style={{ padding: '0.5rem' }}>{t('nameRu')}</th>
-              <th style={{ padding: '0.5rem' }}>{t('nameRo')}</th>
-              <th style={{ padding: '0.5rem' }}>{t('image')}</th>
-              <th style={{ padding: '0.5rem' }}>{t('slug')}</th>
-              <th style={{ padding: '0.5rem' }}>{t('parent')}</th>
-              <th style={{ padding: '0.5rem' }}>{tc('actions')}</th>
+            <tr className="border-b-2 border-gray-200 text-left">
+              <th className="p-2">{t('name')}</th>
+              <th className="p-2">{t('nameRu')}</th>
+              <th className="p-2">{t('nameRo')}</th>
+              <th className="p-2">{t('image')}</th>
+              <th className="p-2">{t('slug')}</th>
+              <th className="p-2">{t('parent')}</th>
+              <th className="p-2">{tc('actions')}</th>
             </tr>
           </thead>
           <tbody>
             {categories.map((cat) => (
-              <tr key={cat.id} style={{ borderBottom: '1px solid #eee' }}>
+              <tr key={cat.id} className="border-b border-gray-200">
                 {editingId === cat.id ? (
                   <>
-                    <td style={{ padding: '0.5rem' }}>
-                      <input style={{ ...inputStyle, width: '120px' }} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                    <td className="p-2">
+                      <input className="w-full max-w-[120px]" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                     </td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <input style={{ ...inputStyle, width: '120px' }} value={form.nameRu} onChange={(e) => setForm({ ...form, nameRu: e.target.value })} />
+                    <td className="p-2">
+                      <input className="w-full max-w-[120px]" value={form.nameRu} onChange={(e) => setForm({ ...form, nameRu: e.target.value })} />
                     </td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <input style={{ ...inputStyle, width: '120px' }} value={form.nameRo} onChange={(e) => setForm({ ...form, nameRo: e.target.value })} />
+                    <td className="p-2">
+                      <input className="w-full max-w-[120px]" value={form.nameRo} onChange={(e) => setForm({ ...form, nameRo: e.target.value })} />
                     </td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <input style={{ ...inputStyle, width: '120px' }} value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
+                    <td className="p-2">
+                      <input className="w-full max-w-[120px]" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
                     </td>
-                    <td style={{ padding: '0.5rem', color: '#999' }}>{cat.slug}</td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <select style={{ ...inputStyle, width: '120px' }} value={form.parentId} onChange={(e) => setForm({ ...form, parentId: e.target.value })}>
+                    <td className="p-2 text-gray-500">{cat.slug}</td>
+                    <td className="p-2">
+                      <select className="w-full max-w-[120px]" value={form.parentId} onChange={(e) => setForm({ ...form, parentId: e.target.value })}>
                         <option value="">—</option>
                         {categories.filter((c) => c.id !== cat.id).map((c) => (
                           <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
                       </select>
                     </td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <div style={{ display: 'flex', gap: '0.3rem' }}>
-                        <button onClick={handleSave} disabled={saving || !form.name} style={{ ...btnStyle, background: '#4CAF50', color: 'white', border: 'none', fontSize: '0.8rem' }}>
+                    <td className="p-2">
+                      <div className="flex gap-1">
+                        <button
+                          onClick={handleSave}
+                          disabled={saving || !form.name}
+                          className="px-3 py-1.5 border-0 rounded bg-green-700 text-white text-xs hover:bg-green-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
                           {tc('save')}
                         </button>
-                        <button onClick={cancelForm} style={{ ...btnStyle, fontSize: '0.8rem' }}>{tc('cancel')}</button>
+                        <button onClick={cancelForm} className="px-3 py-1.5 border border-gray-300 rounded bg-white text-xs hover:bg-gray-50">
+                          {tc('cancel')}
+                        </button>
                       </div>
                     </td>
                   </>
                 ) : (
                   <>
-                    <td style={{ padding: '0.5rem' }}>{cat.name}</td>
-                    <td style={{ padding: '0.5rem', color: cat.nameRu ? 'inherit' : '#ccc' }}>{cat.nameRu || '—'}</td>
-                    <td style={{ padding: '0.5rem', color: cat.nameRo ? 'inherit' : '#ccc' }}>{cat.nameRo || '—'}</td>
-                    <td style={{ padding: '0.5rem' }}>
+                    <td className="p-2">{cat.name}</td>
+                    <td className={`p-2 ${cat.nameRu ? '' : 'text-gray-400'}`}>{cat.nameRu || '—'}</td>
+                    <td className={`p-2 ${cat.nameRo ? '' : 'text-gray-400'}`}>{cat.nameRo || '—'}</td>
+                    <td className="p-2">
                       {cat.imageUrl ? (
-                        <img src={cat.imageUrl} alt="" style={{ width: 32, height: 32, objectFit: 'cover', borderRadius: 4 }} />
+                        <img src={cat.imageUrl} alt="" className="w-8 h-8 object-cover rounded" />
                       ) : '—'}
                     </td>
-                    <td style={{ padding: '0.5rem', color: '#999', fontSize: '0.85rem' }}>{cat.slug}</td>
-                    <td style={{ padding: '0.5rem' }}>{getParentName(cat.parentId)}</td>
-                    <td style={{ padding: '0.5rem' }}>
-                      <div style={{ display: 'flex', gap: '0.3rem' }}>
-                        <button onClick={() => startEdit(cat)} style={{ ...btnStyle, fontSize: '0.8rem' }}>{tc('edit')}</button>
-                        <button onClick={() => handleDelete(cat.id)} style={{ ...btnStyle, fontSize: '0.8rem', color: 'red', borderColor: 'red' }}>{tc('delete')}</button>
+                    <td className="p-2 text-gray-500 text-sm">{cat.slug}</td>
+                    <td className="p-2">{getParentName(cat.parentId)}</td>
+                    <td className="p-2">
+                      <div className="flex gap-1">
+                        <button onClick={() => startEdit(cat)} className="px-3 py-1.5 border border-gray-300 rounded bg-white text-xs hover:bg-gray-50">
+                          {tc('edit')}
+                        </button>
+                        <button onClick={() => handleDelete(cat.id)} className="px-3 py-1.5 border border-red-600 text-red-600 rounded bg-white text-xs hover:bg-red-50">
+                          {tc('delete')}
+                        </button>
                       </div>
                     </td>
                   </>

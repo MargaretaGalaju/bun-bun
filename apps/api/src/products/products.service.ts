@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import type { ProductDto, ProductImageDto } from '@bun-bun/shared';
+import type {
+  ProductDto,
+  ProductImageDto,
+  PaginatedProductsDto,
+} from '@bun-bun/shared';
 import { ProductStatus } from '@bun-bun/shared';
 
 export interface ProductFilters {
   q?: string;
   city?: string;
+  categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
   sort?: 'price_asc' | 'price_desc' | 'newest' | 'oldest';
+  page?: number;
+  limit?: number;
 }
 
-const IMAGES_INCLUDE = {
+const PRODUCT_INCLUDE = {
   images: { orderBy: { position: 'asc' as const } },
+  seller: { select: { name: true } },
 } satisfies Prisma.ProductInclude;
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(filters: ProductFilters = {}): Promise<ProductDto[]> {
+  async findAll(filters: ProductFilters = {}): Promise<PaginatedProductsDto> {
     const where: Prisma.ProductWhereInput = { status: 'ACTIVE' };
 
     if (filters.q) {
@@ -32,6 +40,10 @@ export class ProductsService {
 
     if (filters.city) {
       where.city = filters.city;
+    }
+
+    if (filters.categoryId) {
+      where.categoryId = filters.categoryId;
     }
 
     if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
@@ -57,19 +69,33 @@ export class ProductsService {
         break;
     }
 
-    const products = await this.prisma.product.findMany({
-      where,
-      orderBy,
-      include: IMAGES_INCLUDE,
-    });
+    const page = filters.page ?? 1;
+    const limit = filters.limit ?? 20;
+    const skip = (page - 1) * limit;
 
-    return products.map((p) => this.toDto(p));
+    const [products, total] = await Promise.all([
+      this.prisma.product.findMany({
+        where,
+        orderBy,
+        include: PRODUCT_INCLUDE,
+        skip,
+        take: limit,
+      }),
+      this.prisma.product.count({ where }),
+    ]);
+
+    return {
+      items: products.map((p) => this.toDto(p)),
+      total,
+      page,
+      limit,
+    };
   }
 
   async findById(id: string): Promise<ProductDto | null> {
     const p = await this.prisma.product.findFirst({
       where: { id, status: 'ACTIVE' },
-      include: IMAGES_INCLUDE,
+      include: PRODUCT_INCLUDE,
     });
     if (!p) return null;
 
@@ -85,6 +111,7 @@ export class ProductsService {
       status: p.status as ProductStatus,
       city: p.city || undefined,
       sellerId: p.sellerId,
+      sellerName: p.seller?.name,
       categoryId: p.categoryId,
       images: (p.images || []).map((img: any): ProductImageDto => ({
         id: img.id,

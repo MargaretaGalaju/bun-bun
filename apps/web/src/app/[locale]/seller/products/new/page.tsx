@@ -35,8 +35,8 @@ export default function SellerCreateProductPage() {
 
   if (!isSeller) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-        <p style={{ fontSize: '1.1rem', color: '#666' }}>{t('accessRequired')}</p>
+      <div className="text-center mt-12">
+        <p className="text-lg text-gray-500">{t('accessRequired')}</p>
       </div>
     );
   }
@@ -70,58 +70,42 @@ export default function SellerCreateProductPage() {
     }
   }
 
-  const inputStyle = {
-    width: '100%',
-    padding: '0.6rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '0.95rem',
-    boxSizing: 'border-box' as const,
-  };
-
-  const labelStyle = {
-    display: 'block',
-    marginBottom: '0.3rem',
-    fontWeight: 600 as const,
-    fontSize: '0.9rem',
-  };
-
   return (
-    <div style={{ maxWidth: '600px' }}>
-      <Link href="/seller/products" style={{ color: '#555', textDecoration: 'none' }}>
+    <div className="max-w-[600px]">
+      <Link href="/seller/products" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
-      <h1 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}>{t('create')}</h1>
+      <h1 className="mt-2 mb-6">{t('create')}</h1>
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '0.75rem', background: '#fff5f5', borderRadius: '6px', marginBottom: '1rem' }}>
+        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
           {error}
         </p>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label style={labelStyle}>{t('titleField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('titleField')}</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            style={inputStyle}
+            className="w-full"
           />
         </div>
         <div>
-          <label style={labelStyle}>{t('descriptionField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('descriptionField')}</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={4}
-            style={inputStyle}
+            className="w-full"
           />
         </div>
         <div>
-          <label style={labelStyle}>{t('priceField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('priceField')}</label>
           <input
             type="number"
             value={price}
@@ -129,25 +113,25 @@ export default function SellerCreateProductPage() {
             required
             min={0.01}
             step={0.01}
-            style={inputStyle}
+            className="w-full"
           />
         </div>
         <div>
-          <label style={labelStyle}>{t('cityField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            style={inputStyle}
+            className="w-full"
           />
         </div>
         <div>
-          <label style={labelStyle}>{t('categoryField')}</label>
+          <label className="block mb-1 font-semibold text-sm">{t('categoryField')}</label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
             required
-            style={inputStyle}
+            className="w-full"
           >
             <option value="">{t('selectCategory')}</option>
             {categories.map((cat) => (
@@ -161,16 +145,7 @@ export default function SellerCreateProductPage() {
         <button
           type="submit"
           disabled={submitting}
-          style={{
-            padding: '0.7rem',
-            background: submitting ? '#999' : '#2d6a4f',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 600,
-            cursor: submitting ? 'default' : 'pointer',
-            fontSize: '1rem',
-          }}
+          className="w-full py-2.5 bg-green-700 text-white font-semibold rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? t('creating') : t('create')}
         </button>

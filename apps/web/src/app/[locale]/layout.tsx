@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { Providers } from './providers';
 import { NavBar } from './navbar';
+import '../globals.css';
 
 type Props = {
   children: ReactNode;
@@ -29,14 +30,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} style={{ margin: 0, padding: 0 }}>
-      <body style={{ margin: 0, padding: 0 }}>
+    <html lang={locale}>
+      <body className="m-0 p-0 bg-white text-gray-900 font-sans">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <header>
               <NavBar />
             </header>
-            <main style={{ padding: '2rem' }}>{children}</main>
+            <main className="p-8">{children}</main>
           </Providers>
         </NextIntlClientProvider>
       </body>

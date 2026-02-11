@@ -40,51 +40,54 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h1>{t('title')}</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div className="max-w-md mx-auto mt-8">
+      <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: 4 }}>{t('email')}</label>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            {t('email')}
+          </label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
+            className="w-full"
           />
         </div>
         <div>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: 4 }}>{t('password')}</label>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            {t('password')}
+          </label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
+            className="w-full"
           />
         </div>
 
         {error && (
-          <div style={{ color: 'red', fontSize: '0.9rem' }}>{error}</div>
+          <div className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2">{error}</div>
         )}
 
         <button
           type="submit"
           disabled={submitting}
-          style={{
-            padding: '0.6rem 1.2rem',
-            cursor: submitting ? 'not-allowed' : 'pointer',
-            opacity: submitting ? 0.6 : 1,
-          }}
+          className="w-full py-2.5 px-4 bg-green-700 text-white font-semibold rounded-md hover:bg-green-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? t('submitting') : t('submit')}
         </button>
       </form>
 
-      <p style={{ marginTop: '1rem' }}>
-        {t('noAccount')} <Link href="/register">{t('registerLink')}</Link>
+      <p className="mt-4 text-sm text-gray-600">
+        {t('noAccount')}{' '}
+        <Link href="/register" className="text-green-700 hover:underline">
+          {t('registerLink')}
+        </Link>
       </p>
     </div>
   );

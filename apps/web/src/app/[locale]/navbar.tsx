@@ -15,36 +15,22 @@ function LanguageSwitcher() {
   }
 
   return (
-    <div style={{ display: 'flex', gap: '0.25rem' }}>
+    <div className="flex">
       <button
         onClick={() => switchTo('ru')}
         disabled={locale === 'ru'}
-        style={{
-          padding: '0.2rem 0.5rem',
-          cursor: locale === 'ru' ? 'default' : 'pointer',
-          fontWeight: locale === 'ru' ? 'bold' : 'normal',
-          background: locale === 'ru' ? '#444' : 'transparent',
-          color: '#fff',
-          border: '1px solid #555',
-          borderRadius: '4px 0 0 4px',
-          opacity: locale === 'ru' ? 1 : 0.7,
-        }}
+        className={`px-2 py-1 text-xs text-white border border-gray-600 rounded-l transition-colors ${
+          locale === 'ru' ? 'bg-gray-600 font-bold' : 'bg-transparent opacity-70 hover:opacity-100'
+        }`}
       >
         RU
       </button>
       <button
         onClick={() => switchTo('ro')}
         disabled={locale === 'ro'}
-        style={{
-          padding: '0.2rem 0.5rem',
-          cursor: locale === 'ro' ? 'default' : 'pointer',
-          fontWeight: locale === 'ro' ? 'bold' : 'normal',
-          background: locale === 'ro' ? '#444' : 'transparent',
-          color: '#fff',
-          border: '1px solid #555',
-          borderRadius: '0 4px 4px 0',
-          opacity: locale === 'ro' ? 1 : 0.7,
-        }}
+        className={`px-2 py-1 text-xs text-white border border-gray-600 border-l-0 rounded-r transition-colors ${
+          locale === 'ro' ? 'bg-gray-600 font-bold' : 'bg-transparent opacity-70 hover:opacity-100'
+        }`}
       >
         RO
       </button>
@@ -57,81 +43,72 @@ export function NavBar() {
   const { itemCount } = useCart();
   const t = useTranslations('nav');
 
+  const linkClass = 'text-white no-underline text-sm hover:text-gray-300 transition-colors';
+
   return (
-    <nav
-      style={{
-        display: 'flex',
-        gap: '1.5rem',
-        alignItems: 'center',
-        background: '#1e1e1e',
-        padding: '1rem 2rem',
-      }}
-    >
-      <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+    <nav className="flex items-center gap-5 bg-[#1e1e1e] px-6 py-3">
+      <Link href="/" className="flex items-center no-underline">
         <img
           src="https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/bunbun-logo-white.svg"
           alt="BunBun"
-          style={{ height: '28px', width: 'auto' }}
+          className="h-7 w-auto"
         />
       </Link>
-      <Link href="/products" style={{ color: '#fff', textDecoration: 'none' }}>
+      <Link href="/products" className={linkClass}>
         {t('products')}
       </Link>
       {user?.role === 'SELLER' && (
         <>
-          <Link href="/seller/products" style={{ color: '#fff', textDecoration: 'none' }}>
+          <Link href="/seller/products" className={linkClass}>
             {t('myProducts')}
           </Link>
-          <Link href="/seller/orders" style={{ color: '#fff', textDecoration: 'none' }}>
+          <Link href="/seller/orders" className={linkClass}>
             {t('sellerOrders')}
           </Link>
         </>
       )}
       {user?.role === 'BUYER' && (
-        <Link href="/orders" style={{ color: '#fff', textDecoration: 'none' }}>
+        <Link href="/orders" className={linkClass}>
           {t('orders')}
         </Link>
       )}
-      <Link href="/cart" style={{ color: '#fff', textDecoration: 'none' }}>
+      <Link href="/cart" className={linkClass}>
         {t('cart')}
-        {itemCount > 0 && ` (${itemCount})`}
+        {itemCount > 0 && (
+          <span className="ml-1 bg-green-700 text-white text-xs rounded-full px-1.5 py-0.5">
+            {itemCount}
+          </span>
+        )}
       </Link>
       {user?.role === 'ADMIN' && (
-        <Link href="/admin" style={{ color: '#fff', textDecoration: 'none' }}>
+        <Link href="/admin" className={linkClass}>
           {t('admin')}
         </Link>
       )}
 
-      <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <div className="ml-auto flex items-center gap-3">
         <LanguageSwitcher />
 
         {isLoading ? (
-          <span style={{ color: '#999', fontSize: '0.9rem' }}>...</span>
+          <span className="text-gray-400 text-sm">...</span>
         ) : user ? (
           <>
-            <span style={{ fontSize: '0.9rem', color: '#ccc' }}>
+            <span className="text-sm text-gray-400">
               {user.name} ({user.role})
             </span>
             <button
               onClick={() => logout()}
-              style={{
-                padding: '0.3rem 0.8rem',
-                cursor: 'pointer',
-                background: 'none',
-                color: '#fff',
-                border: '1px solid #555',
-                borderRadius: 4,
-              }}
+              className="px-3 py-1 text-sm text-white border border-gray-600 rounded bg-transparent hover:bg-gray-700 transition-colors"
             >
               {t('logout')}
             </button>
           </>
         ) : (
           <>
-            <Link href="/login" style={{ color: '#fff', textDecoration: 'none' }}>
+            <Link href="/login" className={linkClass}>
               {t('login')}
             </Link>
-            <Link href="/register" style={{ color: '#fff', textDecoration: 'none' }}>
+            <Link href="/register" className={linkClass}>
               {t('register')}
             </Link>
           </>

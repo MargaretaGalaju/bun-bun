@@ -33,7 +33,7 @@ export default function ProductsPage() {
       if (minPrice) params.minPrice = parseFloat(minPrice);
       if (maxPrice) params.maxPrice = parseFloat(maxPrice);
       const data = await listPublicProducts(params);
-      setProducts(data);
+      setProducts(data.items);
     } catch {
       setError(t('loadError'));
     } finally {
@@ -53,49 +53,32 @@ export default function ProductsPage() {
     setTimeout(() => setAddedId((prev) => (prev === product.id ? null : prev)), 2000);
   }
 
-  const inputStyle = {
-    padding: '0.5rem',
-    border: '1px solid #ddd',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-  };
-
   return (
     <div>
-      <h1 style={{ marginBottom: '1rem' }}>{t('title')}</h1>
+      <h1 className="text-2xl font-bold mb-4">{t('title')}</h1>
 
       {/* Filter bar */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-          marginBottom: '1.5rem',
-          padding: '1rem',
-          background: '#f9f9f9',
-          borderRadius: '8px',
-        }}
-      >
+      <div className="flex flex-wrap gap-3 mb-6 p-4 bg-gray-50 rounded-lg">
         <input
           type="text"
           placeholder={t('search')}
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          style={{ ...inputStyle, flex: '1 1 200px' }}
+          className="flex-1 min-w-[200px]"
         />
         <input
           type="text"
           placeholder={t('city')}
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          style={{ ...inputStyle, width: '140px' }}
+          className="w-36"
         />
         <input
           type="number"
           placeholder={t('minPrice')}
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
-          style={{ ...inputStyle, width: '110px' }}
+          className="w-28"
           min={0}
         />
         <input
@@ -103,13 +86,13 @@ export default function ProductsPage() {
           placeholder={t('maxPrice')}
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
-          style={{ ...inputStyle, width: '110px' }}
+          className="w-28"
           min={0}
         />
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as PublicProductParams['sort'])}
-          style={{ ...inputStyle, width: '140px' }}
+          className="w-36"
         >
           <option value="newest">{t('sortNewest')}</option>
           <option value="price_asc">{t('sortPriceAsc')}</option>
@@ -117,80 +100,51 @@ export default function ProductsPage() {
         </select>
       </div>
 
-      {loading && <p>{t('empty')}</p>}
+      {loading && <p className="text-gray-500">{t('empty')}</p>}
       {error && (
-        <p style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}>
-          {error}
-        </p>
+        <p className="text-red-600 p-4 bg-red-50 rounded-lg">{error}</p>
       )}
 
-      {!loading && !error && products.length === 0 && <p>{t('empty')}</p>}
+      {!loading && !error && products.length === 0 && (
+        <p className="text-gray-500">{t('empty')}</p>
+      )}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: '1.5rem',
-        }}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {products.map((product) => (
           <Link
             key={product.id}
             href={`/products/${product.id}`}
-            style={{ textDecoration: 'none', color: 'inherit' }}
+            className="no-underline text-inherit group"
           >
-            <div
-              style={{
-                border: '1px solid #eee',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                transition: 'box-shadow 0.2s',
-                cursor: 'pointer',
-              }}
-            >
+            <div className="border border-gray-200 rounded-lg overflow-hidden transition-shadow hover:shadow-lg">
               {product.images && product.images.length > 0 ? (
                 <div
-                  style={{
-                    height: '180px',
-                    background: `url(${product.images[0].url}) center/cover no-repeat`,
-                    backgroundColor: '#f0f0f0',
-                  }}
+                  className="h-48 bg-gray-100 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${product.images[0].url})` }}
                 />
               ) : (
-                <div
-                  style={{
-                    height: '180px',
-                    background: '#f0f0f0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#999',
-                    fontSize: '0.9rem',
-                  }}
-                >
+                <div className="h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
                   {t('noImage')}
                 </div>
               )}
-              <div style={{ padding: '1rem' }}>
-                <h2 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{product.title}</h2>
+              <div className="p-4">
+                <h2 className="text-base font-semibold mb-1">{product.title}</h2>
                 {product.city && (
-                  <p style={{ color: '#888', fontSize: '0.8rem', marginBottom: '0.25rem' }}>
-                    {product.city}
-                  </p>
+                  <p className="text-gray-500 text-xs mb-1">{product.city}</p>
                 )}
-                <p style={{ fontWeight: 'bold', color: '#2d6a4f', marginBottom: '0.5rem' }}>
+                <p className="font-bold text-green-800 mb-2">
                   {t('price', { price: product.price.toFixed(2) })}
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div className="flex items-center gap-2">
                   {addedId === product.id ? (
                     <>
-                      <span style={{ color: '#2d6a4f', fontWeight: 600, fontSize: '0.85rem' }}>
+                      <span className="text-green-700 font-semibold text-sm">
                         {tc('added')}
                       </span>
                       <Link
                         href="/cart"
                         onClick={(e) => e.stopPropagation()}
-                        style={{ fontSize: '0.85rem', color: '#2d6a4f' }}
+                        className="text-sm text-green-700 underline"
                       >
                         {tc('goToCart')}
                       </Link>
@@ -198,15 +152,7 @@ export default function ProductsPage() {
                   ) : (
                     <button
                       onClick={(e) => handleAddToCart(e, product)}
-                      style={{
-                        padding: '0.35rem 0.8rem',
-                        background: '#2d6a4f',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '0.85rem',
-                      }}
+                      className="px-3 py-1.5 bg-green-700 text-white text-sm rounded hover:bg-green-800 transition-colors"
                     >
                       {tc('addToCart')}
                     </button>

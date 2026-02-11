@@ -10,11 +10,13 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "db:generate": "pnpm --filter @bun-bun/api exec prisma generate",
     "db:migrate": "pnpm --filter @bun-bun/api exec prisma migrate dev",
-    "db:push": "pnpm --filter @bun-bun/api exec prisma db push"
+    "db:push": "pnpm --filter @bun-bun/api exec prisma db push",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.0.0",
+    "husky": "^9.1.7",
     "prettier": "^3.0.0",
     "turbo": "^2.0.0",
     "typescript": "^5.5.0"

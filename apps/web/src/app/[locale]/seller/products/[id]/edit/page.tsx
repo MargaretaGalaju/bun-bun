@@ -106,8 +106,10 @@ export default function SellerEditProductPage() {
     const payload: Record<string, unknown> = {};
     if (titleRo.trim() !== product!.titleRo) payload.titleRo = titleRo.trim();
     if (titleRu.trim() !== product!.titleRu) payload.titleRu = titleRu.trim();
-    if (descriptionRo.trim() !== product!.descriptionRo) payload.descriptionRo = descriptionRo.trim();
-    if (descriptionRu.trim() !== product!.descriptionRu) payload.descriptionRu = descriptionRu.trim();
+    if (descriptionRo.trim() !== product!.descriptionRo)
+      payload.descriptionRo = descriptionRo.trim();
+    if (descriptionRu.trim() !== product!.descriptionRu)
+      payload.descriptionRu = descriptionRu.trim();
     if (parseFloat(price) !== product!.price) payload.price = parseFloat(price);
     if (categoryId !== product!.categoryId) payload.categoryId = categoryId;
     const newCity = city || undefined;
@@ -173,7 +175,7 @@ export default function SellerEditProductPage() {
   }
 
   return (
-    <div className="max-w-[600px]">
+    <div className="max-w-[600px] mx-auto">
       <Link href="/seller/products" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
@@ -236,11 +238,7 @@ export default function SellerEditProductPage() {
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
-          <CitySelect
-            value={city}
-            onChange={setCity}
-            placeholder={t('selectCity')}
-          />
+          <CitySelect value={city} onChange={setCity} placeholder={t('selectCity')} />
         </div>
         <div>
           <label className="block mb-1 font-semibold text-sm">{t('categoryField')}</label>

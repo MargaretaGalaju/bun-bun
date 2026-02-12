@@ -5,10 +5,7 @@ import { useAuth } from '@/lib/auth/AuthContext';
 import { useRouter, Link } from '@/i18n/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import type { AdminCategoryDto } from '@bun-bun/shared';
-import {
-  getAdminCategories,
-  deleteAdminCategory,
-} from '@/lib/api/admin';
+import { getAdminCategories, deleteAdminCategory } from '@/lib/api/admin';
 
 export default function AdminCategoriesPage() {
   const t = useTranslations('admin.categories');
@@ -63,7 +60,7 @@ export default function AdminCategoriesPage() {
   if (user?.role !== 'ADMIN') return null;
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <div className="flex justify-between items-center mb-4">
         <h1>{t('title')}</h1>
         <Link
@@ -94,12 +91,8 @@ export default function AdminCategoriesPage() {
             {categories.map((cat) => (
               <tr key={cat.id} className="border-b border-gray-200">
                 <td className="p-2">{cat.name}</td>
-                <td className={`p-2 ${cat.nameRu ? '' : 'text-gray-400'}`}>
-                  {cat.nameRu || '—'}
-                </td>
-                <td className={`p-2 ${cat.nameRo ? '' : 'text-gray-400'}`}>
-                  {cat.nameRo || '—'}
-                </td>
+                <td className={`p-2 ${cat.nameRu ? '' : 'text-gray-400'}`}>{cat.nameRu || '—'}</td>
+                <td className={`p-2 ${cat.nameRo ? '' : 'text-gray-400'}`}>{cat.nameRo || '—'}</td>
                 <td className="p-2">
                   {cat.imageUrl ? (
                     <img src={cat.imageUrl} alt="" className="w-8 h-8 object-cover rounded" />

@@ -20,13 +20,17 @@ export default function AdminDashboard() {
   if (user?.role !== 'ADMIN') return <p>{t('accessDenied')}</p>;
 
   const sections = [
-    { href: '/admin/categories' as const, label: t('nav.categories'), desc: t('nav.categoriesDesc') },
+    {
+      href: '/admin/categories' as const,
+      label: t('nav.categories'),
+      desc: t('nav.categoriesDesc'),
+    },
     { href: '/admin/users' as const, label: t('nav.users'), desc: t('nav.usersDesc') },
     { href: '/admin/products' as const, label: t('nav.products'), desc: t('nav.productsDesc') },
   ];
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <h1 style={{ marginBottom: '1.5rem' }}>{t('title')}</h1>
       <div
         style={{

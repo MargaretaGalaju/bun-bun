@@ -5,10 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
-import {
-  createSellerProduct,
-  setSellerProductStatus,
-} from '@/lib/api/products';
+import { createSellerProduct, setSellerProductStatus } from '@/lib/api/products';
 import { getCategories } from '@/lib/api/categories';
 import { getCities } from '@/lib/api/cities';
 import type { CategoryDto, CityDto, ProductDto, ProductImageDto } from '@bun-bun/shared';
@@ -48,8 +45,12 @@ export default function SellerCreateProductPage() {
   const isSeller = user?.role === 'SELLER';
 
   useEffect(() => {
-    getCategories().then(setCategories).catch(() => {});
-    getCities().then(setCities).catch(() => {});
+    getCategories()
+      .then(setCategories)
+      .catch(() => {});
+    getCities()
+      .then(setCities)
+      .catch(() => {});
   }, []);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -87,9 +88,7 @@ export default function SellerCreateProductPage() {
     const validation = createProductSchema.safeParse(payload);
     if (!validation.success) {
       setError(
-        t('validationError') +
-          ': ' +
-          validation.error.issues.map((i) => i.message).join(', '),
+        t('validationError') + ': ' + validation.error.issues.map((i) => i.message).join(', '),
       );
       return;
     }
@@ -127,8 +126,7 @@ export default function SellerCreateProductPage() {
 
   // ── Helpers ────────────────────────────────────────────────
 
-  const categoryName =
-    categories.find((c) => c.id === categoryId)?.name || categoryId;
+  const categoryName = categories.find((c) => c.id === categoryId)?.name || categoryId;
 
   const getCityName = (cityId: string) => {
     const c = cities.find((ci) => ci.id === cityId);
@@ -136,37 +134,26 @@ export default function SellerCreateProductPage() {
     return locale === 'ro' ? c.nameRo : c.nameRu;
   };
 
-  const getTitle = (p: ProductDto) =>
-    locale === 'ro' ? p.titleRo : p.titleRu;
+  const getTitle = (p: ProductDto) => (locale === 'ro' ? p.titleRo : p.titleRu);
 
-  const getDescription = (p: ProductDto) =>
-    locale === 'ro' ? p.descriptionRo : p.descriptionRu;
+  const getDescription = (p: ProductDto) => (locale === 'ro' ? p.descriptionRo : p.descriptionRu);
 
   return (
-    <div className="max-w-[600px] mx-auto">
-      <Link
-        href="/seller/products"
-        className="text-gray-600 no-underline hover:text-gray-800"
-      >
+    <div className="max-w-[600px] mx-auto ">
+      <Link href="/seller/products" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
       <h1 className="mt-2 mb-6">{t('create')}</h1>
 
       <Stepper steps={stepLabels} currentStep={step} />
 
-      {error && (
-        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">{error}</p>}
 
       {/* ── Step 1: Product Details ────────────────────────────── */}
       {step === 0 && (
         <form onSubmit={handleCreateProduct} className="flex flex-col gap-4">
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('titleFieldRo')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('titleFieldRo')}</label>
             <input
               type="text"
               value={titleRo}
@@ -176,9 +163,7 @@ export default function SellerCreateProductPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('titleFieldRu')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('titleFieldRu')}</label>
             <input
               type="text"
               value={titleRu}
@@ -188,9 +173,7 @@ export default function SellerCreateProductPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('descriptionFieldRo')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('descriptionFieldRo')}</label>
             <textarea
               value={descriptionRo}
               onChange={(e) => setDescriptionRo(e.target.value)}
@@ -200,9 +183,7 @@ export default function SellerCreateProductPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('descriptionFieldRu')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('descriptionFieldRu')}</label>
             <textarea
               value={descriptionRu}
               onChange={(e) => setDescriptionRu(e.target.value)}
@@ -212,9 +193,7 @@ export default function SellerCreateProductPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('priceField')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('priceField')}</label>
             <input
               type="number"
               value={price}
@@ -226,19 +205,11 @@ export default function SellerCreateProductPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('cityField')}
-            </label>
-            <CitySelect
-              value={city}
-              onChange={setCity}
-              placeholder={t('selectCity')}
-            />
+            <label className="block mb-1 font-semibold text-sm">{t('cityField')}</label>
+            <CitySelect value={city} onChange={setCity} placeholder={t('selectCity')} />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('categoryField')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('categoryField')}</label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
@@ -267,12 +238,7 @@ export default function SellerCreateProductPage() {
       {/* ── Step 2: Upload Photos ──────────────────────────────── */}
       {step === 1 && product && (
         <div className="flex flex-col gap-6">
-          <ImageUploader
-            productId={product.id}
-            images={images}
-            onImagesChange={setImages}
-            t={t}
-          />
+          <ImageUploader productId={product.id} images={images} onImagesChange={setImages} t={t} />
 
           <div className="flex gap-3">
             <button

@@ -86,7 +86,7 @@ export default function AdminUsersPage() {
   );
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <h1 className="mb-4">{t('title')}</h1>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}

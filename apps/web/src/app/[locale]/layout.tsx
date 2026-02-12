@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { Providers } from './providers';
 import { NavBar } from './navbar';
+import { DeliveryTopBanner } from '@/components/home/DeliveryTopBanner';
 import '../globals.css';
 
 type Props = {
@@ -17,9 +18,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
-  const locale = rawLocale && routing.locales.includes(rawLocale as any)
-    ? rawLocale
-    : routing.defaultLocale;
+  const locale =
+    rawLocale && routing.locales.includes(rawLocale as any) ? rawLocale : routing.defaultLocale;
   const messages = await getMessages({ locale });
   const metadata = messages.metadata as Record<string, string>;
   return {
@@ -30,9 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale: rawLocale } = await params;
-  const locale = rawLocale && routing.locales.includes(rawLocale as any)
-    ? rawLocale
-    : routing.defaultLocale;
+  const locale =
+    rawLocale && routing.locales.includes(rawLocale as any) ? rawLocale : routing.defaultLocale;
   const messages = await getMessages({ locale });
 
   return (
@@ -41,9 +40,10 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <header>
+              <DeliveryTopBanner />
               <NavBar />
             </header>
-            <main className="p-8">{children}</main>
+            <main>{children}</main>
           </Providers>
         </NextIntlClientProvider>
       </body>

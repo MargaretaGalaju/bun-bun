@@ -69,7 +69,7 @@ export default function ProductDetailPage() {
   const cityDisplay = product.city ? getCityName(product.city, cities, locale) : null;
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <Link href="/products" className="text-gray-600 no-underline">
         {t('backToCatalog')}
       </Link>

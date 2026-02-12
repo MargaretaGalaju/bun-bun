@@ -79,7 +79,9 @@ export default function OrdersPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [authLoading, isBuyer, tc]);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -107,7 +109,7 @@ export default function OrdersPage() {
   }
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <h1 style={{ marginBottom: '1rem' }}>{t('title')}</h1>
 
       {isSuccess && (
@@ -126,7 +128,9 @@ export default function OrdersPage() {
       )}
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}>
+        <p
+          style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}
+        >
           {error}
         </p>
       )}
@@ -224,15 +228,26 @@ export default function OrdersPage() {
                   <tbody>
                     {order.items.map((item) => (
                       <tr key={item.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{locale === 'ro' ? item.productTitleRo : item.productTitleRu}</td>
+                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>
+                          {locale === 'ro' ? item.productTitleRo : item.productTitleRu}
+                        </td>
                         <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{item.qty}</td>
-                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>{item.priceSnapshot.toFixed(2)} $</td>
+                        <td style={{ padding: '0.4rem', fontSize: '0.9rem' }}>
+                          {item.priceSnapshot.toFixed(2)} $
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
 
-                <p style={{ textAlign: 'right', fontWeight: 600, marginTop: '0.5rem', fontSize: '0.9rem' }}>
+                <p
+                  style={{
+                    textAlign: 'right',
+                    fontWeight: 600,
+                    marginTop: '0.5rem',
+                    fontSize: '0.9rem',
+                  }}
+                >
                   {t('orderTotal')}: {order.total.toFixed(2)} $
                 </p>
               </div>

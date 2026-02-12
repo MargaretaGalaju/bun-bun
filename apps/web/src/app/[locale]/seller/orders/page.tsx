@@ -59,7 +59,9 @@ export default function SellerOrdersPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [authLoading, isSeller, tc]);
 
   if (authLoading) return <p>{tc('loading')}</p>;
@@ -87,20 +89,20 @@ export default function SellerOrdersPage() {
   }
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <h1 style={{ marginBottom: '1.5rem' }}>{t('title')}</h1>
 
       {error && (
-        <p style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}>
+        <p
+          style={{ color: '#e53e3e', padding: '1rem', background: '#fff5f5', borderRadius: '8px' }}
+        >
           {error}
         </p>
       )}
 
       {loading && <p>{tc('loading')}</p>}
 
-      {!loading && orders.length === 0 && !error && (
-        <p style={{ color: '#888' }}>{t('empty')}</p>
-      )}
+      {!loading && orders.length === 0 && !error && <p style={{ color: '#888' }}>{t('empty')}</p>}
 
       {orders.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -120,8 +122,12 @@ export default function SellerOrdersPage() {
             {orders.map((o) => (
               <tr key={o.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
                 <td style={{ padding: '0.75rem' }}>{o.buyer.name}</td>
-                <td style={{ padding: '0.75rem', fontSize: '0.9rem', color: '#555' }}>{o.buyer.email}</td>
-                <td style={{ padding: '0.75rem', fontSize: '0.9rem', color: '#555' }}>{o.buyer.phone || '—'}</td>
+                <td style={{ padding: '0.75rem', fontSize: '0.9rem', color: '#555' }}>
+                  {o.buyer.email}
+                </td>
+                <td style={{ padding: '0.75rem', fontSize: '0.9rem', color: '#555' }}>
+                  {o.buyer.phone || '—'}
+                </td>
                 <td style={{ padding: '0.75rem', fontSize: '0.9rem' }}>
                   {new Date(o.createdAt).toLocaleDateString()}
                 </td>

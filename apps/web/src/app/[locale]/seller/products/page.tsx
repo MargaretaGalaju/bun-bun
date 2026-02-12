@@ -84,7 +84,7 @@ export default function SellerProductsPage() {
   }
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1>{t('title')}</h1>
         <Link

@@ -3,8 +3,23 @@
     "title": "Bine ați venit la BunBun",
     "greeting": "Salut, {{name}}! ({{role}})",
     "subtitle": "Tot ce aveți nevoie — într-un singur loc.",
+    "heroTitle": "Totul pentru familia ta",
+    "heroSubtitle": "Cutie Family Essential gata făcută cu produse proaspete pentru toată săptămâna",
+    "heroCta": "Apăsați pentru a descoperi",
     "browse": "Răsfoiți produsele",
-    "profile": "Profilul meu"
+    "profile": "Profilul meu",
+    "searchPlaceholder": "Căutare produse sau ferme",
+    "ourProducts": "Produsele noastre",
+    "ourFarms": "Fermele noastre",
+    "popularProducts": "Produse populare",
+    "showAllProducts": "Afișează toate produsele",
+    "forItem": "buc.",
+    "for500g": "la 500 g",
+    "deliveryOn": "13 februarie",
+    "popularCategories": "Categorii populare",
+    "readMore": "Citește mai mult",
+    "banner2Headline": "Vești mari!",
+    "banner2Body": "Din 1 septembrie mai multe zile de livrare și extindere în toată țara!"
   },
   "login": {
     "title": "Autentificare",
@@ -26,12 +41,37 @@
   },
   "profile": {
     "logout": "Ieșire",
-    "language": "Limbă"
+    "language": "Limbă",
+    "guestTitle": "Autentificați-vă sau înregistrați-vă",
+    "loginRegister": "Autentificare / Înregistrare"
+  },
+  "cart": {
+    "empty": "Coșul este gol",
+    "goToCatalogue": "La catalog"
   },
   "products": {
     "title": "Produse",
     "loadError": "Nu s-au putut încărca produsele. API-ul funcționează?",
-    "empty": "Nu sunt produse disponibile încă."
+    "empty": "Nu sunt produse disponibile încă.",
+    "searchPlaceholder": "Caut ceva...",
+    "sort": "Sortare",
+    "filter": "Filtre",
+    "sortBy": "Sortare după",
+    "sortNewest": "Cele mai noi",
+    "sortOldest": "Cele mai vechi",
+    "sortPriceAsc": "Preț crescător",
+    "sortPriceDesc": "Preț descrescător",
+    "allCategories": "Toate categoriile",
+    "allCities": "Toate orașele",
+    "categories": "Categorii",
+    "city": "Oraș",
+    "filters": "Filtre",
+    "clearAll": "Șterge tot",
+    "noFilters": "fără filtre",
+    "filtersActive": "filtre active",
+    "showProducts": "Afișează {{count}} produse",
+    "weFoundProducts": "Am găsit {{count}} produse",
+    "done": "Gata"
   },
   "productDetails": {
     "loadError": "Nu s-a putut încărca produsul.",
@@ -41,6 +81,9 @@
     "marketplace": "BunBun",
     "products": "Produse",
     "productDetails": "Detalii produs",
-    "profile": "Profil"
+    "profile": "Profil",
+    "main": "Principal",
+    "catalogue": "Catalog",
+    "cart": "Coș"
   }
 }

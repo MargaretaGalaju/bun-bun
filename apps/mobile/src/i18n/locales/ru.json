@@ -3,8 +3,23 @@
     "title": "Добро пожаловать в BunBun",
     "greeting": "Привет, {{name}}! ({{role}})",
     "subtitle": "Всё, что нужно — в одном месте.",
+    "heroTitle": "Всё для вашей семьи",
+    "heroSubtitle": "Готовая Family Essential коробка со свежими продуктами на всю неделю",
+    "heroCta": "Нажмите, чтобы узнать",
     "browse": "Смотреть товары",
-    "profile": "Мой профиль"
+    "profile": "Мой профиль",
+    "searchPlaceholder": "Поиск по товарам или фермам",
+    "ourProducts": "Наши товары",
+    "ourFarms": "Наши фермы",
+    "popularProducts": "Популярные товары",
+    "showAllProducts": "Показать все товары",
+    "forItem": "за шт.",
+    "for500g": "за 500 г",
+    "deliveryOn": "13 февраля",
+    "popularCategories": "Популярные категории",
+    "readMore": "Подробнее",
+    "banner2Headline": "Большие новости!",
+    "banner2Body": "С 1 сентября больше дней доставки и расширение по всей стране!"
   },
   "login": {
     "title": "Вход",
@@ -26,12 +41,37 @@
   },
   "profile": {
     "logout": "Выйти",
-    "language": "Язык"
+    "language": "Язык",
+    "guestTitle": "Войдите или зарегистрируйтесь",
+    "loginRegister": "Вход / Регистрация"
+  },
+  "cart": {
+    "empty": "Корзина пуста",
+    "goToCatalogue": "В каталог"
   },
   "products": {
     "title": "Товары",
     "loadError": "Не удалось загрузить товары. API запущен?",
-    "empty": "Товаров пока нет."
+    "empty": "Товаров пока нет.",
+    "searchPlaceholder": "Ищу что-то...",
+    "sort": "Сортировка",
+    "filter": "Фильтры",
+    "sortBy": "Сортировать по",
+    "sortNewest": "Сначала новые",
+    "sortOldest": "Сначала старые",
+    "sortPriceAsc": "Цена по возрастанию",
+    "sortPriceDesc": "Цена по убыванию",
+    "allCategories": "Все категории",
+    "allCities": "Все города",
+    "categories": "Категории",
+    "city": "Город",
+    "filters": "Фильтры",
+    "clearAll": "Сбросить всё",
+    "noFilters": "без фильтров",
+    "filtersActive": "фильтры применены",
+    "showProducts": "Показать {{count}} товаров",
+    "weFoundProducts": "Найдено {{count}} товаров",
+    "done": "Готово"
   },
   "productDetails": {
     "loadError": "Не удалось загрузить товар.",
@@ -41,6 +81,9 @@
     "marketplace": "BunBun",
     "products": "Товары",
     "productDetails": "Детали товара",
-    "profile": "Профиль"
+    "profile": "Профиль",
+    "main": "Главная",
+    "catalogue": "Каталог",
+    "cart": "Корзина"
   }
 }

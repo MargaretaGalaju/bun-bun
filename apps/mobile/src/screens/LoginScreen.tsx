@@ -12,12 +12,14 @@ import {
   Platform,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 import { authLoginSchema, authRegisterSchema } from '@bun-bun/shared';
 import { useAuth } from '../lib/auth/AuthContext';
 
 export function LoginScreen() {
   const { login, register } = useAuth();
   const { t } = useTranslation();
+  const navigation = useNavigation();
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,28 +31,42 @@ export function LoginScreen() {
     if (isRegister) {
       const parsed = authRegisterSchema.safeParse({ email, password, name, role });
       if (!parsed.success) {
-        Alert.alert(t('login.validationError'), parsed.error.errors[0]?.message || t('login.invalidInput'));
+        Alert.alert(
+          t('login.validationError'),
+          parsed.error.errors[0]?.message || t('login.invalidInput'),
+        );
         return;
       }
       setSubmitting(true);
       try {
         await register(parsed.data);
+        navigation.goBack();
       } catch (err: unknown) {
-        Alert.alert(t('login.registerFailed'), err instanceof Error ? err.message : t('login.unknownError'));
+        Alert.alert(
+          t('login.registerFailed'),
+          err instanceof Error ? err.message : t('login.unknownError'),
+        );
       } finally {
         setSubmitting(false);
       }
     } else {
       const parsed = authLoginSchema.safeParse({ email, password });
       if (!parsed.success) {
-        Alert.alert(t('login.validationError'), parsed.error.errors[0]?.message || t('login.invalidInput'));
+        Alert.alert(
+          t('login.validationError'),
+          parsed.error.errors[0]?.message || t('login.invalidInput'),
+        );
         return;
       }
       setSubmitting(true);
       try {
         await login(parsed.data);
+        navigation.goBack();
       } catch (err: unknown) {
-        Alert.alert(t('login.loginFailed'), err instanceof Error ? err.message : t('login.unknownError'));
+        Alert.alert(
+          t('login.loginFailed'),
+          err instanceof Error ? err.message : t('login.unknownError'),
+        );
       } finally {
         setSubmitting(false);
       }
@@ -63,9 +79,7 @@ export function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>
-          {isRegister ? t('login.registerTitle') : t('login.title')}
-        </Text>
+        <Text style={styles.title}>{isRegister ? t('login.registerTitle') : t('login.title')}</Text>
 
         {isRegister && (
           <TextInput
@@ -130,10 +144,7 @@ export function LoginScreen() {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.switchButton}
-          onPress={() => setIsRegister(!isRegister)}
-        >
+        <TouchableOpacity style={styles.switchButton} onPress={() => setIsRegister(!isRegister)}>
           <Text style={styles.switchText}>
             {isRegister ? t('login.switchToLogin') : t('login.switchToRegister')}
           </Text>

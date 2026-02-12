@@ -4,19 +4,29 @@
     "slug": "marketplace-mobile",
     "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#016730"
     },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/expo-splash-screen.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#016730"
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.marketplace.mobile"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#016730"
       },
       "package": "com.marketplace.mobile"
     }

@@ -1,9 +1,13 @@
 import type { RefreshTokenResponse } from '@bun-bun/shared';
+import { Platform } from 'react-native';
 import { getAccessToken, getRefreshToken, saveTokens, clearTokens } from '../auth/secureStore';
 
-// For local development, use your machine's IP address instead of localhost
-// when testing on a physical device.
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+const PRODUCTION_API_URL = 'https://api.bunbun.market';
+
+// Native (iOS/Android) uses prod unless EXPO_PUBLIC_API_URL is set; web defaults to localhost for dev.
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL ??
+  (Platform.OS === 'web' ? 'http://localhost:3000' : PRODUCTION_API_URL);
 
 export class ApiError extends Error {
   constructor(
@@ -26,8 +30,19 @@ export function onAuthFailure(cb: () => void) {
 
 // ── Core fetch ──────────────────────────────────────────────
 
+function devLog(method: string, url: string, status?: number, duration?: number) {
+  if (__DEV__) {
+    const statusStr = status != null ? ` ${status}` : '';
+    const durationStr = duration != null ? ` ${duration}ms` : '';
+    // eslint-disable-next-line no-console
+    console.log(`[API] ${method} ${url}${statusStr}${durationStr}`);
+  }
+}
+
 async function rawFetch<T>(path: string, options?: RequestInit, token?: string | null): Promise<T> {
   const url = `${API_BASE_URL}${path}`;
+  const method = (options?.method ?? 'GET').toUpperCase();
+  const start = __DEV__ ? Date.now() : 0;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -44,6 +59,10 @@ async function rawFetch<T>(path: string, options?: RequestInit, token?: string |
     headers,
     // No credentials: 'include' for mobile — no cookies
   });
+
+  if (__DEV__) {
+    devLog(method, url, res.status, Date.now() - start);
+  }
 
   if (!res.ok) {
     let body: unknown;

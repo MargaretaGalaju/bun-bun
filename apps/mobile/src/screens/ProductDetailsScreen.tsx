@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation';
+import type { CatalogueStackParamList } from '../navigation';
 import type { ProductDto } from '@bun-bun/shared';
 import { getProductById } from '../lib/api/products';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ProductDetails'>;
+type Props = NativeStackScreenProps<CatalogueStackParamList, 'ProductDetails'>;
 
 export function ProductDetailsScreen({ route }: Props) {
   const { productId } = route.params;
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRo = i18n.language === 'ro';
 
   useEffect(() => {
     getProductById(productId)
@@ -40,10 +41,10 @@ export function ProductDetailsScreen({ route }: Props) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{product.title}</Text>
+      <Text style={styles.title}>{isRo ? product.titleRo : product.titleRu}</Text>
       <Text style={styles.price}>${product.price.toFixed(2)}</Text>
       <Text style={styles.status}>{product.status}</Text>
-      <Text style={styles.description}>{product.description}</Text>
+      <Text style={styles.description}>{isRo ? product.descriptionRo : product.descriptionRu}</Text>
     </ScrollView>
   );
 }

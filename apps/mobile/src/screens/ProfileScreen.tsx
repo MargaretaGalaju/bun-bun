@@ -1,13 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { ProfileStackParamList } from '../navigation';
 import { useAuth } from '../lib/auth/AuthContext';
 
-export function ProfileScreen() {
+type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
+
+export function ProfileScreen({ navigation }: Props) {
   const { user, logout } = useAuth();
   const { t, i18n } = useTranslation();
 
-  if (!user) return null;
+  if (!user) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.guestCard}>
+          <Text style={styles.guestTitle}>{t('profile.guestTitle')}</Text>
+          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.loginButtonText}>{t('profile.loginRegister')}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
   const currentLang = i18n.language;
 
@@ -15,9 +30,7 @@ export function ProfileScreen() {
     <View style={styles.container}>
       <View style={styles.card}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
-            {user.name.charAt(0).toUpperCase()}
-          </Text>
+          <Text style={styles.avatarText}>{user.name.charAt(0).toUpperCase()}</Text>
         </View>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.email}>{user.email}</Text>
@@ -26,7 +39,6 @@ export function ProfileScreen() {
         </View>
       </View>
 
-      {/* Language picker */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>{t('profile.language')}</Text>
         <View style={styles.langRow}>
@@ -61,6 +73,28 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: '#fff',
+  },
+  guestCard: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  guestTitle: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  loginButton: {
+    backgroundColor: '#0070f3',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 8,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   card: {
     alignItems: 'center',

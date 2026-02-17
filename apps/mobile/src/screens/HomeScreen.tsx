@@ -176,11 +176,7 @@ export function HomeScreen({ navigation }: Props) {
         ))}
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.banner2Wrap}
-        activeOpacity={1}
-        onPress={openCatalogue}
-      >
+      <TouchableOpacity style={styles.banner2Wrap} activeOpacity={1} onPress={openCatalogue}>
         <View style={styles.banner2Left}>
           <Text style={styles.banner2Headline}>{t('home.banner2Headline')}</Text>
           <Text style={styles.banner2Body}>{t('home.banner2Body')}</Text>
@@ -189,11 +185,7 @@ export function HomeScreen({ navigation }: Props) {
           </View>
         </View>
         <View style={styles.banner2ImageWrap}>
-          <Image
-            source={{ uri: BANNER_2_URI }}
-            style={styles.banner2Image}
-            resizeMode="cover"
-          />
+          <Image source={{ uri: BANNER_2_URI }} style={styles.banner2Image} resizeMode="cover" />
         </View>
       </TouchableOpacity>
 

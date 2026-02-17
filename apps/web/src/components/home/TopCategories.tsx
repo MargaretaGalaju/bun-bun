@@ -20,24 +20,31 @@ export function TopCategories() {
 
   useEffect(() => {
     getCategories()
-      .then((list) => setCategories(list.slice(0, 8)))
+      .then((list) =>
+        setCategories(
+          list
+            .filter((c) => !c.parentId)
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, 6),
+        ),
+      )
       .catch(() => {});
   }, []);
 
-  const display = categories.slice(0, 8);
+  const display = categories;
 
   return (
     <section className="w-full bg-gray-50 border-b border-gray-100 py-8">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-xl font-bold text-gray-900 mb-6">{t('topCategories')}</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {display.map((cat) => (
             <Link
               key={cat.id}
               href={`/products?categoryId=${cat.id}`}
-              className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-md transition-all no-underline text-inherit"
+              className="flex flex-col items-center gap-2 p-2 rounded-xl hover:border-green-500 hover:shadow-md transition-all no-underline text-inherit"
             >
-              <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100 flex-shrink-0">
+              <div className="overflow-hidden rounded-full bg-gray-100 flex-shrink-0">
                 {cat.imageUrl ? (
                   <img
                     src={cat.imageUrl}

@@ -61,6 +61,7 @@ model Category {
   slug     String  @unique
   imageUrl String?
   parentId String?
+  rating   Int     @default(1)
 
   parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
   children Category[] @relation("CategoryTree")

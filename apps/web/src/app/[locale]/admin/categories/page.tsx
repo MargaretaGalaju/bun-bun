@@ -17,6 +17,7 @@ export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<AdminCategoryDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [filter, setFilter] = useState<'all' | 'top'>('all');
 
   useEffect(() => {
     if (!authLoading && user?.role !== 'ADMIN') {
@@ -46,6 +47,9 @@ export default function AdminCategoriesPage() {
     return parent?.name ?? '—';
   }
 
+  const filteredCategories =
+    filter === 'top' ? categories.filter((c) => c.parentId === null) : categories;
+
   async function handleDelete(id: string) {
     if (!window.confirm(t('confirmDelete'))) return;
     try {
@@ -71,9 +75,32 @@ export default function AdminCategoriesPage() {
         </Link>
       </div>
 
+      <div className="mb-4 flex gap-2">
+        <button
+          onClick={() => setFilter('all')}
+          className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+            filter === 'all'
+              ? 'bg-green-700 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {t('filterAll')}
+        </button>
+        <button
+          onClick={() => setFilter('top')}
+          className={`px-4 py-2 rounded text-sm font-medium transition-colors ${
+            filter === 'top'
+              ? 'bg-green-700 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {t('filterTop')}
+        </button>
+      </div>
+
       {error && <p className="text-red-600 mb-4">{error}</p>}
 
-      {categories.length === 0 ? (
+      {filteredCategories.length === 0 ? (
         <p className="text-gray-500">{t('noCategories')}</p>
       ) : (
         <table className="w-full border-collapse">
@@ -84,11 +111,12 @@ export default function AdminCategoriesPage() {
               <th className="p-2">{t('nameRo')}</th>
               <th className="p-2">{t('image')}</th>
               <th className="p-2">{t('parent')}</th>
+              <th className="p-2">{t('rating')}</th>
               <th className="p-2">{tc('actions')}</th>
             </tr>
           </thead>
           <tbody>
-            {categories.map((cat) => (
+            {filteredCategories.map((cat) => (
               <tr key={cat.id} className="border-b border-gray-200">
                 <td className="p-2">{cat.name}</td>
                 <td className={`p-2 ${cat.nameRu ? '' : 'text-gray-400'}`}>{cat.nameRu || '—'}</td>
@@ -101,6 +129,7 @@ export default function AdminCategoriesPage() {
                   )}
                 </td>
                 <td className="p-2">{getParentName(cat.parentId)}</td>
+                <td className="p-2">{cat.rating}</td>
                 <td className="p-2">
                   <div className="flex gap-1">
                     <Link

@@ -23,6 +23,7 @@ export class CategoriesController {
       slug: c.slug,
       imageUrl: c.imageUrl,
       parentId: c.parentId,
+      rating: c.rating,
     }));
   }
 }

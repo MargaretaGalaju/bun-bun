@@ -18,6 +18,7 @@ export function createAdminCategory(data: {
   nameRo?: string;
   imageUrl?: string;
   parentId?: string;
+  rating?: number;
 }): Promise<AdminCategoryDto> {
   return apiFetch<AdminCategoryDto>('/admin/categories', {
     method: 'POST',
@@ -75,25 +76,17 @@ export function getAdminUsers(params?: {
   if (params?.page) qs.set('page', String(params.page));
   if (params?.pageSize) qs.set('pageSize', String(params.pageSize));
   const query = qs.toString();
-  return apiFetch<PagedResponse<AdminUserDto>>(
-    `/admin/users${query ? `?${query}` : ''}`,
-  );
+  return apiFetch<PagedResponse<AdminUserDto>>(`/admin/users${query ? `?${query}` : ''}`);
 }
 
-export function blockAdminUser(
-  id: string,
-  isBlocked: boolean,
-): Promise<AdminUserDto> {
+export function blockAdminUser(id: string, isBlocked: boolean): Promise<AdminUserDto> {
   return apiFetch<AdminUserDto>(`/admin/users/${id}/block`, {
     method: 'PATCH',
     body: JSON.stringify({ isBlocked }),
   });
 }
 
-export function changeAdminUserRole(
-  id: string,
-  role: string,
-): Promise<AdminUserDto> {
+export function changeAdminUserRole(id: string, role: string): Promise<AdminUserDto> {
   return apiFetch<AdminUserDto>(`/admin/users/${id}/role`, {
     method: 'PATCH',
     body: JSON.stringify({ role }),
@@ -116,19 +109,14 @@ export function getAdminProducts(params?: {
   if (params?.page) qs.set('page', String(params.page));
   if (params?.pageSize) qs.set('pageSize', String(params.pageSize));
   const query = qs.toString();
-  return apiFetch<PagedResponse<AdminProductDto>>(
-    `/admin/products${query ? `?${query}` : ''}`,
-  );
+  return apiFetch<PagedResponse<AdminProductDto>>(`/admin/products${query ? `?${query}` : ''}`);
 }
 
 export function getAdminProduct(id: string): Promise<AdminProductDto> {
   return apiFetch<AdminProductDto>(`/admin/products/${id}`);
 }
 
-export function changeAdminProductStatus(
-  id: string,
-  status: string,
-): Promise<AdminProductDto> {
+export function changeAdminProductStatus(id: string, status: string): Promise<AdminProductDto> {
   return apiFetch<AdminProductDto>(`/admin/products/${id}/status`, {
     method: 'PATCH',
     body: JSON.stringify({ status }),

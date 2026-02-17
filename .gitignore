@@ -7,6 +7,8 @@ dist/
 .turbo/
 out/
 .pnpm-store/*
+*.tsbuildinfo
+apps/web/tsconfig.tsbuildinfo
 
 # Expo
 .expo/

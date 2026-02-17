@@ -28,6 +28,7 @@ export class AdminCategoriesService {
       slug: c.slug,
       imageUrl: c.imageUrl,
       parentId: c.parentId,
+      rating: c.rating,
     }));
   }
 
@@ -48,6 +49,7 @@ export class AdminCategoriesService {
         slug,
         imageUrl: dto.imageUrl || null,
         parentId: dto.parentId || null,
+        rating: dto.rating ?? 1,
       },
     });
 
@@ -59,6 +61,7 @@ export class AdminCategoriesService {
       slug: category.slug,
       imageUrl: category.imageUrl,
       parentId: category.parentId,
+      rating: category.rating,
     };
   }
 
@@ -87,6 +90,7 @@ export class AdminCategoriesService {
     if (dto.nameRo !== undefined) data.nameRo = dto.nameRo;
     if (dto.imageUrl !== undefined) data.imageUrl = dto.imageUrl;
     if (dto.parentId !== undefined) data.parentId = dto.parentId;
+    if (dto.rating !== undefined) data.rating = dto.rating;
 
     const category = await this.prisma.category.update({
       where: { id },
@@ -101,6 +105,7 @@ export class AdminCategoriesService {
       slug: category.slug,
       imageUrl: category.imageUrl,
       parentId: category.parentId,
+      rating: category.rating,
     };
   }
 

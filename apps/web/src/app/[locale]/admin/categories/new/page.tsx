@@ -4,11 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter, Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
-import {
-  createAdminCategory,
-  updateAdminCategory,
-  getAdminCategories,
-} from '@/lib/api/admin';
+import { createAdminCategory, updateAdminCategory, getAdminCategories } from '@/lib/api/admin';
 import type { AdminCategoryDto } from '@bun-bun/shared';
 import Stepper from '@/components/Stepper';
 import CategoryImageUploader from '@/components/CategoryImageUploader';
@@ -30,6 +26,7 @@ export default function AdminCreateCategoryPage() {
   const [nameRu, setNameRu] = useState('');
   const [nameRo, setNameRo] = useState('');
   const [parentId, setParentId] = useState('');
+  const [rating, setRating] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +40,9 @@ export default function AdminCreateCategoryPage() {
 
   useEffect(() => {
     if (isAdmin) {
-      getAdminCategories().then(setCategories).catch(() => {});
+      getAdminCategories()
+        .then(setCategories)
+        .catch(() => {});
     }
   }, [isAdmin]);
 
@@ -72,6 +71,7 @@ export default function AdminCreateCategoryPage() {
         nameRu: nameRu.trim() || undefined,
         nameRo: nameRo.trim() || undefined,
         parentId: parentId || undefined,
+        rating: rating,
       });
       setCategory(created);
       setStep(1);
@@ -116,29 +116,20 @@ export default function AdminCreateCategoryPage() {
 
   return (
     <div className="max-w-[600px] mx-auto">
-      <Link
-        href="/admin/categories"
-        className="text-gray-600 no-underline hover:text-gray-800"
-      >
+      <Link href="/admin/categories" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
       <h1 className="mt-2 mb-6">{t('add')}</h1>
 
       <Stepper steps={stepLabels} currentStep={step} />
 
-      {error && (
-        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">{error}</p>}
 
       {/* ── Step 1: Category Details ───────────────────────────── */}
       {step === 0 && (
         <form onSubmit={handleCreateCategory} className="flex flex-col gap-4">
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('name')} *
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('name')} *</label>
             <input
               type="text"
               value={name}
@@ -148,9 +139,7 @@ export default function AdminCreateCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('nameRu')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('nameRu')}</label>
             <input
               type="text"
               value={nameRu}
@@ -159,9 +148,7 @@ export default function AdminCreateCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('nameRo')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('nameRo')}</label>
             <input
               type="text"
               value={nameRo}
@@ -170,9 +157,7 @@ export default function AdminCreateCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('parent')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('parent')}</label>
             <select
               value={parentId}
               onChange={(e) => setParentId(e.target.value)}
@@ -185,6 +170,17 @@ export default function AdminCreateCategoryPage() {
                 </option>
               ))}
             </select>
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold text-sm">{t('rating')} (1-100)</label>
+            <input
+              type="number"
+              min="1"
+              max="100"
+              value={rating}
+              onChange={(e) => setRating(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+              className="w-full"
+            />
           </div>
 
           <button
@@ -254,14 +250,16 @@ export default function AdminCreateCategoryPage() {
                   <span className="font-medium">{parentName}</span>
                 </div>
               )}
+              <div className="flex justify-between">
+                <span className="text-gray-500">{t('rating')}</span>
+                <span className="font-medium">{category.rating}</span>
+              </div>
             </div>
 
             {/* Image preview */}
             {imageUrl && (
               <div className="mt-4 pt-3 border-t border-gray-100">
-                <span className="text-sm text-gray-500 block mb-2">
-                  {t('image')}
-                </span>
+                <span className="text-sm text-gray-500 block mb-2">{t('image')}</span>
                 <img
                   src={imageUrl}
                   alt=""

@@ -5,10 +5,7 @@ import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRouter, Link } from '@/i18n/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
-import {
-  updateAdminCategory,
-  getAdminCategories,
-} from '@/lib/api/admin';
+import { updateAdminCategory, getAdminCategories } from '@/lib/api/admin';
 import type { AdminCategoryDto } from '@bun-bun/shared';
 import Stepper from '@/components/Stepper';
 import CategoryImageUploader from '@/components/CategoryImageUploader';
@@ -33,6 +30,7 @@ export default function AdminEditCategoryPage() {
   const [nameRu, setNameRu] = useState('');
   const [nameRo, setNameRo] = useState('');
   const [parentId, setParentId] = useState('');
+  const [rating, setRating] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -62,6 +60,7 @@ export default function AdminEditCategoryPage() {
           setNameRu(found.nameRu || '');
           setNameRo(found.nameRo || '');
           setParentId(found.parentId || '');
+          setRating(found.rating);
           setImageUrl(found.imageUrl || null);
         }
       } catch {
@@ -71,7 +70,9 @@ export default function AdminEditCategoryPage() {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [isAdmin, id, tc]);
 
   if (authLoading || loadingCategory) return <p>{tc('loading')}</p>;
@@ -109,8 +110,8 @@ export default function AdminEditCategoryPage() {
       payload.nameRu = nameRu.trim() || undefined;
     if ((nameRo.trim() || undefined) !== (category!.nameRo || undefined))
       payload.nameRo = nameRo.trim() || undefined;
-    if ((parentId || null) !== (category!.parentId || null))
-      payload.parentId = parentId || null;
+    if ((parentId || null) !== (category!.parentId || null)) payload.parentId = parentId || null;
+    if (rating !== category!.rating) payload.rating = rating;
 
     if (Object.keys(payload).length === 0) {
       setStep(1);
@@ -151,33 +152,25 @@ export default function AdminEditCategoryPage() {
 
   // ── Helpers ─────────────────────────────────────────────────
 
-  const parentName = categories.find((c) => c.id === (category?.parentId || parentId))?.name || null;
+  const parentName =
+    categories.find((c) => c.id === (category?.parentId || parentId))?.name || null;
 
   return (
     <div className="max-w-[600px] mx-auto">
-      <Link
-        href="/admin/categories"
-        className="text-gray-600 no-underline hover:text-gray-800"
-      >
+      <Link href="/admin/categories" className="text-gray-600 no-underline hover:text-gray-800">
         ← {t('title')}
       </Link>
       <h1 className="mt-2 mb-6">{t('editTitle')}</h1>
 
       <Stepper steps={stepLabels} currentStep={step} />
 
-      {error && (
-        <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-red-600 text-sm bg-red-50 rounded-md px-3 py-2 mb-4">{error}</p>}
 
       {/* ── Step 1: Category Details ───────────────────────────── */}
       {step === 0 && (
         <form onSubmit={handleUpdateDetails} className="flex flex-col gap-4">
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('name')} *
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('name')} *</label>
             <input
               type="text"
               value={name}
@@ -187,9 +180,7 @@ export default function AdminEditCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('nameRu')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('nameRu')}</label>
             <input
               type="text"
               value={nameRu}
@@ -198,9 +189,7 @@ export default function AdminEditCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('nameRo')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('nameRo')}</label>
             <input
               type="text"
               value={nameRo}
@@ -209,9 +198,7 @@ export default function AdminEditCategoryPage() {
             />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-sm">
-              {t('parent')}
-            </label>
+            <label className="block mb-1 font-semibold text-sm">{t('parent')}</label>
             <select
               value={parentId}
               onChange={(e) => setParentId(e.target.value)}
@@ -226,6 +213,17 @@ export default function AdminEditCategoryPage() {
                   </option>
                 ))}
             </select>
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold text-sm">{t('rating')} (1-100)</label>
+            <input
+              type="number"
+              min="1"
+              max="100"
+              value={rating}
+              onChange={(e) => setRating(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+              className="w-full"
+            />
           </div>
 
           <button
@@ -295,14 +293,16 @@ export default function AdminEditCategoryPage() {
                   <span className="font-medium">{parentName}</span>
                 </div>
               )}
+              <div className="flex justify-between">
+                <span className="text-gray-500">{t('rating')}</span>
+                <span className="font-medium">{category.rating}</span>
+              </div>
             </div>
 
             {/* Image preview */}
             {imageUrl && (
               <div className="mt-4 pt-3 border-t border-gray-100">
-                <span className="text-sm text-gray-500 block mb-2">
-                  {t('image')}
-                </span>
+                <span className="text-sm text-gray-500 block mb-2">{t('image')}</span>
                 <img
                   src={imageUrl}
                   alt=""

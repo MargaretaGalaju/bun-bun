@@ -6,4 +6,5 @@ export interface CategoryDto {
   slug: string;
   imageUrl: string | null;
   parentId: string | null;
+  rating: number;
 }

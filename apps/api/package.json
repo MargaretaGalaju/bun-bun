@@ -8,7 +8,11 @@
     "start": "node dist/main",
     "start:prod": "node dist/main",
     "lint": "echo 'lint: api'",
-    "test": "echo 'test: api'"
+    "test": "echo 'test: api'",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.985.0",
@@ -38,6 +42,7 @@
     "@types/node": "^20.0.0",
     "@types/passport-jwt": "^4.0.1",
     "prisma": "^6.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.5.0"
   }
 }

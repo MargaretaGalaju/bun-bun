@@ -10,6 +10,7 @@ export interface AdminCategoryDto {
   slug: string;
   imageUrl: string | null;
   parentId: string | null;
+  rating: number;
 }
 
 // ── Users ───────────────────────────────────────────────────

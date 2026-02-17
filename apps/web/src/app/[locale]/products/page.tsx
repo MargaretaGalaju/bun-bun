@@ -4,19 +4,13 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
-import type { ProductDto, CityDto, CategoryDto } from '@bun-bun/shared';
+import type { ProductDto, CityDto } from '@bun-bun/shared';
 import { listPublicProducts, type PublicProductParams } from '@/lib/api/products';
 import { getCities } from '@/lib/api/cities';
-import { getCategories } from '@/lib/api/categories';
 import { useCart } from '@/features/cart/CartContext';
 import { getProductTitle, getCityName } from '@/lib/localizedProduct';
 import CitySelect from '@/components/CitySelect';
-
-function getCategoryName(cat: CategoryDto, locale: string) {
-  if (locale === 'ru' && cat.nameRu) return cat.nameRu;
-  if (locale === 'ro' && cat.nameRo) return cat.nameRo;
-  return cat.name;
-}
+import { CategoryStrip } from '@/components/CategoryStrip';
 
 function buildProductsSearchParams(q: string, categoryId: string): string {
   const params = new URLSearchParams();
@@ -35,7 +29,6 @@ export default function ProductsPage() {
   const { addItem } = useCart();
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [cities, setCities] = useState<CityDto[]>([]);
-  const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
@@ -57,12 +50,6 @@ export default function ProductsPage() {
   useEffect(() => {
     getCities()
       .then(setCities)
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    getCategories()
-      .then(setCategories)
       .catch(() => {});
   }, []);
 
@@ -109,6 +96,16 @@ export default function ProductsPage() {
     <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <h1 className="text-2xl font-bold mb-4">{t('title')}</h1>
 
+      {/* Visual category filter */}
+      <CategoryStrip
+        activeCategoryId={categoryId || null}
+        onSelect={(id) => {
+          const v = id ?? '';
+          setCategoryId(v);
+          updateProductsUrl(q, v);
+        }}
+      />
+
       {/* Filter bar */}
       <div className="flex flex-wrap gap-3 mb-6 p-4 bg-gray-50 rounded-lg items-end">
         <input
@@ -122,22 +119,6 @@ export default function ProductsPage() {
           }}
           className="flex-1 min-w-[200px]"
         />
-        <select
-          value={categoryId}
-          onChange={(e) => {
-            const v = e.target.value;
-            setCategoryId(v);
-            updateProductsUrl(q, v);
-          }}
-          className="w-48"
-        >
-          <option value="">{t('allCategories')}</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {getCategoryName(cat, locale)}
-            </option>
-          ))}
-        </select>
         <div className="w-48">
           <CitySelect value={city} onChange={setCity} placeholder={t('city')} />
         </div>

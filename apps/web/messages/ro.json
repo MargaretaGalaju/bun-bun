@@ -312,6 +312,7 @@
       "image": "Foto",
       "slug": "Slug",
       "parent": "Părinte",
+      "rating": "Rating",
       "add": "Adaugă categorie",
       "edit": "Editare",
       "delete": "Șterge",
@@ -331,7 +332,9 @@
       "uploadFailed": "Nu s-a putut încărca imaginea",
       "uploading": "Se încarcă...",
       "editTitle": "Editare categorie",
-      "saveChanges": "Salvează modificările"
+      "saveChanges": "Salvează modificările",
+      "filterAll": "Toate categoriile",
+      "filterTop": "Doar categoriile de top"
     },
     "users": {
       "title": "Utilizatori",

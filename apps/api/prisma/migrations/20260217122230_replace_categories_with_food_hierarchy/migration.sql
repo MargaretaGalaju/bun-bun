@@ -1,220 +1,178 @@
--- Clear existing food product data only (preserve users and orders)
+-- Category seed data for bun-bun marketplace
+-- Auto-generated from local database export
+-- Total: 117 categories (14 main + 103 subcategories)
+-- Generated on: 2026-02-17
+
+-- Clear existing data (in correct order to avoid FK violations)
 DELETE FROM product_images;
 DELETE FROM products;
 DELETE FROM categories;
 
--- Insert Main Categories (15 total)
--- 1. Panificație & Patiserie
+-- Main Categories (with images)
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c', 'Panificație & Patiserie', 'Хлебопекарные изделия и выпечка', 'Panificație & Patiserie', 'panificatie-patiserie', NULL, NULL);
+('f6e04fa3-74c1-4394-9992-539c9e38808a', 'Băuturi', 'Напитки', 'Băuturi', 'bauturi', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/f6e04fa3-74c1-4394-9992-539c9e38808a/8c349779-846f-410f-ae5c-775ca11f20d5.png', NULL, 1),
+('33c283d7-a4e1-4592-87bc-565c6aefadef', 'Carne & Produse din Carne', 'Мясо и мясные продукты', 'Carne & Produse din Carne', 'carne-produse-carne', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/33c283d7-a4e1-4592-87bc-565c6aefadef/3c092026-53e9-45b9-82b7-55d893b3bab4.png', NULL, 98),
+('6126b032-c0e2-427f-bdb3-291dd52e864b', 'Cereale & Produse de Moară', 'Зерновые и мукомольные продукты', 'Cereale & Produse de Moară', 'cereale-produse-moara', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/6126b032-c0e2-427f-bdb3-291dd52e864b/59a8f575-c656-4048-9480-1f414fdf2659.png', NULL, 1),
+('398a57db-b9da-4524-af3b-5a150a67f5e0', 'Condimente & Mixuri', 'Специи и пряности', 'Condimente & Mixuri', 'condimente-mixuri', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/398a57db-b9da-4524-af3b-5a150a67f5e0/ce40ab1a-c9f5-4124-8d0f-306cb3565b71.png', NULL, 1),
+('1b9956b7-a6df-433f-875a-31c3833f24e8', 'Conserve & Murături', 'Консервы и соленья', 'Conserve & Murături', 'conserve-muraturi', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/1b9956b7-a6df-433f-875a-31c3833f24e8/7c691159-9055-4431-9beb-517a5b4d65ed.png', NULL, 95),
+('c7492181-fcdf-4940-a3de-f940bca13f17', 'Dulciuri & Gustări', 'Сладости и закуски', 'Dulciuri & Gustări', 'dulciuri-gustari', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/c7492181-fcdf-4940-a3de-f940bca13f17/74d654ea-9c3e-412b-aabe-6de80dcd7eb9.png', NULL, 1),
+('f9e4ebae-05d2-4706-b8bf-78752867482e', 'Fructe & Legume', 'Фрукты и овощи', 'Fructe & Legume', 'fructe-legume', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/f9e4ebae-05d2-4706-b8bf-78752867482e/fbeb66d5-1c48-4cf7-85fb-a8b5d5dea5a3.png', NULL, 100),
+('1d708f63-5712-419e-a135-fecb7e389e32', 'Lactate & Brânzeturi', 'Молочные продукты и сыры', 'Lactate & Brânzeturi', 'lactate-branzeturi', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/1d708f63-5712-419e-a135-fecb7e389e32/00b8b96f-efd5-4663-85e2-c72f6b7b12a7.png', NULL, 99),
+('407f1d14-4595-4070-9ee5-ac849b05eefb', 'Miere & Produse Apicole', 'Мёд и продукты пчеловодства', 'Miere & Produse Apicole', 'miere-produse-apicole', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/407f1d14-4595-4070-9ee5-ac849b05eefb/7f5bf79a-39d4-4675-ae58-2019176114d5.png', NULL, 97),
+('df692b73-2cc4-4bbc-96d1-8aec71be628b', 'Nuci, Semințe & Produse Derivate', 'Орехи, семена и продукты из них', 'Nuci, Semințe & Produse Derivate', 'nuci-seminte-produse', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/df692b73-2cc4-4bbc-96d1-8aec71be628b/6c9faf96-6348-445d-8169-a0ce496dbb5e.png', NULL, 93),
+('3f0475dc-57e3-4166-8639-11a8f45dc3eb', 'Ouă & Produse din Ouă', 'Яйца и яичные продукты', 'Ouă & Produse din Ouă', 'oua-produse-oua', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/3f0475dc-57e3-4166-8639-11a8f45dc3eb/811a0233-7258-4273-891a-8e651153ccaa.png', NULL, 96),
+('e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 'Panificație & Patiserie', 'Хлебопекарные изделия и выпечка', 'Panificație & Patiserie', 'panificatie-patiserie', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/e32a50d1-ae9e-4689-ba23-275ed5fc25f5/5ce2ac64-2a2c-4827-984e-0f4c6ce015f2.png', NULL, 94),
+('d89a0ee1-82ad-4780-949c-dfffdc74d811', 'Pește & Produse din Pește', 'Рыба и рыбные продукты', 'Pește & Produse din Pește', 'peste-produse-peste', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/d89a0ee1-82ad-4780-949c-dfffdc74d811/12851236-5485-498c-b516-0ccfa01f9867.png', NULL, 1),
+('506b2240-02b3-49b9-bd12-ae6eca09e38b', 'Produse Naturale & Dietetice', 'Натуральные и диетические продукты', 'Produse Naturale & Dietetice', 'produse-naturale-dietetice', 'https://pub-82a0121d9a324bf3a27b7bd9e2511bba.r2.dev/categories/506b2240-02b3-49b9-bd12-ae6eca09e38b/0a0cb76d-2380-459d-9491-32e9e3e9088f.png', NULL, 1);
 
 -- Subcategories for Panificație & Patiserie
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('a2d4f6b8-3c5e-4f7a-9b1d-8e2f4c6a9b3d', 'Pâine artizanală', 'Ремесленный хлеб', 'Pâine artizanală', 'paine-artizanala', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('b5e7c9d1-4a6f-5e8b-a2c4-9f3e5d7b1a4e', 'Pâine integrală / cu maia', 'Цельнозерновой хлеб / на закваске', 'Pâine integrală / cu maia', 'paine-integrala-cu-maia', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('c8f1a3e5-5b7d-6f9c-b3d5-a4f6e8c2b5f1', 'Colaci & cozonaci', 'Калачи и куличи', 'Colaci & cozonaci', 'colaci-cozonaci', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('d1e4b6c8-6c8e-7a1d-c4e6-b5d7f9a3c6e2', 'Plăcinte tradiționale', 'Традиционные пироги', 'Plăcinte tradiționale', 'placinte-traditionale', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('e4f7c9d2-7d9f-8b2e-d5f7-c6e8a1b4d7f3', 'Biscuiți & fursecuri', 'Печенье', 'Biscuiți & fursecuri', 'biscuiti-fursecuri', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('f7a1d3e6-8e1a-9c3f-e6a8-d7f9b2c5e8a4', 'Tarte & deserturi de casă', 'Торты и домашние десерты', 'Tarte & deserturi de casă', 'tarte-deserturi-casa', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c'),
-('a9b2c4d7-9f2b-1d4a-f7b9-e8a1c3d6f9b5', 'Produse fără gluten', 'Безглютеновые продукты', 'Produse fără gluten', 'produse-fara-gluten', NULL, '8f3a2b4c-1e5d-4a9f-b8c7-6d2e9f4a1b3c');
-
--- 2. Lactate & Brânzeturi
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6', 'Lactate & Brânzeturi', 'Молочные продукты и сыры', 'Lactate & Brânzeturi', 'lactate-branzeturi', NULL, NULL);
+('e207f1cc-90ed-4e12-b8b4-bdc7174379fb', 'Biscuiți & fursecuri', 'Печенье', 'Biscuiți & fursecuri', 'biscuiti-fursecuri', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('a3e4d783-05eb-4b4a-a052-8151540ebdb9', 'Colaci & cozonaci', 'Калачи и куличи', 'Colaci & cozonaci', 'colaci-cozonaci', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('402984cf-c57c-4d4f-b1f4-746db4a5bc26', 'Plăcinte tradiționale', 'Традиционные пироги', 'Plăcinte tradiționale', 'placinte-traditionale', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('d2455f3d-f1af-44ac-871a-0116473c97da', 'Produse fără gluten', 'Безглютеновые продукты', 'Produse fără gluten', 'produse-fara-gluten', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('90e55415-0346-4328-a66e-63d95a1c1e64', 'Pâine artizanală', 'Ремесленный хлеб', 'Pâine artizanală', 'paine-artizanala', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('e18297b0-fc54-4659-b421-6c2a6c8bfeb5', 'Pâine integrală / cu maia', 'Цельнозерновой хлеб / на закваске', 'Pâine integrală / cu maia', 'paine-integrala-cu-maia', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1),
+('11a89953-d0f5-4f5e-a931-34382dfe8652', 'Tarte & deserturi de casă', 'Торты и домашние десерты', 'Tarte & deserturi de casă', 'tarte-deserturi-casa', NULL, 'e32a50d1-ae9e-4689-ba23-275ed5fc25f5', 1);
 
 -- Subcategories for Lactate & Brânzeturi
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('2d6f8b1e-b4d6-3f6c-b9d2-a1c4e5f8b3d7', 'Brânză de vacă', 'Коровий сыр', 'Brânză de vacă', 'branza-vaca', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('3e7a9c2f-c5e7-4a7d-c1e3-b2d5f6a9c4e8', 'Brânză de oaie', 'Овечий сыр', 'Brânză de oaie', 'branza-oaie', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('4f8b1d3a-d6f8-5b8e-d2f4-c3e6a7b1d5f9', 'Brânză de capră', 'Козий сыр', 'Brânză de capră', 'branza-capra', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('5a9c2e4b-e7a9-6c9f-e3a5-d4f7b8c2e6a1', 'Cașcaval', 'Кашкавал', 'Cașcaval', 'cascaval', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('6b1d3f5c-f8b1-7d1a-f4b6-e5a8c9d3f7b2', 'Telemea', 'Телемя', 'Telemea', 'telemea', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('7c2e4a6d-a9c2-8e2b-a5c7-f6b9d1e4a8c3', 'Iaurt natural', 'Натуральный йогурт', 'Iaurt natural', 'iaurt-natural', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('8d3f5b7e-b1d3-9f3c-b6d8-a7c1e2f5b9d4', 'Chefir', 'Кефир', 'Chefir', 'chefir', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('9e4a6c8f-c2e4-1a4d-c7e9-b8d2f3a6c1e5', 'Unt artizanal', 'Ремесленное масло', 'Unt artizanal', 'unt-artizanal', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6'),
-('1f5b7d9a-d3f5-2b5e-d8f1-c9e3a4b7d2f6', 'Smântână', 'Сметана', 'Smântână', 'smantana', NULL, '1c5e7a9d-a3c5-2e5b-a8c1-f9b3d4e7a2c6');
-
--- 3. Carne & Produse din Carne
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7', 'Carne & Produse din Carne', 'Мясо и мясные продукты', 'Carne & Produse din Carne', 'carne-produse-carne', NULL, NULL);
+('ab1cb5c0-915d-40df-85b0-3ea04875d264', 'Brânză de capră', 'Козий сыр', 'Brânză de capră', 'branza-capra', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('c4933330-d2ea-4f62-bfdf-02786f2d7181', 'Brânză de oaie', 'Овечий сыр', 'Brânză de oaie', 'branza-oaie', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('996b5329-d8b1-492e-ad62-067b6554949e', 'Brânză de vacă', 'Коровий сыр', 'Brânză de vacă', 'branza-vaca', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('b476132c-2dbf-42a7-85fe-4120c84f2bfc', 'Cașcaval', 'Кашкавал', 'Cașcaval', 'cascaval', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('d68d4483-9a54-469a-8147-7602f8b64f79', 'Chefir', 'Кефир', 'Chefir', 'chefir', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('6461a553-37aa-442e-8748-4a0e27f1859e', 'Iaurt natural', 'Натуральный йогурт', 'Iaurt natural', 'iaurt-natural', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('bf2d4a33-5654-4d49-9afd-48bad29401f1', 'Smântână', 'Сметана', 'Smântână', 'smantana', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('75e9653f-00ab-4689-8cc7-5a21e0721a65', 'Telemea', 'Телемя', 'Telemea', 'telemea', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1),
+('51a29031-8983-4310-a4e5-bb1b04dcf2c7', 'Unt artizanal', 'Ремесленное масло', 'Unt artizanal', 'unt-artizanal', NULL, '1d708f63-5712-419e-a135-fecb7e389e32', 1);
 
 -- Subcategories for Carne & Produse din Carne
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('3b7d9f2c-f5b7-4d7a-c1f3-e2a5b6d9f4c8', 'Carne proaspătă (vită, porc, pasăre)', 'Свежее мясо (говядина, свинина, птица)', 'Carne proaspătă (vită, porc, pasăre)', 'carne-proaspata', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('4c8e1a3d-a6c8-5e8b-d2a4-f3b6c7e1a5d9', 'Carne maturată', 'Выдержанное мясо', 'Carne maturată', 'carne-maturata', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('5d9f2b4e-b7d9-6f9c-e3b5-a4c7d8f2b6e1', 'Mezeluri tradiționale', 'Традиционные колбасные изделия', 'Mezeluri tradiționale', 'mezeluri-traditionale', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('6e1a3c5f-c8e1-7a1d-f4c6-b5d8e9a3c7f2', 'Cârnați artizanali', 'Ремесленные колбаски', 'Cârnați artizanali', 'carnati-artizanali', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('7f2b4d6a-d9f2-8b2e-a5d7-c6e9f1b4d8a3', 'Salamuri uscate', 'Сухие колбасы', 'Salamuri uscate', 'salamuri-uscate', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('8a3c5e7b-e1a3-9c3f-b6e8-d7f1a2c5e9b4', 'Slănină', 'Сало', 'Slănină', 'slanina', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('9b4d6f8c-f2b4-1d4a-c7f9-e8a2b3d6f1c5', 'Pateuri', 'Паштеты', 'Pateuri', 'pateuri', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7'),
-('1c5e7a9d-a3c5-2e5b-d8a1-f9b3c4e7a2d6', 'Conserve din carne', 'Мясные консервы', 'Conserve din carne', 'conserve-carne', NULL, '2a6c8e1b-e4a6-3c6f-b9e2-d1f4a5c8e3b7');
-
--- 4. Pește & Produse din Pește
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7', 'Pește & Produse din Pește', 'Рыба и рыбные продукты', 'Pește & Produse din Pește', 'peste-produse-peste', NULL, NULL);
+('76e48b96-4e81-4cd3-82a6-74f18539c607', 'Cârnați artizanali', 'Ремесленные колбаски', 'Cârnați artizanali', 'carnati-artizanali', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('98e430b8-a601-4771-b22b-3cd9941f1dff', 'Carne maturată', 'Выдержанное мясо', 'Carne maturată', 'carne-maturata', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('319f6ea9-445f-4fc0-98b6-31d581d0aac7', 'Carne proaspătă (vită, porc, pasăre)', 'Свежее мясо (говядина, свинина, птица)', 'Carne proaspătă (vită, porc, pasăre)', 'carne-proaspata', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('96582264-1942-4265-8060-66d861bf61db', 'Conserve din carne', 'Мясные консервы', 'Conserve din carne', 'conserve-carne', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('9984a4d5-31b8-4231-bdfe-5f47b91c81dd', 'Mezeluri tradiționale', 'Традиционные колбасные изделия', 'Mezeluri tradiționale', 'mezeluri-traditionale', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('57a38f07-b070-4422-8ee8-36535558e80e', 'Pateuri', 'Паштеты', 'Pateuri', 'pateuri', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('a44c8fd5-613d-4c44-b9a9-b45c20880410', 'Salamuri uscate', 'Сухие колбасы', 'Salamuri uscate', 'salamuri-uscate', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1),
+('5c7c0b24-a616-425a-a9a8-5cf3529e3270', 'Slănină', 'Сало', 'Slănină', 'slanina', NULL, '33c283d7-a4e1-4592-87bc-565c6aefadef', 1);
 
 -- Subcategories for Pește & Produse din Pește
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('4e8a1c2f-c5e7-5a8d-d1c3-f2b5a6e9c4f8', 'Pește proaspăt', 'Свежая рыба', 'Pește proaspăt', 'peste-proaspat', NULL, '3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7'),
-('5f9b2d3a-d6f8-6b9e-e2d4-a3c6b7f1d5a9', 'Pește afumat', 'Копчёная рыба', 'Pește afumat', 'peste-afumat', NULL, '3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7'),
-('6a1c3e4b-e7a9-7c1f-f3e5-b4d7c8a2e6b1', 'Pește sărat', 'Солёная рыба', 'Pește sărat', 'peste-sarat', NULL, '3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7'),
-('7b2d4f5c-f8b1-8d2a-a4f6-c5e8d9b3f7c2', 'Conserve din pește', 'Рыбные консервы', 'Conserve din pește', 'conserve-peste', NULL, '3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7'),
-('8c3e5a6d-a9c2-9e3b-b5a7-d6f9e1c4a8d3', 'Icre', 'Икра', 'Icre', 'icre', NULL, '3d7f9b1e-b4d6-4f7c-c9b2-e1a4f5d8b3e7');
-
--- 5. Miere & Produse Apicole
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8', 'Miere & Produse Apicole', 'Мёд и продукты пчеловодства', 'Miere & Produse Apicole', 'miere-produse-apicole', NULL, NULL);
+('775f6044-01af-47c6-84cb-3f10a24d1705', 'Conserve din pește', 'Рыбные консервы', 'Conserve din pește', 'conserve-peste', NULL, 'd89a0ee1-82ad-4780-949c-dfffdc74d811', 1),
+('abbf01ed-41eb-47e3-b7d2-fd059aca0cba', 'Icre', 'Икра', 'Icre', 'icre', NULL, 'd89a0ee1-82ad-4780-949c-dfffdc74d811', 1),
+('8b8bda01-ed5d-448c-92d1-ab6480b2952e', 'Pește afumat', 'Копчёная рыба', 'Pește afumat', 'peste-afumat', NULL, 'd89a0ee1-82ad-4780-949c-dfffdc74d811', 1),
+('879b8df6-0c48-4393-a07f-27cd6c630910', 'Pește proaspăt', 'Свежая рыба', 'Pește proaspăt', 'peste-proaspat', NULL, 'd89a0ee1-82ad-4780-949c-dfffdc74d811', 1),
+('63e97b50-2bc0-47d3-99f5-a74f4361e2ea', 'Pește sărat', 'Солёная рыба', 'Pește sărat', 'peste-sarat', NULL, 'd89a0ee1-82ad-4780-949c-dfffdc74d811', 1);
 
 -- Subcategories for Miere & Produse Apicole
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('5f1b2e4a-c2e4-6a5d-e7d9-f8c1a3b6d2f9', 'Miere polifloră', 'Полифлорный мёд', 'Miere polifloră', 'miere-poliflora', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('6a2c3f5b-d3f5-7b6e-f8e1-a9d2b4c7e3a1', 'Miere de salcâm', 'Акациевый мёд', 'Miere de salcâm', 'miere-salcam', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('7b3d4a6c-e4a6-8c7f-a9f2-b1e3c5d8f4b2', 'Miere de tei', 'Липовый мёд', 'Miere de tei', 'miere-tei', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('8c4e5b7d-f5b7-9d8a-b1a3-c2f4d6e9a5c3', 'Miere de rapiță', 'Рапсовый мёд', 'Miere de rapiță', 'miere-rapita', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('9d5f6c8e-a6c8-1e9b-c2b4-d3a5e7f1b6d4', 'Fagure', 'Соты', 'Fagure', 'fagure', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('1e6a7d9f-b7d9-2f1c-d3c5-e4b6f8a2c7e5', 'Polen', 'Пыльца', 'Polen', 'polen', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('2f7b8e1a-c8e1-3a2d-e4d6-f5c7a9b3d8f6', 'Propolis', 'Прополис', 'Propolis', 'propolis', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('3a8c9f2b-d9f2-4b3e-f5e7-a6d8b1c4e9a7', 'Lăptișor de matcă', 'Маточное молочко', 'Lăptișor de matcă', 'laptisor-matca', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8'),
-('4b9d1a3c-e1a3-5c4f-a6f8-b7e9c2d5f1b8', 'Mixuri apicole', 'Пчелиные смеси', 'Mixuri apicole', 'mixuri-apicole', NULL, '4e9a1d3f-b1d3-5f4c-d6c8-e7b9f2a5c1e8');
-
--- 6. Fructe & Legume
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9', 'Fructe & Legume', 'Фрукты и овощи', 'Fructe & Legume', 'fructe-legume', NULL, NULL);
+('427f06d4-b771-415a-8bcc-f2622eb2be75', 'Fagure', 'Соты', 'Fagure', 'fagure', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('b9655243-2c08-44b5-bb49-9b18bef20000', 'Lăptișor de matcă', 'Маточное молочко', 'Lăptișor de matcă', 'laptisor-matca', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('c274d5e0-901f-4c0b-988d-0b486ec96820', 'Miere de rapiță', 'Рапсовый мёд', 'Miere de rapiță', 'miere-rapita', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('883d8716-4922-4f51-aef4-d03f3872f9a4', 'Miere de salcâm', 'Акациевый мёд', 'Miere de salcâm', 'miere-salcam', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('ec2b824e-d553-4e65-a2c3-09da8a7c1531', 'Miere de tei', 'Липовый мёд', 'Miere de tei', 'miere-tei', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('f583b50b-8e82-40f6-9207-342f64f7ad12', 'Miere polifloră', 'Полифлорный мёд', 'Miere polifloră', 'miere-poliflora', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('598164d7-1d6a-4ad6-bfe9-ff02e0c8136b', 'Mixuri apicole', 'Пчелиные смеси', 'Mixuri apicole', 'mixuri-apicole', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('a362e6d2-dd5b-4366-b445-654c21eeef7d', 'Polen', 'Пыльца', 'Polen', 'polen', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1),
+('193d2dbd-2265-4d07-8545-51470ea0f2e6', 'Propolis', 'Прополис', 'Propolis', 'propolis', NULL, '407f1d14-4595-4070-9ee5-ac849b05eefb', 1);
 
 -- Subcategories for Fructe & Legume
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('6d2f3c5e-a3c5-7e6b-c8b1-d9a2e4f7b3d1', 'Fructe proaspete', 'Свежие фрукты', 'Fructe proaspete', 'fructe-proaspete', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('7e3a4d6f-b4d6-8f7c-d9c2-e1b3f5a8c4e2', 'Legume proaspete', 'Свежие овощи', 'Legume proaspete', 'legume-proaspete', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('8f4b5e7a-c5e7-9a8d-e1d3-f2c4a6b9d5f3', 'Fructe uscate', 'Сушёные фрукты', 'Fructe uscate', 'fructe-uscate', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('9a5c6f8b-d6f8-1b9e-f2e4-a3d5b7c1e6a4', 'Legume uscate', 'Сушёные овощи', 'Legume uscate', 'legume-uscate', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('1b6d7a9c-e7a9-2c1f-a3f5-b4e6c8d2f7b5', 'Verdețuri', 'Зелень', 'Verdețuri', 'verdeturi', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('2c7e8b1d-f8b1-3d2a-b4a6-c5f7d9e3a8c6', 'Produse de sezon', 'Сезонные продукты', 'Produse de sezon', 'produse-sezon', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9'),
-('3d8f9c2e-a9c2-4e3b-c5b7-d6a8e1f4b9d7', 'Produse bio certificate', 'Сертифицированные био-продукты', 'Produse bio certificate', 'produse-bio-certificate', NULL, '5c1e2b4d-f2b4-6d5a-b7a9-c8f1d3e6a2c9');
-
--- 7. Conserve & Murături
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8', 'Conserve & Murături', 'Консервы и соленья', 'Conserve & Murături', 'conserve-muraturi', NULL, NULL);
+('5f716d74-21f6-4193-afe7-581a486a972d', 'Fructe proaspete', 'Свежие фрукты', 'Fructe proaspete', 'fructe-proaspete', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('126de295-95b5-424e-96dc-f607d7a8af6c', 'Fructe uscate', 'Сушёные фрукты', 'Fructe uscate', 'fructe-uscate', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('5fdf8b34-956a-427b-b6ab-abc4e6e6fa63', 'Legume proaspete', 'Свежие овощи', 'Legume proaspete', 'legume-proaspete', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('2765c43b-216a-428c-b574-5e4fc73bb887', 'Legume uscate', 'Сушёные овощи', 'Legume uscate', 'legume-uscate', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('c98ae5ab-bc1e-4b0d-8adc-3c8159cb2d95', 'Produse bio certificate', 'Сертифицированные био-продукты', 'Produse bio certificate', 'produse-bio-certificate', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('e038fdb6-ddf0-4246-89e6-83386d4378d9', 'Produse de sezon', 'Сезонные продукты', 'Produse de sezon', 'produse-sezon', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1),
+('ba491c9e-7427-4eec-8fb0-b40f2186e415', 'Verdețuri', 'Зелень', 'Verdețuri', 'verdeturi', NULL, 'f9e4ebae-05d2-4706-b8bf-78752867482e', 1);
 
 -- Subcategories for Conserve & Murături
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7f1b2e4a-c2e4-6a5d-e7d9-f8a1c3d6b2e9', 'Dulceață', 'Варенье', 'Dulceață', 'dulceata', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('8a2c3f5b-d3f5-7b6e-f8e1-a9b2d4e7c3f1', 'Gem', 'Джем', 'Gem', 'gem', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('9b3d4a6c-e4a6-8c7f-a9f2-b1c3e5f8d4a2', 'Zacuscă', 'Закуска', 'Zacuscă', 'zacusca', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('1c4e5b7d-f5b7-9d8a-b1a3-c2d4f6a9e5b3', 'Murături', 'Соленья', 'Murături', 'muraturi', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('2d5f6c8e-a6c8-1e9b-c2b4-d3e5a7b1f6c4', 'Suc de roșii', 'Томатный сок', 'Suc de roșii', 'suc-rosii', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('3e6a7d9f-b7d9-2f1c-d3c5-e4f6b8c2a7d5', 'Pastă de tomate', 'Томатная паста', 'Pastă de tomate', 'pasta-tomate', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('4f7b8e1a-c8e1-3a2d-e4d6-f5a7c9d3b8e6', 'Compot', 'Компот', 'Compot', 'compot', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8'),
-('5a8c9f2b-d9f2-4b3e-f5e7-a6b8d1e4c9f7', 'Siropuri naturale', 'Натуральные сиропы', 'Siropuri naturale', 'siropuri-naturale', NULL, '6e9a1d3f-b1d3-5f4c-d6c8-e7f9a2b5d1e8');
+('9135af98-800e-4656-9361-a6c629ba5e5d', 'Compot', 'Компот', 'Compot', 'compot', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('7b031a2c-42fc-4bd2-bd94-777cd75fa002', 'Dulceață', 'Варенье', 'Dulceață', 'dulceata', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('cf2b386d-8c10-4f34-8493-7f9a92bb3d3c', 'Gem', 'Джем', 'Gem', 'gem', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('4ee28e63-e9f0-41a0-ade5-d405aa729c52', 'Murături', 'Соленья', 'Murături', 'muraturi', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('f6c41c6d-d979-4263-85ae-412b0029ace2', 'Pastă de tomate', 'Томатная паста', 'Pastă de tomate', 'pasta-tomate', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('f12190cf-325e-4da8-94f4-2433d5a6a829', 'Siropuri naturale', 'Натуральные сиропы', 'Siropuri naturale', 'siropuri-naturale', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('af4ebc81-9cd5-4c7f-8d5f-57bb438597fa', 'Suc de roșii', 'Томатный сок', 'Suc de roșii', 'suc-rosii', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1),
+('8919381f-0438-4219-9575-81bc54f47c05', 'Zacuscă', 'Закуска', 'Zacuscă', 'zacusca', NULL, '1b9956b7-a6df-433f-875a-31c3833f24e8', 1);
 
--- 8. Băuturi
+-- Subcategories for Băuturi
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7b9d1a3c-e1a3-5c4f-a6f8-b7c9e2f5d1a8', 'Băuturi', 'Напитки', 'Băuturi', 'bauturi', NULL, NULL);
+('93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 'Băuturi alcoolice', 'Алкогольные напитки', 'Băuturi alcoolice', 'bauturi-alcoolice', NULL, 'f6e04fa3-74c1-4394-9992-539c9e38808a', 1),
+('88dafa6b-d0b5-4362-b835-2486da93e94d', 'Băuturi non-alcoolice', 'Безалкогольные напитки', 'Băuturi non-alcoolice', 'bauturi-non-alcoolice', NULL, 'f6e04fa3-74c1-4394-9992-539c9e38808a', 1);
 
--- Subcategories for Băuturi - Alcoolice
+-- Subcategories for Băuturi alcoolice
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9', 'Băuturi alcoolice', 'Алкогольные напитки', 'Băuturi alcoolice', 'bauturi-alcoolice', NULL, '7b9d1a3c-e1a3-5c4f-a6f8-b7c9e2f5d1a8'),
-('9d2f3c5e-a3c5-7e6b-c8b1-d9e2a4b7f3c1', 'Vin alb', 'Белое вино', 'Vin alb', 'vin-alb', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('1e3a4d6f-b4d6-8f7c-d9c2-e1f3b5c8a4d2', 'Vin roșu', 'Красное вино', 'Vin roșu', 'vin-rosu', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('2f4b5e7a-c5e7-9a8d-e1d3-f2a4c6d9b5e3', 'Vin rose', 'Розовое вино', 'Vin rose', 'vin-rose', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('3a5c6f8b-d6f8-1b9e-f2e4-a3b5d7e1c6f4', 'Vin spumant', 'Игристое вино', 'Vin spumant', 'vin-spumant', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('4b6d7a9c-e7a9-2c1f-a3f5-b4c6e8f2d7a5', 'Divin', 'Дивин', 'Divin', 'divin', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('5c7e8b1d-f8b1-3d2a-b4a6-c5d7f9a3e8b6', 'Țuică / rachiu', 'Цуйка / ракия', 'Țuică / rachiu', 'tuica-rachiu', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9'),
-('6d8f9c2e-a9c2-4e3b-c5b7-d6e8a1b4f9c7', 'Lichioruri artizanale', 'Ремесленные ликёры', 'Lichioruri artizanale', 'lichioruri-artizanale', NULL, '8c1e2b4d-f2b4-6d5a-b7a9-c8d1f3a6e2b9');
+('cfc6a763-d42a-4a94-8abb-5400d23a3a66', 'Divin', 'Дивин', 'Divin', 'divin', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('9ddcad03-7378-483a-8014-996e0c4f1faf', 'Lichioruri artizanale', 'Ремесленные ликёры', 'Lichioruri artizanale', 'lichioruri-artizanale', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('80603498-c5fc-428c-abaa-6a663331c29d', 'Vin alb', 'Белое вино', 'Vin alb', 'vin-alb', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('de398339-1ac7-4059-a786-f32dea1b2acb', 'Vin rose', 'Розовое вино', 'Vin rose', 'vin-rose', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('a38b0622-a5bb-4bfa-9e10-66b34ec36106', 'Vin roșu', 'Красное вино', 'Vin roșu', 'vin-rosu', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('0f3f12ed-1e2d-49e6-af62-1122575324b7', 'Vin spumant', 'Игристое вино', 'Vin spumant', 'vin-spumant', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1),
+('4a0b0dbe-a7a7-4bde-9821-08c40809b197', 'Țuică / rachiu', 'Цуйка / ракия', 'Țuică / rachiu', 'tuica-rachiu', NULL, '93ac20e5-ed50-4a10-aeb1-9a08415fd03b', 1);
 
--- Subcategories for Băuturi - Non-alcoolice
+-- Subcategories for Băuturi non-alcoolice
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8', 'Băuturi non-alcoolice', 'Безалкогольные напитки', 'Băuturi non-alcoolice', 'bauturi-non-alcoolice', NULL, '7b9d1a3c-e1a3-5c4f-a6f8-b7c9e2f5d1a8'),
-('8f1b2e4a-c2e4-6a5d-e7d9-f8a1d3c6b2e9', 'Sucuri naturale', 'Натуральные соки', 'Sucuri naturale', 'sucuri-naturale', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8'),
-('9a2c3f5b-d3f5-7b6e-f8e1-a9b2e4d7c3f1', 'Nectare', 'Нектары', 'Nectare', 'nectare', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8'),
-('1b3d4a6c-e4a6-8c7f-a9f2-b1c3f5e8d4a2', 'Siropuri', 'Сиропы', 'Siropuri', 'siropuri', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8'),
-('2c4e5b7d-f5b7-9d8a-b1a3-c2d4a6f9e5b3', 'Kombucha', 'Комбуча', 'Kombucha', 'kombucha', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8'),
-('3d5f6c8e-a6c8-1e9b-c2b4-d3e5b7a1f6c4', 'Apă minerală locală', 'Местная минеральная вода', 'Apă minerală locală', 'apa-minerala-locala', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8'),
-('4e6a7d9f-b7d9-2f1c-d3c5-e4f6c8b2a7d5', 'Cvas', 'Квас', 'Cvas', 'cvas', NULL, '7e9a1d3f-b1d3-5f4c-d6c8-e7f9b2c5a1d8');
-
--- 9. Nuci, Semințe & Produse Derivate
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6', 'Nuci, Semințe & Produse Derivate', 'Орехи, семена и продукты из них', 'Nuci, Semințe & Produse Derivate', 'nuci-seminte-produse', NULL, NULL);
+('f7219c0d-ca2c-4947-9ca6-4c86ddf44637', 'Apă minerală locală', 'Местная минеральная вода', 'Apă minerală locală', 'apa-minerala-locala', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1),
+('dc4e5e60-bc7e-4959-9ffb-155705de8168', 'Cvas', 'Квас', 'Cvas', 'cvas', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1),
+('5c7e0675-f619-4f1a-b41b-162ede08c6b3', 'Kombucha', 'Комбуча', 'Kombucha', 'kombucha', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1),
+('93d580f5-46b7-4c90-be5e-5762e8c6a5b8', 'Nectare', 'Нектары', 'Nectare', 'nectare', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1),
+('92af988c-c423-47e0-a22d-ad69b0440366', 'Siropuri', 'Сиропы', 'Siropuri', 'siropuri', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1),
+('5c3c91dc-a806-4e19-b963-3969e001b1a2', 'Sucuri naturale', 'Натуральные соки', 'Sucuri naturale', 'sucuri-naturale', NULL, '88dafa6b-d0b5-4362-b835-2486da93e94d', 1);
 
 -- Subcategories for Nuci, Semințe & Produse Derivate
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('9a8c1f2b-d9f2-7b3e-f5e7-a6b8e1d4c9f7', 'Nuci decojite', 'Очищенные орехи', 'Nuci decojite', 'nuci-decojite', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6'),
-('1b9d2a3c-e1a3-8c4f-a6f8-b7c9f2e5d1a8', 'Nuci prăjite', 'Жареные орехи', 'Nuci prăjite', 'nuci-prajite', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6'),
-('2c1e3b4d-f2b4-9d5a-b7a9-c8d1a3f6e2b9', 'Semințe', 'Семена', 'Semințe', 'seminte', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6'),
-('3d2f4c5e-a3c5-1e6b-c8b1-d9e2b4a7f3c1', 'Unt de nuci', 'Ореховое масло', 'Unt de nuci', 'unt-nuci', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6'),
-('4e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2', 'Pastă de semințe', 'Паста из семян', 'Pastă de semințe', 'pasta-seminte', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6'),
-('5f4b6e7a-c5e7-3a8d-e1d3-f2a4d6c9b5e3', 'Mixuri sănătoase', 'Здоровые смеси', 'Mixuri sănătoase', 'mixuri-sanatoase', NULL, '8f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6');
-
--- 10. Dulciuri & Gustări
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4', 'Dulciuri & Gustări', 'Сладости и закуски', 'Dulciuri & Gustări', 'dulciuri-gustari', NULL, NULL);
+('be561713-482c-454e-ba3f-3774a44b8dac', 'Mixuri sănătoase', 'Здоровые смеси', 'Mixuri sănătoase', 'mixuri-sanatoase', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1),
+('8a6feaa7-2052-4f9c-bffe-f882e5ee02d6', 'Nuci decojite', 'Очищенные орехи', 'Nuci decojite', 'nuci-decojite', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1),
+('ad2d0fee-0744-4732-a9b0-32e5ef2ce83a', 'Nuci prăjite', 'Жареные орехи', 'Nuci prăjite', 'nuci-prajite', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1),
+('52573a57-a58c-4309-9a03-85e23fe1291e', 'Pastă de semințe', 'Паста из семян', 'Pastă de semințe', 'pasta-seminte', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1),
+('ff9f687e-eab5-4ab7-b878-8093dc4262b3', 'Semințe', 'Семена', 'Semințe', 'seminte', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1),
+('3cbcc84a-63bf-486f-adf9-ea7fd3a05ce1', 'Unt de nuci', 'Ореховое масло', 'Unt de nuci', 'unt-nuci', NULL, 'df692b73-2cc4-4bbc-96d1-8aec71be628b', 1);
 
 -- Subcategories for Dulciuri & Gustări
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('1b6d8a9c-e7a9-5c1f-a3f5-b4c6f8e2d7a5', 'Ciocolată artizanală', 'Ремесленный шоколад', 'Ciocolată artizanală', 'ciocolata-artizanala', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4'),
-('2c7e9b1d-f8b1-6d2a-b4a6-c5d7a9f3e8b6', 'Bomboane handmade', 'Конфеты ручной работы', 'Bomboane handmade', 'bomboane-handmade', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4'),
-('3d8f1c2e-a9c2-7e3b-c5b7-d6e8b1a4f9c7', 'Halva', 'Халва', 'Halva', 'halva', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4'),
-('4e9a2d3f-b1d3-8f4c-d6c8-e7f9c2b5a1d8', 'Produse din carob', 'Продукты из кароба', 'Produse din carob', 'produse-carob', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4'),
-('5f1b3e4a-c2e4-9a5d-e7d9-f8a1d3c6b2e9', 'Snacks-uri naturale', 'Натуральные снэки', 'Snacks-uri naturale', 'snacks-naturale', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4'),
-('6a2c4f5b-d3f5-1b6e-f8e1-a9b2e4d7c3f1', 'Batoane proteice artizanale', 'Ремесленные протеиновые батончики', 'Batoane proteice artizanale', 'batoane-proteice', NULL, '9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4');
-
--- 11. Produse Naturale & Dietetice
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2', 'Produse Naturale & Dietetice', 'Натуральные и диетические продукты', 'Produse Naturale & Dietetice', 'produse-naturale-dietetice', NULL, NULL);
+('aef2f7bb-579b-4211-85d7-519bc03e2a18', 'Batoane proteice artizanale', 'Ремесленные протеиновые батончики', 'Batoane proteice artizanale', 'batoane-proteice', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1),
+('778f88a6-03d9-4911-8603-9e1d9b220121', 'Bomboane handmade', 'Конфеты ручной работы', 'Bomboane handmade', 'bomboane-handmade', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1),
+('1470d4fb-783e-4346-964b-be71d2551990', 'Ciocolată artizanală', 'Ремесленный шоколад', 'Ciocolată artizanală', 'ciocolata-artizanala', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1),
+('fb0c104e-5f09-460a-bb96-c4f6799c20e4', 'Halva', 'Халва', 'Halva', 'halva', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1),
+('2b5608a8-dd09-4967-809f-1f906d8293d8', 'Produse din carob', 'Продукты из кароба', 'Produse din carob', 'produse-carob', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1),
+('9a87d8ee-09ad-42d3-a65d-08e35bb5cc1d', 'Snacks-uri naturale', 'Натуральные снэки', 'Snacks-uri naturale', 'snacks-naturale', NULL, 'c7492181-fcdf-4940-a3de-f940bca13f17', 1);
 
 -- Subcategories for Produse Naturale & Dietetice
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('8c4e6b7d-f5b7-3d8a-b1a3-c2d4f6a9e5b3', 'Produse vegane', 'Веганские продукты', 'Produse vegane', 'produse-vegane', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('9d5f7c8e-a6c8-4e9b-c2b4-d3e5a7b1f6c4', 'Produse raw', 'Сыроедческие продукты', 'Produse raw', 'produse-raw', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('1e6a8d9f-b7d9-5f1c-d3c5-e4f6b8c2a7d5', 'Produse fără zahăr', 'Продукты без сахара', 'Produse fără zahăr', 'produse-fara-zahar', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('2f7b9e1a-c8e1-6a2d-e4d6-f5a7c9d3b8e6', 'Produse fără gluten (dietetice)', 'Безглютеновые продукты (диетические)', 'Produse fără gluten (dietetice)', 'produse-fara-gluten-diet', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('3a8c1f2b-d9f2-7b3e-f5e7-a6b8d1e4c9f7', 'Superfoods', 'Суперфуды', 'Superfoods', 'superfoods', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('4b9d2a3c-e1a3-8c4f-a6f8-b7c9e2f5d1a8', 'Făinuri alternative', 'Альтернативная мука', 'Făinuri alternative', 'fainuri-alternative', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2'),
-('5c1e3b4d-f2b4-9d5a-b7a9-c8d1f3a6e2b9', 'Uleiuri presate la rece', 'Масла холодного отжима', 'Uleiuri presate la rece', 'uleiuri-presate-rece', NULL, '7b3d5a6c-e4a6-2c7f-a9f2-b1c3f5e8d4a2');
-
--- 12. Cereale & Produse de Moară
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1', 'Cereale & Produse de Moară', 'Зерновые и мукомольные продукты', 'Cereale & Produse de Moară', 'cereale-produse-moara', NULL, NULL);
+('d635fff4-c228-44e3-ad91-8278d78b7121', 'Făinuri alternative', 'Альтернативная мука', 'Făinuri alternative', 'fainuri-alternative', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('badba779-d847-46fd-add5-e3f3755b8306', 'Produse fără gluten (dietetice)', 'Безглютеновые продукты', 'Produse fără gluten (dietetice)', 'produse-fara-gluten-dietetice', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('a5398261-542d-4f7c-9e5a-c4798cfdf471', 'Produse fără zahăr', 'Продукты без сахара', 'Produse fără zahăr', 'produse-fara-zahar', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('8f1d97f8-0717-43da-a809-51f458555306', 'Produse raw', 'Сыроедческие продукты', 'Produse raw', 'produse-raw', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('ab0b7dbc-5fab-4d0c-9f5d-8700a2e00587', 'Produse vegane', 'Веганские продукты', 'Produse vegane', 'produse-vegane', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('923c180c-6152-4a58-b2e0-33cc9f407651', 'Superfoods', 'Суперфуды', 'Superfoods', 'superfoods', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1),
+('adc74364-38d9-4655-aed8-c5ca81b0f1c4', 'Uleiuri presate la rece', 'Масла холодного отжима', 'Uleiuri presate la rece', 'uleiuri-presate-rece', NULL, '506b2240-02b3-49b9-bd12-ae6eca09e38b', 1);
 
 -- Subcategories for Cereale & Produse de Moară
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7e3a5d6f-b4d6-2f7c-d9c2-e1f3b5c8a4d2', 'Făină albă', 'Белая мука', 'Făină albă', 'faina-alba', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('8f4b6e7a-c5e7-3a8d-e1d3-f2a4c6d9b5e3', 'Făină integrală', 'Цельнозерновая мука', 'Făină integrală', 'faina-integrala', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('9a5c7f8b-d6f8-4b9e-f2e4-a3b5d7e1c6f4', 'Făină de porumb', 'Кукурузная мука', 'Făină de porumb', 'faina-porumb', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('1b6d8a9c-e7a9-5c1f-a3f5-b4c6e8f2d7a5', 'Mălai', 'Мамалыга', 'Mălai', 'malai', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('2c7e9b1d-f8b1-6d2a-b4a6-c5d7f9a3e8b6', 'Paste artizanale', 'Ремесленные макароны', 'Paste artizanale', 'paste-artizanale', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('3d8f1c2e-a9c2-7e3b-c5b7-d6e8a1b4f9c7', 'Crupe', 'Крупы', 'Crupe', 'crupe', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1'),
-('4e9a2d3f-b1d3-8f4c-d6c8-e7f9b2c5a1d8', 'Fulgi', 'Хлопья', 'Fulgi', 'fulgi', NULL, '6d2f4c5e-a3c5-1e6b-c8b1-d9e2a4b7f3c1');
-
--- 13. Ouă & Produse din Ouă
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('5f1b3e4a-c2e4-9a5d-e7d9-f8a1c3d6b2e9', 'Ouă & Produse din Ouă', 'Яйца и яичные продукты', 'Ouă & Produse din Ouă', 'oua-produse-oua', NULL, NULL);
+('59018319-eb51-4db7-bec5-1ff9c7b5511b', 'Crupe', 'Крупы', 'Crupe', 'crupe', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('b77b12cd-1911-4637-bdec-9457f403ab4a', 'Fulgi', 'Хлопья', 'Fulgi', 'fulgi', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('428d55e3-106d-480b-8cc4-146c49bd4435', 'Făină albă', 'Белая мука', 'Făină albă', 'faina-alba', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('04138253-d8cf-47d7-9f13-92a342962edf', 'Făină de porumb', 'Кукурузная мука', 'Făină de porumb', 'faina-porumb', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('5427c08c-f455-4e5f-bf28-a3b8fadf4cef', 'Făină integrală', 'Цельнозерновая мука', 'Făină integrală', 'faina-integrala', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('07103c3a-1a54-46b0-aa6c-47ff1c881b5a', 'Mălai', 'Мамалыга', 'Mălai', 'malai', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1),
+('c4d8cc94-5c2f-41b1-9a1b-23114f573877', 'Paste artizanale', 'Ремесленные макароны', 'Paste artizanale', 'paste-artizanale', NULL, '6126b032-c0e2-427f-bdb3-291dd52e864b', 1);
 
 -- Subcategories for Ouă & Produse din Ouă
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('6a2c4f5b-d3f5-1b6e-f8e1-a9b2d4e7c3f1', 'Ouă de casă', 'Домашние яйца', 'Ouă de casă', 'oua-casa', NULL, '5f1b3e4a-c2e4-9a5d-e7d9-f8a1c3d6b2e9'),
-('7b3d5a6c-e4a6-2c7f-a9f2-b1c3e5f8d4a2', 'Ouă bio', 'Био яйца', 'Ouă bio', 'oua-bio', NULL, '5f1b3e4a-c2e4-9a5d-e7d9-f8a1c3d6b2e9'),
-('8c4e6b7d-f5b7-3d8a-b1a3-c2d4f6a9e5b3', 'Paste cu ou', 'Макароны с яйцом', 'Paste cu ou', 'paste-ou', NULL, '5f1b3e4a-c2e4-9a5d-e7d9-f8a1c3d6b2e9'),
-('9d5f7c8e-a6c8-4e9b-c2b4-d3e5a7b1f6c4', 'Produse pe bază de ou', 'Продукты на основе яиц', 'Produse pe bază de ou', 'produse-baza-ou', NULL, '5f1b3e4a-c2e4-9a5d-e7d9-f8a1c3d6b2e9');
-
--- 14. Condimente & Mixuri
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5', 'Condimente & Mixuri', 'Специи и пряности', 'Condimente & Mixuri', 'condimente-mixuri', NULL, NULL);
+('1f9ecfc1-005c-4cb3-b340-723d44193d08', 'Ouă bio', 'Био яйца', 'Ouă bio', 'oua-bio', NULL, '3f0475dc-57e3-4166-8639-11a8f45dc3eb', 1),
+('b420ee18-359d-4278-83fa-c97a4d8c4382', 'Ouă de casă', 'Домашние яйца', 'Ouă de casă', 'oua-casa', NULL, '3f0475dc-57e3-4166-8639-11a8f45dc3eb', 1),
+('dd9b27b0-bd1f-4473-b35c-d27ffd792cbb', 'Paste cu ou', 'Макароны с яйцом', 'Paste cu ou', 'paste-ou', NULL, '3f0475dc-57e3-4166-8639-11a8f45dc3eb', 1),
+('dba757f5-16ce-4895-ae93-2347bf9ce747', 'Produse pe bază de ou', 'Продукты на основе яиц', 'Produse pe bază de ou', 'produse-baza-ou', NULL, '3f0475dc-57e3-4166-8639-11a8f45dc3eb', 1);
 
 -- Subcategories for Condimente & Mixuri
 INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('2f7b9e1a-c8e1-6a2d-e4d6-f5a7d9c3b8e6', 'Condimente uscate', 'Сушёные специи', 'Condimente uscate', 'condimente-uscate', NULL, '1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5'),
-('3a8c1f2b-d9f2-7b3e-f5e7-a6b8e1d4c9f7', 'Mixuri tradiționale', 'Традиционные смеси', 'Mixuri tradiționale', 'mixuri-traditionale', NULL, '1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5'),
-('4b9d2a3c-e1a3-8c4f-a6f8-b7c9f2e5d1a8', 'Sare aromatizată', 'Ароматизированная соль', 'Sare aromatizată', 'sare-aromatizata', NULL, '1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5'),
-('5c1e3b4d-f2b4-9d5a-b7a9-c8d1a3f6e2b9', 'Plante medicinale', 'Лекарственные травы', 'Plante medicinale', 'plante-medicinale', NULL, '1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5'),
-('6d2f4c5e-a3c5-1e6b-c8b1-d9e2b4a7f3c1', 'Ceaiuri din plante', 'Травяные чаи', 'Ceaiuri din plante', 'ceaiuri-plante', NULL, '1e6a8d9f-b7d9-5f1c-d3c5-e4f6c8b2a7d5');
+('98727cdd-54cd-4629-be65-d03c644eeb6f', 'Ceaiuri din plante', 'Травяные чаи', 'Ceaiuri din plante', 'ceaiuri-plante', NULL, '398a57db-b9da-4524-af3b-5a150a67f5e0', 1),
+('efdbbdb9-a357-444f-b41b-1e7123e2a749', 'Condimente uscate', 'Сушёные специи', 'Condimente uscate', 'condimente-uscate', NULL, '398a57db-b9da-4524-af3b-5a150a67f5e0', 1),
+('373ce359-8b4d-4174-a6fb-8b31ab1708b1', 'Mixuri tradiționale', 'Традиционные смеси', 'Mixuri tradiționale', 'mixuri-traditionale', NULL, '398a57db-b9da-4524-af3b-5a150a67f5e0', 1),
+('84bcb885-9a76-4947-af85-4d0d3b64ffd5', 'Plante medicinale', 'Лекарственные травы', 'Plante medicinale', 'plante-medicinale', NULL, '398a57db-b9da-4524-af3b-5a150a67f5e0', 1),
+('9d8d391a-0114-4d11-b6cb-9948d5a399ec', 'Sare aromatizată', 'Ароматизированная соль', 'Sare aromatizată', 'sare-aromatizata', NULL, '398a57db-b9da-4524-af3b-5a150a67f5e0', 1);
 
--- 15. Pachete Alimentare
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('7e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2', 'Pachete Alimentare', 'Продуктовые наборы', 'Pachete Alimentare', 'pachete-alimentare', NULL, NULL);
-
--- Subcategories for Pachete Alimentare
-INSERT INTO categories (id, name, "nameRu", "nameRo", slug, "imageUrl", "parentId") VALUES
-('8f4b6e7a-c5e7-3a8d-e1d3-f2a4d6c9b5e3', 'Coșuri tradiționale', 'Традиционные корзины', 'Coșuri tradiționale', 'cosuri-traditionale', NULL, '7e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2'),
-('9a5c7f8b-d6f8-4b9e-f2e4-a3b5e7d1c6f4', 'Pachete de sezon', 'Сезонные наборы', 'Pachete de sezon', 'pachete-sezon', NULL, '7e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2'),
-('1b6d8a9c-e7a9-5c1f-a3f5-b4c6f8e2d7a5', 'Seturi degustare', 'Дегустационные наборы', 'Seturi degustare', 'seturi-degustare', NULL, '7e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2'),
-('2c7e9b1d-f8b1-6d2a-b4a6-c5d7a9f3e8b6', 'Pachete corporate', 'Корпоративные наборы', 'Pachete corporate', 'pachete-corporate', NULL, '7e3a5d6f-b4d6-2f7c-d9c2-e1f3c5b8a4d2');
